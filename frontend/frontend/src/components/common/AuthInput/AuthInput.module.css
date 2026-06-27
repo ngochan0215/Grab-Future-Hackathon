@@ -1,0 +1,29 @@
+/* filepath: src/components/common/AuthInput/AuthInput.module.css */
+.wrapper {
+  margin-bottom: 30px;
+}
+
+.label {
+  display: block;
+  font-size: 12px;
+  color: black;
+  font-weight: bold;
+  margin-bottom: 4px;
+  text-align: left;
+}
+
+.input {
+  color: black;
+  border: none;
+  border-bottom: 1.5px solid #ccc;
+  outline: none;
+  width: 100%;
+  padding: 4px 0;
+  font-size: 14px;
+  background: transparent;
+  transition: border-bottom-color 0.2s;
+}
+
+.input:focus {
+  border-bottom-color: #222;
+}

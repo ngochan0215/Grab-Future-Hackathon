@@ -1,0 +1,38 @@
+/* filepath: src/components/common/SocialIcons/SocialIcons.module.css */
+.wrapper {
+  text-align: center;
+}
+
+.hint {
+  font-size: 11px;
+  color: #bbb;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #e0e0e0;
+  background: white;
+  font-size: 14px;
+  font-weight: 700;
+  color: #444;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.icon:hover {
+  border-color: #111;
+  color: #111;
+}
