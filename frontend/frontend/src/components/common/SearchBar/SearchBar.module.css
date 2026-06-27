@@ -1,0 +1,33 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 18px;
+  padding: 15px 18px;
+  gap: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.14);
+}
+
+.icon {
+  flex-shrink: 0;
+  color: #9CA3AF;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  color: #1A1A2E;
+  background: transparent;
+  font-weight: 500;
+}
+
+.input::placeholder {
+  color: #9CA3AF;
+  font-weight: 400;
+}
+
+.input::-webkit-search-cancel-button {
+  cursor: pointer;
+}
