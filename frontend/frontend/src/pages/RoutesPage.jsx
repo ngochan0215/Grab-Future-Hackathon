@@ -1,87 +1,102 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useAppStore from '../store/useAppStore';
-import { searchRoutes } from '../services/route.api';
-import RouteCard from '../components/RouteCard';
-import MapView from '../components/map/MapView';
-import { Spinner, ErrorMsg, EmptyState } from '../components/ui';
-import { routePath } from '../utils/geo';
-import { PRIORITIES } from '../constants/labels';
+import { Clock, Navigation, Timer, History } from 'lucide-react';
+import { listTrips } from '../services/trip.api';
+import { Spinner, EmptyState, ErrorMsg } from '../components/ui';
+import { formatDuration, formatDistance } from '../utils/formatRoute';
+import TripCard from '../components/common/TripCard/TripCard';
+import RouteDetailView from '../components/common/RouteDetailView/RouteDetailView';
+import Header from '../components/layout/Header/Header';
+
+const relTime = (iso) => {
+  if (!iso) return '';
+  const m = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+  if (m < 1) return 'Just now';
+  if (m < 60) return `${m}m ago`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h ago`;
+  const d = Math.floor(h / 24);
+  return d === 1 ? 'Yesterday' : `${d}d ago`;
+};
 
 export default function RoutesPage() {
-  const navigate = useNavigate();
-  const origin = useAppStore((s) => s.origin);
-  const destination = useAppStore((s) => s.destination);
-  const transportMode = useAppStore((s) => s.transportMode);
-  const priority = useAppStore((s) => s.priority);
-  const setSelectedRoute = useAppStore((s) => s.setSelectedRoute);
+  const [selectedTrip, setSelectedTrip] = useState(null);
 
-  const [routes, setRoutes] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  if (selectedTrip) {
+    const stats = [
+      selectedTrip.started_at && {
+        label: 'Date',
+        value: new Date(selectedTrip.started_at).toLocaleString('en-GB', { dateStyle: 'medium' }),
+      },
+      selectedTrip.actual_distance != null && {
+        label: 'Distance',
+        value: formatDistance(selectedTrip.actual_distance),
+      },
+      selectedTrip.actual_duration != null && {
+        label: 'Duration',
+        value: formatDuration(selectedTrip.actual_duration),
+      },
+    ].filter(Boolean);
 
-  useEffect(() => {
-    if (!origin || !destination) {
-      navigate('/search', { replace: true });
-      return;
-    }
-    setLoading(true);
-    searchRoutes({
-      origin: origin.label,
-      destination: destination.label,
-      transport_mode: transportMode,
-      priority,
-    })
-      .then((d) => setRoutes(d.routes || []))
-      .catch((e) => setError(e.message))
-      .finally(() => setLoading(false));
-  }, [origin, destination, transportMode, priority, navigate]);
-
-  function pick(route) {
-    setSelectedRoute(route);
-    navigate('/compare');
+    return (
+      <main className="page page--plain">
+        <RouteDetailView
+          origin={selectedTrip.origin}
+          destination={selectedTrip.destination}
+          stats={stats}
+          onBack={() => setSelectedTrip(null)}
+        />
+      </main>
+    );
   }
-
-  const priLabel = PRIORITIES.find((p) => p.id === priority)?.label || priority;
-
-  const polylines = routes.map((r) => ({
-    coords: routePath(r),
-    color: r.route_type === 'normal' ? '#9ca3af' : '#16a34a',
-    dashArray: r.route_type === 'normal' ? '6 8' : undefined,
-    weight: r.route_type === 'normal' ? 4 : 6,
-  }));
-  const ref = routes[0] ? routePath(routes[0]) : [];
-  const markers = ref.length
-    ? [
-        { position: ref[0], emoji: '🟢', label: origin?.label },
-        { position: ref[ref.length - 1], emoji: '🏁', label: destination?.label },
-      ]
-    : [];
 
   return (
     <main className="page">
-      <header className="pageHeader">
-        <button className="btn btn--ghost btn--sm" onClick={() => navigate('/options')}>←</button>
-        <div className="col">
-          <h1>Tuyến gợi ý</h1>
-          <span className="sub">Ưu tiên: {priLabel} · {origin?.label} → {destination?.label}</span>
-        </div>
-      </header>
-
-      <ErrorMsg>{error}</ErrorMsg>
-
-      {loading ? (
-        <Spinner />
-      ) : routes.length === 0 ? (
-        <EmptyState icon="🚫">Không tìm được tuyến phù hợp.</EmptyState>
-      ) : (
-        <>
-          <MapView height={240} polylines={polylines} markers={markers} />
-          {routes.map((r) => (
-            <RouteCard key={r.route_id} route={r} onClick={() => pick(r)} />
-          ))}
-        </>
-      )}
+      <Header title="Routes" />
+      <div className="sectionTitle" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <History size={15} />
+        Route History
+      </div>
+      <TripHistory onSelect={setSelectedTrip} />
     </main>
+  );
+}
+
+function TripHistory({ onSelect }) {
+  const [trips, setTrips] = useState(null);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    listTrips()
+      .then(setTrips)
+      .catch((e) => { setError(e.message); setTrips([]); });
+  }, []);
+
+  if (trips === null) return <Spinner />;
+
+  return (
+    <>
+      <ErrorMsg>{error}</ErrorMsg>
+      {trips.length === 0 ? (
+        <EmptyState icon="🧭">No trips yet.</EmptyState>
+      ) : (
+        trips.map((t) => {
+          const stats = [
+            t.started_at && { icon: Clock, label: relTime(t.started_at) },
+            t.actual_distance != null && { icon: Navigation, label: formatDistance(t.actual_distance) },
+            t.actual_duration != null && { icon: Timer, label: formatDuration(t.actual_duration) },
+          ].filter(Boolean);
+
+          return (
+            <TripCard
+              key={t.trip_id}
+              origin={t.origin}
+              destination={t.destination}
+              stats={stats}
+              onClick={() => onSelect(t)}
+            />
+          );
+        })
+      )}
+    </>
   );
 }

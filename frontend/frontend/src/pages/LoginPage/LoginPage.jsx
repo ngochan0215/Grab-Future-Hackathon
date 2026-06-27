@@ -56,7 +56,7 @@ export default function LoginPage() {
         <AuthCard>
           <AuthLogo />
           <h2 className={styles.title}>
-            {isRegister ? 'Tạo tài khoản' : 'Đăng nhập'}
+            {isRegister ? 'Create Account' : 'Log In'}
           </h2>
 
           {error && <div className={styles.error}>{error}</div>}
@@ -112,8 +112,8 @@ export default function LoginPage() {
             }}
           >
             {isRegister
-              ? 'Đã có tài khoản? Đăng nhập'
-              : 'Chưa có tài khoản? Đăng ký'}
+              ? 'Already have an account? Log In'
+              : "Don't have an account? Sign Up"}
           </button>
         </AuthCard>
       </div>

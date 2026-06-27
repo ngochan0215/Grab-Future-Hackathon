@@ -6,12 +6,12 @@ import {
   User,
 } from 'lucide-react';
 import styles from '../styles/HomePage.module.css';
-import SearchBar from '../components/common/SearchBar/SearchBar';
+import AddressAutocomplete from '../components/AddressAutocomplete';
 import AlertCard from '../components/common/AlertCard/AlertCard';
 import RouteCard from '../components/common/RouteCard/RouteCard';
 import useAppStore from '../store/useAppStore';
 import { listAddresses } from '../services/address.api';
-import { getAlerts } from '../services/map.api';
+import { getAlerts, getPlaces } from '../services/map.api';
 import { listTrips } from '../services/trip.api';
 import { listSavedRoutes, getSavedRoute } from '../services/savedRoute.api';
 import { issueLabels } from '../constants/labels';
@@ -61,7 +61,8 @@ const SEVERITY_RANK = { danger: 3, warning: 2, caution: 1 };
 
 // Reduce an issue_type token array to a single AlertCard style.
 function alertStyle(tokens = []) {
-  const mapped = tokens.map((t) => ALERT_TOKEN[t]).filter(Boolean);
+  const list = Array.isArray(tokens) ? tokens : [tokens].filter(Boolean);
+  const mapped = list.map((t) => ALERT_TOKEN[t]).filter(Boolean);
   if (!mapped.length) return { severity: 'warning', icon: AlertTriangle };
   const severity = mapped.reduce(
     (s, m) => (SEVERITY_RANK[m.severity] > SEVERITY_RANK[s] ? m.severity : s),
@@ -106,10 +107,34 @@ export default function HomePage() {
   const [recents, setRecents] = useState([]);
   const [alerts, setAlerts] = useState([]);
   const [recommended, setRecommended] = useState(null);
+  const [searchDest, setSearchDest] = useState(null);
+  const [searchSuggestions, setSearchSuggestions] = useState([]);
 
   useEffect(() => {
     listAddresses().then((a) => setPlaces(a.slice(0, 4))).catch(() => {});
     getAlerts({ status: 'active' }).then(setAlerts).catch(() => {});
+
+    Promise.all([listAddresses().catch(() => []), getPlaces().catch(() => [])]).then(
+      ([addresses, places]) => {
+        const a = addresses.map((x) => ({
+          key: `a-${x.address_id}`,
+          label: x.label || x.address,
+          address: x.address,
+          lat: x.latitude,
+          lng: x.longitude,
+          icon: '⭐',
+        }));
+        const p = places.map((x) => ({
+          key: `p-${x.place_id}`,
+          label: x.place_name,
+          address: x.category,
+          lat: x.latitude,
+          lng: x.longitude,
+          icon: x.has_ramp_entrance ? '♿' : '📍',
+        }));
+        setSearchSuggestions([...a, ...p]);
+      }
+    );
 
     listTrips()
       .then((trips) => {
@@ -152,10 +177,6 @@ export default function HomePage() {
       })
       .catch(() => {});
   }, []);
-
-  function goSearch() {
-    navigate('/search');
-  }
 
   function pickDestination(addr) {
     setDestination({
@@ -209,14 +230,19 @@ export default function HomePage() {
             <User size={20} />
           </button>
         </div>
-        {/* Read-only — tapping opens the dedicated search flow */}
-        <div
-          onClick={goSearch}
-          onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && goSearch()}
-          role="button"
-          tabIndex={0}
-        >
-          <SearchBar value="" onChange={() => {}} placeholder="Where would you like to go?" readOnly />
+        <div className={styles.searchWrap}>
+          <AddressAutocomplete
+            value={searchDest}
+            onChange={(val) => {
+              setSearchDest(val);
+              if (val.lat && val.lng) {
+                setDestination(val);
+                navigate('/search');
+              }
+            }}
+            suggestions={searchSuggestions}
+            placeholder="Where would you like to go?"
+          />
         </div>
       </header>
 

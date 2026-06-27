@@ -1,8 +1,7 @@
 /* ── Page shell ── */
 .page {
-  min-height: 100vh;
-  max-width: 390px;
-  margin: 0 auto;
+  min-height: 100dvh;
+  width: 100%;
   background: #f0faf6;
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
   color: #1A1A2E;
@@ -12,7 +11,7 @@
 /* ── Header ── */
 .header {
   background: linear-gradient(150deg, #0d9b87 0%, #a8eddc 100%);
-  padding: 52px 20px 32px;
+  padding: calc(env(safe-area-inset-top, 44px) + 12px) 20px 32px;
   border-radius: 0 0 32px 32px;
 }
 
@@ -56,6 +55,12 @@
 
 .avatarBtn:active {
   background: rgba(255, 255, 255, 0.35);
+}
+
+/* ── Header search wrapper — ensures dropdown overlaps main content ── */
+.searchWrap {
+  position: relative;
+  z-index: 20;
 }
 
 /* ── Main scrollable area ── */
@@ -217,5 +222,5 @@
 
 /* ── Spacer for fixed nav ── */
 .navSpacer {
-  height: calc(72px + env(safe-area-inset-bottom));
+  height: calc(72px + env(safe-area-inset-bottom, 0px));
 }

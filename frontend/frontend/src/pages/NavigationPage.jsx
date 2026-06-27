@@ -232,9 +232,7 @@ export default function NavigationPage() {
             <div className="bar" style={{ marginBottom: 12 }}>
               <span style={{ width: `${Math.round(progress * 100)}%`, background: lineColor }} />
             </div>
-            <button className="btn btn--danger btn--block" onClick={finish}>
-              ⏹ Kết thúc chuyến đi
-            </button>
+            <button className="btn btn--danger btn--block" onClick={finish}>⏹ End Trip</button>
           </>
         ) : (
           <>
@@ -255,13 +253,11 @@ export default function NavigationPage() {
               style={{ marginTop: 8 }}
             />
             <div className="row" style={{ gap: 10, marginTop: 10 }}>
-              <button className="btn btn--block" onClick={saveRoute} disabled={busy}>🔖 Lưu tuyến</button>
-              <button className="btn btn--primary btn--block" onClick={submitRating} disabled={busy}>
-                Gửi đánh giá
-              </button>
+              <button className="btn btn--block" onClick={saveRoute} disabled={busy}>🔖 Save Route</button>
+              <button className="btn btn--primary btn--block" onClick={submitRating} disabled={busy}>Submit Review</button>
             </div>
             <div className="row" style={{ gap: 10, marginTop: 10 }}>
-              <button className="btn btn--block" onClick={() => navigate('/trips')}>Chuyến đi</button>
+              <button className="btn btn--block" onClick={() => navigate('/trips')}>Trips</button>
               <button
                 className="btn btn--block"
                 onClick={() => { resetTrip(); navigate('/home'); }}

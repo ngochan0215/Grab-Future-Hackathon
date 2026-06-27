@@ -8,6 +8,7 @@ import { ScoreBar, Spinner, ErrorMsg } from '../components/ui';
 import { issueLabel, issueLabels, formatWarning } from '../constants/labels';
 import { routePath, segmentMidpoint } from '../utils/geo';
 import { formatDuration, formatDistance } from '../utils/formatRoute';
+import Header from '../components/layout/Header/Header';
 
 export default function ComparePage() {
   const navigate = useNavigate();
@@ -85,10 +86,7 @@ export default function ComparePage() {
 
   return (
     <main className="page">
-      <header className="pageHeader">
-        <button className="btn btn--ghost btn--sm" onClick={() => navigate('/routes')}>←</button>
-        <h1>So sánh tuyến</h1>
-      </header>
+      <Header title="So sánh tuyến" />
 
       <MapView height={260} polylines={polylines} markers={markers} hazards={hazards} />
       <div className="mapLegend">

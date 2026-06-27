@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAppStore from '../store/useAppStore';
 import { TRANSPORT_MODES, PRIORITIES } from '../constants/labels';
+import Header from '../components/layout/Header/Header';
 
 export default function OptionsPage() {
   const navigate = useNavigate();
@@ -28,13 +29,7 @@ export default function OptionsPage() {
 
   return (
     <main className="page">
-      <header className="pageHeader">
-        <button className="btn btn--ghost btn--sm" onClick={() => navigate('/confirm')}>←</button>
-        <div className="col">
-          <h1>Cá nhân hoá lộ trình</h1>
-          <span className="sub">{origin.label} → {destination.label}</span>
-        </div>
-      </header>
+      <Header title="Cá nhân hoá lộ trình" />
 
       <div className="sectionTitle">Phương tiện</div>
       {TRANSPORT_MODES.map((m) => (
@@ -65,9 +60,7 @@ export default function OptionsPage() {
         </div>
       ))}
 
-      <button className="btn btn--primary btn--block" style={{ marginTop: 16 }} onClick={findRoutes}>
-        🔍 Tìm tuyến đường
-      </button>
+      <button className="btn btn--primary btn--block" style={{ marginTop: 16 }} onClick={findRoutes}>🔍 Find Routes</button>
     </main>
   );
 }

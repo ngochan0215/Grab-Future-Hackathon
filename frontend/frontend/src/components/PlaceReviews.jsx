@@ -62,7 +62,7 @@ export default function PlaceReviews({ placeId }) {
         disabled={submitting}
         style={{ marginTop: 8 }}
       >
-        {submitting ? 'Đang gửi…' : 'Gửi đánh giá'}
+        {submitting ? 'Sending...' : 'Submit Review'}
       </button>
     </div>
   );

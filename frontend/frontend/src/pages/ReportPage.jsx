@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getSegments, reportAlert } from '../services/map.api';
 import { ISSUE_TYPES, SURFACE_LABEL } from '../constants/labels';
 import { Spinner, ErrorMsg, OkMsg } from '../components/ui';
+import Header from '../components/layout/Header/Header';
 
 export default function ReportPage() {
   const [segments, setSegments] = useState(null);
@@ -50,12 +51,7 @@ export default function ReportPage() {
 
   return (
     <main className="page">
-      <header className="pageHeader">
-        <div className="col">
-          <h1>Báo cáo sự cố</h1>
-          <span className="sub">Giúp cộng đồng tránh các đoạn đường nguy hiểm</span>
-        </div>
-      </header>
+      <Header title="Báo cáo sự cố" />
 
       <ErrorMsg>{error}</ErrorMsg>
       <OkMsg>{notice}</OkMsg>
@@ -103,7 +99,7 @@ export default function ReportPage() {
         </div>
 
         <button className="btn btn--primary btn--block" onClick={submit} disabled={busy}>
-          {busy ? 'Đang gửi…' : '⚠️ Gửi báo cáo'}
+          {busy ? 'Sending...' : '⚠️ Submit Report'}
         </button>
       </div>
     </main>

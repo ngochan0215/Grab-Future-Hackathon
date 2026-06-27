@@ -5,6 +5,7 @@ import { getMe } from '../services/auth.api';
 import { updateProfile } from '../services/user.api';
 import { MOBILITY_TYPES, mobilityLabel } from '../constants/labels';
 import { Spinner, ErrorMsg, OkMsg } from '../components/ui';
+import Header from '../components/layout/Header/Header';
 
 export default function ProfilePage() {
   const navigate = useNavigate();
@@ -68,9 +69,7 @@ export default function ProfilePage() {
 
   return (
     <main className="page">
-      <header className="pageHeader">
-        <h1>Hồ sơ</h1>
-      </header>
+      <Header title="Hồ sơ" />
 
       <ErrorMsg>{error}</ErrorMsg>
       <OkMsg>{notice}</OkMsg>
@@ -91,9 +90,7 @@ export default function ProfilePage() {
             <span className="muted">Khoảng cách đi bộ tối đa</span>
             <span className="title small">{user.max_walking_distance} m</span>
           </div>
-          <button className="btn btn--primary btn--block" style={{ marginTop: 12 }} onClick={startEdit}>
-            ✏️ Chỉnh sửa hồ sơ
-          </button>
+          <button className="btn btn--primary btn--block" style={{ marginTop: 12 }} onClick={startEdit}>✏️ Edit Profile</button>
         </div>
       ) : (
         <div className="card">
@@ -128,19 +125,13 @@ export default function ProfilePage() {
             />
           </div>
           <div className="row" style={{ gap: 10 }}>
-            <button className="btn btn--block" onClick={() => setEditing(false)} disabled={busy}>
-              Huỷ
-            </button>
-            <button className="btn btn--primary btn--block" onClick={save} disabled={busy}>
-              Lưu
-            </button>
+            <button className="btn btn--block" onClick={() => setEditing(false)} disabled={busy}>Cancel</button>
+            <button className="btn btn--primary btn--block" onClick={save} disabled={busy}>Save</button>
           </div>
         </div>
       )}
 
-      <button className="btn btn--danger btn--block" style={{ marginTop: 8 }} onClick={handleLogout}>
-        Đăng xuất
-      </button>
+      <button className="btn btn--danger btn--block" style={{ marginTop: 8 }} onClick={handleLogout}>Log Out</button>
     </main>
   );
 }

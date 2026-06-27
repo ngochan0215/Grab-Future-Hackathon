@@ -1,4 +1,4 @@
-import { useRef, useMemo, useCallback } from 'react';
+import { useRef, useMemo, useCallback, useEffect } from 'react';
 import Map, { Source, Layer, Marker } from 'react-map-gl/maplibre';
 import { DHQG_CENTER } from '../../utils/geo';
 
@@ -13,6 +13,8 @@ const toLngLat = (c) => [c[1], c[0]];
  *  - polylines: [{ coords:[[lat,lng]], color, dashArray, weight }]
  *  - markers:   [{ position:[lat,lng], emoji, label }]
  *  - hazards:   [{ position:[lat,lng], label, color }]
+ *  - focusPosition: [lat, lng] — fly to this when it changes
+ *  - onMapClick(lat, lng) — called when user taps/clicks on the map
  */
 export default function MapView({
   polylines = [],
@@ -21,6 +23,9 @@ export default function MapView({
   height = 260,
   center = DHQG_CENTER,
   zoom = 14,
+  interactive = false,
+  focusPosition = null,
+  onMapClick = null,
 }) {
   const mapRef = useRef(null);
 
@@ -51,6 +56,19 @@ export default function MapView({
     );
   }, [allCoords]);
 
+  // Fly to focusPosition when it changes
+  useEffect(() => {
+    if (!focusPosition || !mapRef.current) return;
+    const [lat, lng] = focusPosition;
+    mapRef.current.easeTo({ center: [lng, lat], zoom: 16, duration: 600 });
+  }, [focusPosition]);
+
+  const handleMapClick = useCallback((e) => {
+    if (!onMapClick) return;
+    const { lng, lat } = e.lngLat;
+    onMapClick(lat, lng);
+  }, [onMapClick]);
+
   return (
     <div className="mapWrap" style={{ height }}>
       <Map
@@ -58,8 +76,12 @@ export default function MapView({
         initialViewState={{ longitude: center[1], latitude: center[0], zoom }}
         mapStyle={MAP_STYLE}
         attributionControl={false}
-        scrollZoom={false}
+        scrollZoom={interactive}
+        dragPan={interactive}
+        dragRotate={false}
         onLoad={fitBounds}
+        onClick={onMapClick ? handleMapClick : undefined}
+        cursor={onMapClick ? 'crosshair' : 'grab'}
       >
         {polylines.map((p, i) =>
           p.coords?.length ? (

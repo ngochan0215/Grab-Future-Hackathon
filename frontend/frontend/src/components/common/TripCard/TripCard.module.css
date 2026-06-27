@@ -1,0 +1,128 @@
+.card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.06);
+  margin-bottom: 10px;
+  border: 1.5px solid #f0f5f3;
+  cursor: pointer;
+  transition: transform 0.13s ease, box-shadow 0.13s ease;
+}
+
+.card:active {
+  transform: scale(0.983);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.07);
+}
+
+/* ── Timeline ── */
+.route {
+  display: flex;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 14px;
+  flex-shrink: 0;
+  padding-top: 3px;
+}
+
+.dotOrigin {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #0d9b87;
+  box-shadow: 0 0 0 3px rgba(13, 155, 135, 0.18);
+  flex-shrink: 0;
+}
+
+.connector {
+  flex: 1;
+  width: 2px;
+  min-height: 22px;
+  margin: 4px 0;
+  border-radius: 1px;
+  background: repeating-linear-gradient(
+    to bottom,
+    #a8eddc 0px,
+    #a8eddc 5px,
+    transparent 5px,
+    transparent 9px
+  );
+}
+
+.dotDest {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.14);
+  flex-shrink: 0;
+}
+
+.routeLabels {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.placeName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Delete button ── */
+.deleteBtn {
+  align-self: flex-start;
+  margin-left: 8px;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: #fef2f2;
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.deleteBtn:active {
+  background: #fecaca;
+}
+
+/* ── Stat pills ── */
+.stats {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #6b7280;
+  background: #f8fafc;
+  border: 1px solid #e4f8f1;
+  padding: 4px 10px;
+  border-radius: 100px;
+}

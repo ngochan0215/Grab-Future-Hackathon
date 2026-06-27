@@ -1,0 +1,27 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(env(safe-area-inset-top, 24px) + 28px) 20px 24px;
+  background: linear-gradient(150deg, #0d9b87 0%, #a8eddc 100%);
+  margin: -16px -16px 16px -16px;
+  width: calc(100% + 32px);
+  box-sizing: border-box;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: all 0.3s ease;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  text-align: center;
+}
+
+.right {
+  /* Placeholder for action buttons on the right */
+}

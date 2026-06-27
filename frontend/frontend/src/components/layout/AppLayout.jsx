@@ -1,20 +1,22 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, Bookmark, Navigation, AlertTriangle, User } from 'lucide-react';
+import { Home, Search, Map, Bookmark, User } from 'lucide-react';
 import BottomNav from './BottomNav/BottomNav';
 import styles from './AppLayout.module.css';
+import useAppStore from '../../store/useAppStore';
 
 const NAV = [
-  { label: 'Home', icon: Home, path: '/home' },
-  { label: 'Saved', icon: Bookmark, path: '/saved' },
-  { label: 'Trips', icon: Navigation, path: '/trips' },
-  { label: 'Report', icon: AlertTriangle, path: '/report' },
-  { label: 'Profile', icon: User, path: '/profile' },
+  { label: 'Home',    icon: Home,     path: '/home'    },
+  { label: 'Search',  icon: Search,   path: '/search'  },
+  { label: 'Routes',  icon: Map,      path: '/routes'  },
+  { label: 'Saved',   icon: Bookmark, path: '/saved'   },
+  { label: 'Profile', icon: User,     path: '/profile' },
 ];
 
 export default function AppLayout({ children }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const active = NAV.find((n) => pathname.startsWith(n.path))?.label;
+  const setDestination = useAppStore((s) => s.setDestination);
 
   return (
     <div className={styles.shell}>
@@ -24,7 +26,9 @@ export default function AppLayout({ children }) {
         activeLabel={active}
         onNavigate={(label) => {
           const item = NAV.find((n) => n.label === label);
-          if (item) navigate(item.path);
+          if (!item) return;
+          if (item.path === '/search') setDestination(null);
+          navigate(item.path);
         }}
       />
     </div>

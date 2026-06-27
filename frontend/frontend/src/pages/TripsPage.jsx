@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { listTrips, finishTrip } from '../services/trip.api';
 import { Spinner, EmptyState, ErrorMsg } from '../components/ui';
+import Header from '../components/layout/Header/Header';
 
 const fmt = (iso) => (iso ? new Date(iso).toLocaleString('vi-VN') : '—');
 
@@ -25,9 +26,7 @@ export default function TripsPage() {
 
   return (
     <main className="page">
-      <header className="pageHeader">
-        <h1>Chuyến đi</h1>
-      </header>
+      <Header title="Trips" />
       <ErrorMsg>{error}</ErrorMsg>
       {trips.length === 0 ? (
         <EmptyState icon="🧭">Bạn chưa có chuyến đi nào.</EmptyState>
@@ -56,9 +55,7 @@ export default function TripsPage() {
                   className="btn btn--primary btn--block"
                   style={{ marginTop: 10 }}
                   onClick={() => finish(t.trip_id)}
-                >
-                  ⏹ Kết thúc
-                </button>
+                >⏹ End</button>
               )}
             </div>
           );

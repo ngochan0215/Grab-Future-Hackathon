@@ -39,7 +39,10 @@ export const issueLabel = (id) =>
   ISSUE_TYPES.find((i) => i.id === id)?.label || id;
 
 // Join an array of issue tokens into one readable string.
-export const issueLabels = (arr) => (arr || []).map(issueLabel).join(', ');
+export const issueLabels = (arr) => {
+  const list = Array.isArray(arr) ? arr : [arr].filter(Boolean);
+  return list.map(issueLabel).join(', ');
+};
 
 // Format a route warning, which the backend sends as { street_name, issues }.
 export const formatWarning = (w) =>

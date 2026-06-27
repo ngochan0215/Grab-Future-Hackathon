@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import useAppStore from '../store/useAppStore';
 import MapView from '../components/map/MapView';
+import Header from '../components/layout/Header/Header';
 
 export default function ConfirmPage() {
   const navigate = useNavigate();
@@ -21,10 +22,7 @@ export default function ConfirmPage() {
 
   return (
     <main className="page">
-      <header className="pageHeader">
-        <button className="btn btn--ghost btn--sm" onClick={() => navigate('/search')}>←</button>
-        <h1>Xác nhận hành trình</h1>
-      </header>
+      <Header title="Xác nhận hành trình" />
 
       {markers.length > 0 ? (
         <MapView height={240} markers={markers} polylines={polylines} />
@@ -52,18 +50,14 @@ export default function ConfirmPage() {
             </div>
           </div>
         </div>
-        <button className="link" style={{ marginTop: 12 }} onClick={() => navigate('/search')}>
-          ✏️ Chỉnh sửa
-        </button>
+        <button className="link" style={{ marginTop: 12 }} onClick={() => navigate('/search')}>✏️ Edit</button>
       </div>
 
       <button
         className="btn btn--primary btn--block"
         style={{ marginTop: 8 }}
         onClick={() => navigate('/options')}
-      >
-        Xác nhận & cá nhân hoá
-      </button>
+      >Confirm & Personalize</button>
     </main>
   );
 }

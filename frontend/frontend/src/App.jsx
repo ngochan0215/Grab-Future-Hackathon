@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import ProtectedRoute from './components/layout/ProtectedRoute'
+import AppLayout from './components/layout/AppLayout'
 import LoginPage from './pages/LoginPage/LoginPage'
 import HomePage from './pages/HomePage'
 import SearchPage from './pages/SearchPage'
@@ -11,20 +12,18 @@ import NavigationPage from './pages/NavigationPage'
 import SavedPage from './pages/SavedPage'
 import TripsPage from './pages/TripsPage'
 import ProfilePage from './pages/ProfilePage'
-import ReportPage from './pages/ReportPage'
 
 const protectedPages = [
-  { path: '/home', element: <HomePage /> },
-  { path: '/search', element: <SearchPage /> },
-  { path: '/confirm', element: <ConfirmPage /> },
-  { path: '/options', element: <OptionsPage /> },
-  { path: '/routes', element: <RoutesPage /> },
-  { path: '/compare', element: <ComparePage /> },
-  { path: '/navigate', element: <NavigationPage /> },
-  { path: '/saved', element: <SavedPage /> },
-  { path: '/trips', element: <TripsPage /> },
-  { path: '/report', element: <ReportPage /> },
-  { path: '/profile', element: <ProfilePage /> },
+  { path: '/home',     element: <AppLayout><HomePage /></AppLayout>       },
+  { path: '/search',   element: <AppLayout><SearchPage /></AppLayout>     },
+  { path: '/confirm',  element: <ConfirmPage />                           },
+  { path: '/options',  element: <OptionsPage />                           },
+  { path: '/routes',   element: <AppLayout><RoutesPage /></AppLayout>     },
+  { path: '/compare',  element: <ComparePage />                           },
+  { path: '/navigate', element: <NavigationPage />                        },
+  { path: '/saved',    element: <AppLayout><SavedPage /></AppLayout>      },
+  { path: '/trips',    element: <TripsPage />                             },
+  { path: '/profile',  element: <AppLayout><ProfilePage /></AppLayout>    },
 ]
 
 export default function App() {
