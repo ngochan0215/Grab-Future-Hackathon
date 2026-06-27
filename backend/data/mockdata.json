@@ -17,6 +17,24 @@
       "mobility_type": "none",
       "max_walking_distance": 5000,
       "created_at": "2026-06-27T09:15:00Z"
+    },
+    {
+      "user_id": 1003,
+      "name": "Pham Thi Mai",
+      "email": "maipham@gmail.com",
+      "password": "$2b$10$fJ32iZbSF8YCjQm3JO4L4u6o1BF9X8PeU1pT25DBVENy0XI/UugO2",
+      "mobility_type": "wheelchair_electric",
+      "max_walking_distance": 1500,
+      "created_at": "2026-06-27T10:30:00Z"
+    },
+    {
+      "user_id": 1004,
+      "name": "Nguyen Quoc Dat",
+      "email": "datnguyen@gmail.com",
+      "password": "$2b$10$fJ32iZbSF8YCjQm3JO4L4u6o1BF9X8PeU1pT25DBVENy0XI/UugO2",
+      "mobility_type": "crutches",
+      "max_walking_distance": 800,
+      "created_at": "2026-06-27T11:45:00Z"
     }
   ],
   "accessible_places": [
@@ -28,6 +46,51 @@
       "longitude": 106.801,
       "has_ramp_entrance": true,
       "has_accessible_toilet": true
+    },
+    {
+      "place_id": 502,
+      "place_name": "Thu vien Trung tam DHQG HCM",
+      "category": "Library",
+      "latitude": 10.8765,
+      "longitude": 106.8025,
+      "has_ramp_entrance": true,
+      "has_accessible_toilet": true
+    },
+    {
+      "place_id": 503,
+      "place_name": "Tram y te DHQG",
+      "category": "Clinic",
+      "latitude": 10.8758,
+      "longitude": 106.8002,
+      "has_ramp_entrance": true,
+      "has_accessible_toilet": true
+    },
+    {
+      "place_id": 504,
+      "place_name": "Khu pho am thuc KTX Khu B",
+      "category": "Food Court",
+      "latitude": 10.8801,
+      "longitude": 106.7895,
+      "has_ramp_entrance": false,
+      "has_accessible_toilet": false
+    },
+    {
+      "place_id": 505,
+      "place_name": "Trung tam The duc The thao DHQG",
+      "category": "Sports Center",
+      "latitude": 10.8779,
+      "longitude": 106.8041,
+      "has_ramp_entrance": true,
+      "has_accessible_toilet": true
+    },
+    {
+      "place_id": 506,
+      "place_name": "Nha Dieu Hanh DHQG",
+      "category": "Administrative",
+      "latitude": 10.8731,
+      "longitude": 106.8009,
+      "has_ramp_entrance": true,
+      "has_accessible_toilet": false
     }
   ],
   "user_reviews": [
@@ -38,6 +101,38 @@
       "rating_score": 4,
       "comment": "Loi vao phia truoc co doc dat chuan.",
       "created_at": "2026-06-27T14:20:00Z"
+    },
+    {
+      "review_id": 802,
+      "place_id": 502,
+      "user_id": 1002,
+      "rating_score": 5,
+      "comment": "Thang may va WC tiep can rat tot.",
+      "created_at": "2026-06-27T15:00:00Z"
+    },
+    {
+      "review_id": 803,
+      "place_id": 503,
+      "user_id": 1003,
+      "rating_score": 4,
+      "comment": "Co doc nhung hoi cao mot chut voi xe lan tay.",
+      "created_at": "2026-06-27T16:10:00Z"
+    },
+    {
+      "review_id": 804,
+      "place_id": 504,
+      "user_id": 1001,
+      "rating_score": 2,
+      "comment": "Khong co loi doc, phai nho nguoi ho tro.",
+      "created_at": "2026-06-27T17:25:00Z"
+    },
+    {
+      "review_id": 805,
+      "place_id": 505,
+      "user_id": 1003,
+      "rating_score": 5,
+      "comment": "Khu the thao co duong doc va cho dau xe lan rong rai.",
+      "created_at": "2026-06-27T18:40:00Z"
     }
   ],
   "route_segments": [
@@ -56,6 +151,54 @@
       "has_sidewalk_ramp": false,
       "sidewalk_width": 0.5,
       "safety_score": 1.2
+    },
+    {
+      "segment_id": 203,
+      "street_name": "Duong Tran Dai Nghia",
+      "surface_quality": "moderate",
+      "has_sidewalk_ramp": true,
+      "sidewalk_width": 1.8,
+      "safety_score": 4.0
+    },
+    {
+      "segment_id": 204,
+      "street_name": "Duong noi bo NVH Sinh Vien",
+      "surface_quality": "smooth",
+      "has_sidewalk_ramp": true,
+      "sidewalk_width": 2.5,
+      "safety_score": 4.8
+    },
+    {
+      "segment_id": 205,
+      "street_name": "Duong Vo Truong Toan",
+      "surface_quality": "moderate",
+      "has_sidewalk_ramp": false,
+      "sidewalk_width": 1.2,
+      "safety_score": 3.2
+    },
+    {
+      "segment_id": 206,
+      "street_name": "Duong truoc KTX Khu B",
+      "surface_quality": "smooth",
+      "has_sidewalk_ramp": true,
+      "sidewalk_width": 2.2,
+      "safety_score": 4.5
+    },
+    {
+      "segment_id": 207,
+      "street_name": "Hem ben hong Thu vien Trung tam",
+      "surface_quality": "damaged",
+      "has_sidewalk_ramp": false,
+      "sidewalk_width": 0.8,
+      "safety_score": 2.0
+    },
+    {
+      "segment_id": 208,
+      "street_name": "Truc duong chinh DHQG",
+      "surface_quality": "smooth",
+      "has_sidewalk_ramp": true,
+      "sidewalk_width": 3.0,
+      "safety_score": 5.0
     }
   ],
   "realtime_alerts": [
@@ -68,6 +211,36 @@
       "detected_by": "User_Report_App",
       "status": "active",
       "created_at": "2026-06-27T21:05:00Z"
+    },
+    {
+      "alert_id": 302,
+      "segment_id": 207,
+      "user_id": 1001,
+      "issue_type": "obstacle",
+      "description": "Vat lieu xay dung chan loi di.",
+      "detected_by": "User_Report_App",
+      "status": "active",
+      "created_at": "2026-06-28T06:30:00Z"
+    },
+    {
+      "alert_id": 303,
+      "segment_id": 205,
+      "user_id": 1003,
+      "issue_type": "flooded",
+      "description": "Ngap sau mua, da rut nuoc.",
+      "detected_by": "User_Report_App",
+      "status": "resolved",
+      "created_at": "2026-06-27T22:50:00Z"
+    },
+    {
+      "alert_id": 304,
+      "segment_id": 203,
+      "user_id": 1004,
+      "issue_type": "minor_pothole",
+      "description": "O ga nho gan le duong.",
+      "detected_by": "AI_Road_Scan",
+      "status": "active",
+      "created_at": "2026-06-28T07:15:00Z"
     }
   ],
   "bus_lines": [
@@ -76,6 +249,18 @@
       "line_number": "Bus 53",
       "route_name": "Tuyen Le Hong Phong - Dai hoc Quoc Te",
       "has_low_floor_bus": true
+    },
+    {
+      "line_id": 402,
+      "line_number": "Bus 8",
+      "route_name": "Tuyen DHQG - Ben xe Mien Dong",
+      "has_low_floor_bus": true
+    },
+    {
+      "line_id": 403,
+      "line_number": "Bus 99",
+      "route_name": "Tuyen KTX Khu B - Khu du lich Suoi Tien",
+      "has_low_floor_bus": false
     }
   ],
   "bus_stops": [
@@ -85,6 +270,27 @@
       "latitude": 10.874,
       "longitude": 106.802,
       "wheelchair_accessible": true
+    },
+    {
+      "stop_id": 602,
+      "stop_name": "Tram Thu vien Trung tam",
+      "latitude": 10.8762,
+      "longitude": 106.8028,
+      "wheelchair_accessible": true
+    },
+    {
+      "stop_id": 603,
+      "stop_name": "Tram KTX Khu B",
+      "latitude": 10.8805,
+      "longitude": 106.7901,
+      "wheelchair_accessible": false
+    },
+    {
+      "stop_id": 604,
+      "stop_name": "Tram Nha Dieu Hanh DHQG",
+      "latitude": 10.8729,
+      "longitude": 106.8011,
+      "wheelchair_accessible": true
     }
   ],
   "segment_bus_mapping": [
@@ -92,6 +298,21 @@
       "mapping_id": 701,
       "segment_id": 201,
       "stop_id": 601
+    },
+    {
+      "mapping_id": 702,
+      "segment_id": 208,
+      "stop_id": 604
+    },
+    {
+      "mapping_id": 703,
+      "segment_id": 206,
+      "stop_id": 603
+    },
+    {
+      "mapping_id": 704,
+      "segment_id": 204,
+      "stop_id": 602
     }
   ],
   "saved_routes": [
@@ -104,6 +325,26 @@
       "total_duration": 15,
       "total_cost": 0,
       "transport_mode": "walk_only"
+    },
+    {
+      "route_id": 102,
+      "user_id": 1002,
+      "origin": "KTX Khu B",
+      "destination": "Thu vien Trung tam",
+      "total_distance": 1200,
+      "total_duration": 20,
+      "total_cost": 0,
+      "transport_mode": "walk_only"
+    },
+    {
+      "route_id": 103,
+      "user_id": 1003,
+      "origin": "Nha van hoa Sinh vien",
+      "destination": "Trung tam The duc The thao",
+      "total_distance": 1500,
+      "total_duration": 12,
+      "total_cost": 7000,
+      "transport_mode": "walk_and_bus"
     }
   ],
   "route_details": [
@@ -112,6 +353,144 @@
       "route_id": 101,
       "segment_id": 201,
       "sequence_order": 1
+    },
+    {
+      "route_detail_id": 12,
+      "route_id": 102,
+      "segment_id": 206,
+      "sequence_order": 1
+    },
+    {
+      "route_detail_id": 13,
+      "route_id": 102,
+      "segment_id": 204,
+      "sequence_order": 2
+    },
+    {
+      "route_detail_id": 14,
+      "route_id": 103,
+      "segment_id": 208,
+      "sequence_order": 1
+    },
+    {
+      "route_detail_id": 15,
+      "route_id": 103,
+      "segment_id": 204,
+      "sequence_order": 2
+    }
+  ],
+  "saved_addresses": [
+    {
+      "address_id": 901,
+      "user_id": 1001,
+      "label": "Nha",
+      "address": "KTX Khu A, DHQG HCM",
+      "latitude": 10.8812,
+      "longitude": 106.7869,
+      "created_at": "2026-06-27T08:05:00Z"
+    },
+    {
+      "address_id": 902,
+      "user_id": 1001,
+      "label": "Truong",
+      "address": "Nha van hoa Sinh vien DHQG HCM",
+      "latitude": 10.875,
+      "longitude": 106.801,
+      "created_at": "2026-06-27T08:06:00Z"
+    },
+    {
+      "address_id": 903,
+      "user_id": 1002,
+      "label": "Nha",
+      "address": "KTX Khu B, DHQG HCM",
+      "latitude": 10.8805,
+      "longitude": 106.7901,
+      "created_at": "2026-06-27T09:20:00Z"
+    },
+    {
+      "address_id": 904,
+      "user_id": 1002,
+      "label": "Thu vien",
+      "address": "Thu vien Trung tam DHQG HCM",
+      "latitude": 10.8765,
+      "longitude": 106.8025,
+      "created_at": "2026-06-27T09:21:00Z"
+    },
+    {
+      "address_id": 905,
+      "user_id": 1003,
+      "label": "Phong tap",
+      "address": "Trung tam The duc The thao DHQG",
+      "latitude": 10.8779,
+      "longitude": 106.8041,
+      "created_at": "2026-06-27T10:35:00Z"
+    }
+  ],
+  "trips": [
+    {
+      "trip_id": "trip-0001",
+      "user_id": 1001,
+      "origin": "KTX Khu A",
+      "destination": "Nha van hoa Sinh vien",
+      "route_id": 101,
+      "segment_ids": [201],
+      "status": "completed",
+      "started_at": "2026-06-27T13:00:00Z",
+      "finished_at": "2026-06-27T13:18:00Z",
+      "actual_distance": 820,
+      "actual_duration": 18
+    },
+    {
+      "trip_id": "trip-0002",
+      "user_id": 1002,
+      "origin": "KTX Khu B",
+      "destination": "Thu vien Trung tam",
+      "route_id": 102,
+      "segment_ids": [206, 204],
+      "status": "completed",
+      "started_at": "2026-06-27T14:30:00Z",
+      "finished_at": "2026-06-27T14:52:00Z",
+      "actual_distance": 1180,
+      "actual_duration": 22
+    },
+    {
+      "trip_id": "trip-0003",
+      "user_id": 1003,
+      "origin": "Nha van hoa Sinh vien",
+      "destination": "Trung tam The duc The thao",
+      "route_id": 103,
+      "segment_ids": [208, 204],
+      "status": "in_progress",
+      "started_at": "2026-06-28T07:40:00Z",
+      "finished_at": null,
+      "actual_distance": null,
+      "actual_duration": null
+    }
+  ],
+  "route_reviews": [
+    {
+      "route_review_id": 8501,
+      "route_id": 101,
+      "user_id": 1001,
+      "rating_score": 5,
+      "comment": "Duong bang phang, de di xe lan, rat an toan.",
+      "created_at": "2026-06-27T13:25:00Z"
+    },
+    {
+      "route_review_id": 8502,
+      "route_id": 102,
+      "user_id": 1002,
+      "rating_score": 4,
+      "comment": "Tuyen ok nhung doan cuoi hoi dong nguoi.",
+      "created_at": "2026-06-27T14:55:00Z"
+    },
+    {
+      "route_review_id": 8503,
+      "route_id": 101,
+      "user_id": 1003,
+      "rating_score": 4,
+      "comment": "Doc vao chuan, nhung thieu mai che khi mua.",
+      "created_at": "2026-06-27T19:10:00Z"
     }
   ]
 }
