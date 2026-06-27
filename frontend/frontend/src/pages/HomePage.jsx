@@ -1,132 +1,300 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
-  Home, Briefcase, GraduationCap, Building2,
-  Clock,
-  HardHat, ArrowUpDown, AlertTriangle,
-  Search, Map, Bookmark, User,
+  Home, Briefcase, GraduationCap, Building2, MapPin,
+  Clock, Droplets, Construction, HardHat, ArrowUpDown, AlertTriangle,
+  User,
 } from 'lucide-react';
 import styles from '../styles/HomePage.module.css';
 import SearchBar from '../components/common/SearchBar/SearchBar';
 import AlertCard from '../components/common/AlertCard/AlertCard';
 import RouteCard from '../components/common/RouteCard/RouteCard';
-import BottomNav from '../components/layout/BottomNav/BottomNav';
+import useAppStore from '../store/useAppStore';
+import { listAddresses } from '../services/address.api';
+import { getAlerts } from '../services/map.api';
+import { listTrips } from '../services/trip.api';
+import { listSavedRoutes, getSavedRoute } from '../services/savedRoute.api';
+import { issueLabel } from '../constants/labels';
+import { pathFromSegments } from '../utils/geo';
 
-const QUICK_PLACES = [
-  { id: 'home',     label: 'Home',     icon: Home          },
-  { id: 'work',     label: 'Work',     icon: Briefcase     },
-  { id: 'school',   label: 'School',   icon: GraduationCap },
-  { id: 'hospital', label: 'Hospital', icon: Building2     },
-];
-
-const RECENT = [
-  { id: 1, name: 'City Hospital',       address: '14 Hùng Vương, Q.5',     time: '2h ago'    },
-  { id: 2, name: 'Bến Thành Market',    address: 'Lê Lợi, Q.1',            time: 'Yesterday' },
-  { id: 3, name: 'Independence Palace', address: 'Nam Kỳ Khởi Nghĩa, Q.1', time: 'Mon'       },
-];
-
-const ALERTS = [
-  { id: 1, severity: 'warning', icon: HardHat,       title: 'Roadwork on Lê Lợi St',  desc: 'Sidewalk closed 50 m — use Pasteur St instead' },
-  { id: 2, severity: 'danger',  icon: ArrowUpDown,   title: 'Elevator out of service', desc: 'Bến Thành Station, Gate A — stairs only'       },
-  { id: 3, severity: 'caution', icon: AlertTriangle, title: 'Ramp blocked',            desc: 'City Hall main entrance — use side entrance'   },
-];
-
-const ROUTE = {
-  duration:   '18 min',
-  mode:       'Bus + Walk',
-  score:      92,
-  from:       'Current location',
-  to:         'City Hospital',
-  highlights: ['Wheelchair ramp', 'No stairs', 'Sheltered stops'],
+// ── helpers ─────────────────────────────────────────────
+const greeting = () => {
+  const h = new Date().getHours();
+  return h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
 };
 
-const NAV_ITEMS = [
-  { icon: Home,     label: 'Home'    },
-  { icon: Search,   label: 'Search'  },
-  { icon: Map,      label: 'Routes'  },
-  // { icon: Bookmark, label: 'Saved'   },
-  { icon: User,     label: 'Profile' },
-];
+const relTime = (iso) => {
+  if (!iso) return '';
+  const m = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+  if (m < 1) return 'just now';
+  if (m < 60) return `${m}m ago`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h ago`;
+  const d = Math.floor(h / 24);
+  return d === 1 ? 'Yesterday' : `${d}d ago`;
+};
 
+const placeIcon = (label = '') => {
+  const l = label.toLowerCase();
+  if (/(home|nhà|ktx)/.test(l)) return Home;
+  if (/(work|cơ quan|văn phòng)/.test(l)) return Briefcase;
+  if (/(school|trường|đại học|thư viện)/.test(l)) return GraduationCap;
+  if (/(hospital|bệnh viện|y tế|clinic)/.test(l)) return Building2;
+  return MapPin;
+};
+
+const ALERT_MAP = {
+  flooded: { severity: 'danger', icon: Droplets },
+  pothole_and_flooded: { severity: 'danger', icon: Droplets },
+  minor_pothole: { severity: 'caution', icon: AlertTriangle },
+  obstacle: { severity: 'warning', icon: Construction },
+  construction: { severity: 'warning', icon: HardHat },
+  broken_ramp: { severity: 'warning', icon: ArrowUpDown },
+};
+
+const SURFACE = { smooth: 1, moderate: 0.6, damaged: 0.2 };
+const routeScore = (segs = []) => {
+  if (!segs.length) return 0;
+  const v =
+    segs.reduce(
+      (s, x) =>
+        s +
+        ((x.has_sidewalk_ramp ? 1 : 0) * 0.4 +
+          (SURFACE[x.surface_quality] ?? 0.5) * 0.4 +
+          Math.min((x.sidewalk_width || 1) / 2, 1) * 0.2),
+      0
+    ) / segs.length;
+  return Math.round(v * 100);
+};
+const routeHighlights = (segs = []) => {
+  const out = [];
+  if (segs.length && segs.every((s) => s.has_sidewalk_ramp)) out.push('Wheelchair ramp');
+  if (segs.length && segs.every((s) => s.surface_quality === 'smooth')) out.push('Smooth path');
+  const avgW = segs.length ? segs.reduce((a, s) => a + (s.sidewalk_width || 0), 0) / segs.length : 0;
+  if (avgW >= 1.8) out.push('Wide sidewalk');
+  return out.length ? out : ['Accessible route'];
+};
+const modeLabel = (m) => (m === 'walk_and_bus' ? 'Bus + Walk' : 'Walk');
+
+// ── component ───────────────────────────────────────────
 export default function HomePage() {
-  const [search, setSearch] = useState('');
+  const navigate = useNavigate();
+  const user = useAppStore((s) => s.user);
+  const setOrigin = useAppStore((s) => s.setOrigin);
+  const setDestination = useAppStore((s) => s.setDestination);
+  const setSelectedRoute = useAppStore((s) => s.setSelectedRoute);
+
+  const [places, setPlaces] = useState([]);
+  const [recents, setRecents] = useState([]);
+  const [alerts, setAlerts] = useState([]);
+  const [recommended, setRecommended] = useState(null);
+
+  useEffect(() => {
+    listAddresses().then((a) => setPlaces(a.slice(0, 4))).catch(() => {});
+    getAlerts({ status: 'active' }).then(setAlerts).catch(() => {});
+
+    listTrips()
+      .then((trips) => {
+        if (trips.length) {
+          const sorted = [...trips].sort(
+            (a, b) => new Date(b.started_at) - new Date(a.started_at)
+          );
+          setRecents(
+            sorted.slice(0, 3).map((t) => ({
+              key: `t-${t.trip_id}`,
+              name: t.destination,
+              addr: `from ${t.origin}`,
+              time: relTime(t.started_at),
+              origin: t.origin,
+              destination: t.destination,
+            }))
+          );
+        }
+      })
+      .catch(() => {});
+
+    listSavedRoutes()
+      .then((routes) => {
+        if (!routes.length) return;
+        // Fall back to saved routes for "Recent" if there are no trips yet.
+        setRecents((cur) =>
+          cur.length
+            ? cur
+            : routes.slice(0, 3).map((r) => ({
+                key: `r-${r.route_id}`,
+                name: r.destination,
+                addr: `from ${r.origin}`,
+                time: '',
+                origin: r.origin,
+                destination: r.destination,
+              }))
+        );
+        // Recommended route = latest saved route, with full geometry.
+        return getSavedRoute(routes[0].route_id).then(setRecommended);
+      })
+      .catch(() => {});
+  }, []);
+
+  function goSearch() {
+    navigate('/search');
+  }
+
+  function pickDestination(addr) {
+    setDestination({
+      label: addr.label || addr.address,
+      address: addr.address,
+      lat: addr.latitude,
+      lng: addr.longitude,
+    });
+    navigate('/search');
+  }
+
+  function rerun(r) {
+    setOrigin({ label: r.origin });
+    setDestination({ label: r.destination });
+    navigate('/confirm');
+  }
+
+  function startRecommended() {
+    if (!recommended) return;
+    const segments = recommended.segments || [];
+    setSelectedRoute({
+      route_id: recommended.route_id,
+      route_type: 'optimized',
+      label: 'Tuyến đã lưu',
+      origin: recommended.origin,
+      destination: recommended.destination,
+      total_distance: recommended.total_distance,
+      total_duration: recommended.total_duration,
+      transport_mode: recommended.transport_mode,
+      segment_ids: segments.map((s) => s.segment_id),
+      segments,
+      path: pathFromSegments(segments),
+      safety_score: routeScore(segments),
+      accessibility_score: routeScore(segments),
+      priority_score: routeScore(segments),
+    });
+    navigate('/navigate');
+  }
+
+  const firstName = user?.name ? user.name.split(' ').pop() : 'bạn';
 
   return (
     <div className={styles.page}>
-
       <header className={styles.header}>
         <div className={styles.topRow}>
           <div>
-            <p className={styles.hi}>Good morning</p>
-            <h1 className={styles.name}>Huy</h1>
+            <p className={styles.hi}>{greeting()}</p>
+            <h1 className={styles.name}>{firstName}</h1>
           </div>
-          <button className={styles.avatarBtn} aria-label="Open profile">
+          <button className={styles.avatarBtn} aria-label="Open profile" onClick={() => navigate('/profile')}>
             <User size={20} />
           </button>
         </div>
-        <SearchBar
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          placeholder="Where would you like to go?"
-        />
+        {/* Read-only — tapping opens the dedicated search flow */}
+        <div
+          onClick={goSearch}
+          onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && goSearch()}
+          role="button"
+          tabIndex={0}
+        >
+          <SearchBar value="" onChange={() => {}} placeholder="Where would you like to go?" readOnly />
+        </div>
       </header>
 
       <main className={styles.main}>
+        {places.length > 0 && (
+          <section aria-labelledby="saved-title">
+            <h2 id="saved-title" className={styles.sectionTitle}>Saved Places</h2>
+            <div className={styles.quickRow}>
+              {places.map((p) => {
+                const Icon = placeIcon(p.label || p.address);
+                return (
+                  <button
+                    key={p.address_id}
+                    className={styles.placeChip}
+                    aria-label={`Go to ${p.label || p.address}`}
+                    onClick={() => pickDestination(p)}
+                  >
+                    <Icon size={24} className={styles.placeIcon} aria-hidden="true" />
+                    <span className={styles.placeLabel}>{p.label || p.address}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+        )}
 
-        <section aria-labelledby="saved-title">
-          <h2 id="saved-title" className={styles.sectionTitle}>Saved Places</h2>
-          <div className={styles.quickRow}>
-            {QUICK_PLACES.map(({ id, label, icon: Icon }) => (
-              <button key={id} className={styles.placeChip} aria-label={`Go to ${label}`}>
-                <Icon size={24} className={styles.placeIcon} aria-hidden="true" />
-                <span className={styles.placeLabel}>{label}</span>
-              </button>
-            ))}
-          </div>
-        </section>
-
-        <section aria-labelledby="recent-title">
-          <h2 id="recent-title" className={styles.sectionTitle}>Recent</h2>
-          <div className={styles.recentCard}>
-            {RECENT.map((r, i) => (
-              <button
-                key={r.id}
-                className={`${styles.recentRow} ${i < RECENT.length - 1 ? styles.recentBorder : ''}`}
-              >
-                <span className={styles.recentIconWrap}>
-                  <Clock size={18} aria-hidden="true" />
-                </span>
-                <span className={styles.recentInfo}>
-                  <span className={styles.recentName}>{r.name}</span>
-                  <span className={styles.recentAddr}>{r.address}</span>
-                </span>
-                <span className={styles.recentTime}>{r.time}</span>
-              </button>
-            ))}
-          </div>
-        </section>
+        {recents.length > 0 && (
+          <section aria-labelledby="recent-title">
+            <h2 id="recent-title" className={styles.sectionTitle}>Recent</h2>
+            <div className={styles.recentCard}>
+              {recents.map((r, i) => (
+                <button
+                  key={r.key}
+                  className={`${styles.recentRow} ${i < recents.length - 1 ? styles.recentBorder : ''}`}
+                  onClick={() => rerun(r)}
+                >
+                  <span className={styles.recentIconWrap}>
+                    <Clock size={18} aria-hidden="true" />
+                  </span>
+                  <span className={styles.recentInfo}>
+                    <span className={styles.recentName}>{r.name}</span>
+                    <span className={styles.recentAddr}>{r.addr}</span>
+                  </span>
+                  <span className={styles.recentTime}>{r.time}</span>
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
 
         <section aria-labelledby="alerts-title">
           <div className={styles.rowBetween}>
             <h2 id="alerts-title" className={styles.sectionTitle}>Accessibility Alerts</h2>
-            <span className={styles.alertBadge} aria-label="3 active alerts">3</span>
+            {alerts.length > 0 && (
+              <span className={styles.alertBadge} aria-label={`${alerts.length} active alerts`}>
+                {alerts.length}
+              </span>
+            )}
           </div>
           <div className={styles.alertList}>
-            {ALERTS.map(a => (
-              <AlertCard key={a.id} {...a} />
-            ))}
+            {alerts.length === 0 ? (
+              <AlertCard severity="caution" icon={AlertTriangle} title="No active alerts" desc="All monitored routes are clear right now." />
+            ) : (
+              alerts.map((a) => {
+                const m = ALERT_MAP[a.issue_type] || { severity: 'warning', icon: AlertTriangle };
+                return (
+                  <AlertCard
+                    key={a.alert_id}
+                    severity={m.severity}
+                    icon={m.icon}
+                    title={issueLabel(a.issue_type)}
+                    desc={a.description || `Đoạn đường #${a.segment_id}`}
+                  />
+                );
+              })
+            )}
           </div>
         </section>
 
-        <section aria-labelledby="route-title">
-          <h2 id="route-title" className={styles.sectionTitle}>Recommended Route</h2>
-          <RouteCard {...ROUTE} onStart={() => {}} />
-        </section>
+        {recommended && (
+          <section aria-labelledby="route-title">
+            <h2 id="route-title" className={styles.sectionTitle}>Recommended Route</h2>
+            <RouteCard
+              duration={`${recommended.total_duration || 0} min`}
+              mode={modeLabel(recommended.transport_mode)}
+              score={routeScore(recommended.segments)}
+              from={recommended.origin}
+              to={recommended.destination}
+              highlights={routeHighlights(recommended.segments)}
+              onStart={startRecommended}
+            />
+          </section>
+        )}
 
         <div className={styles.navSpacer} aria-hidden="true" />
       </main>
-
-      <BottomNav items={NAV_ITEMS} activeLabel="Home" />
-
     </div>
   );
 }

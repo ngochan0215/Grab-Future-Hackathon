@@ -1,22 +1,36 @@
-/* Shared UI primitives for the app pages — reuses tokens from index.css. */
+/* Shared UI primitives for the app pages.
+   Overrides index.css tokens with the teal/mint theme (matches HomePage).
+   Defined after index.css so these win even under prefers-color-scheme: dark. */
 :root {
-  --ok: #16a34a;
-  --ok-bg: rgba(22, 163, 74, 0.12);
+  --accent: #0d9b87;
+  --accent-bg: #e4f8f1;
+  --accent-border: rgba(13, 155, 135, 0.45);
+  --bg: #ffffff;
+  --page-bg: #f0faf6;
+  --text: #4b5563;
+  --text-h: #1a1a2e;
+  --border: #e6efea;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+
+  --ok: #0d9b87;
+  --ok-bg: #e4f8f1;
   --warn: #d97706;
-  --warn-bg: rgba(217, 119, 6, 0.12);
-  --danger: #dc2626;
-  --danger-bg: rgba(220, 38, 38, 0.12);
-  --muted: color-mix(in srgb, var(--text) 75%, transparent);
+  --warn-bg: #fff7ed;
+  --danger: #ef4444;
+  --danger-bg: #fef2f2;
+  --muted: #9ca3af;
 }
 
 /* Page = mobile-style centered column with room for the bottom nav. */
 .page {
   width: 100%;
-  max-width: 480px;
+  max-width: 430px;
   margin: 0 auto;
-  padding: 16px 16px 88px;
+  padding: 16px 16px 92px;
   box-sizing: border-box;
   text-align: left;
+  background: var(--page-bg);
+  min-height: 100vh;
   flex: 1;
 }
 .page--plain { padding-bottom: 24px; }
@@ -48,7 +62,7 @@
 .card {
   background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 16px;
   box-shadow: var(--shadow);
   margin-bottom: 12px;
@@ -75,8 +89,8 @@
   font: inherit;
   font-size: 15px;
   font-weight: 500;
-  padding: 11px 16px;
-  border-radius: 12px;
+  padding: 13px 16px;
+  border-radius: 14px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -98,9 +112,9 @@
 .input, .select, .textarea {
   font: inherit;
   font-size: 15px;
-  padding: 11px 13px;
+  padding: 13px 14px;
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 14px;
   background: var(--bg);
   color: var(--text-h);
   width: 100%;

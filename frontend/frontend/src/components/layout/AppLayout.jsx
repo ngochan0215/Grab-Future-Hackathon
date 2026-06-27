@@ -1,34 +1,32 @@
-import { NavLink } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Home, Bookmark, Navigation, AlertTriangle, User } from 'lucide-react';
+import BottomNav from './BottomNav/BottomNav';
 import styles from './AppLayout.module.css';
 
 const NAV = [
-  { to: '/home', icon: '🏠', label: 'Trang chủ' },
-  { to: '/saved', icon: '🔖', label: 'Đã lưu' },
-  { to: '/trips', icon: '🧭', label: 'Chuyến đi' },
-  { to: '/report', icon: '⚠️', label: 'Báo cáo' },
-  { to: '/profile', icon: '👤', label: 'Hồ sơ' },
+  { label: 'Home', icon: Home, path: '/home' },
+  { label: 'Saved', icon: Bookmark, path: '/saved' },
+  { label: 'Trips', icon: Navigation, path: '/trips' },
+  { label: 'Report', icon: AlertTriangle, path: '/report' },
+  { label: 'Profile', icon: User, path: '/profile' },
 ];
 
 export default function AppLayout({ children }) {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const active = NAV.find((n) => pathname.startsWith(n.path))?.label;
+
   return (
     <div className={styles.shell}>
       {children}
-      <nav className={styles.nav}>
-        <div className={styles.navInner}>
-          {NAV.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                `${styles.navItem} ${isActive ? styles.active : ''}`
-              }
-            >
-              <span className={styles.icon}>{item.icon}</span>
-              <span>{item.label}</span>
-            </NavLink>
-          ))}
-        </div>
-      </nav>
+      <BottomNav
+        items={NAV}
+        activeLabel={active}
+        onNavigate={(label) => {
+          const item = NAV.find((n) => n.label === label);
+          if (item) navigate(item.path);
+        }}
+      />
     </div>
   );
 }

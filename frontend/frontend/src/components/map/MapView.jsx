@@ -77,7 +77,7 @@ export default function MapView({
                 type="line"
                 layout={{ 'line-cap': 'round', 'line-join': 'round' }}
                 paint={{
-                  'line-color': p.color || '#aa3bff',
+                  'line-color': p.color || '#0d9b87',
                   'line-width': p.weight || 5,
                   'line-opacity': 0.9,
                   ...(p.dashArray ? { 'line-dasharray': [2, 2] } : {}),

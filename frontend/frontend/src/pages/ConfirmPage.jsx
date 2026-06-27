@@ -17,7 +17,7 @@ export default function ConfirmPage() {
   const markers = [];
   if (oPt) markers.push({ position: oPt, emoji: '🟢', label: origin.label });
   if (dPt) markers.push({ position: dPt, emoji: '🏁', label: destination.label });
-  const polylines = oPt && dPt ? [{ coords: [oPt, dPt], color: '#aa3bff', dashArray: '4 8', weight: 3 }] : [];
+  const polylines = oPt && dPt ? [{ coords: [oPt, dPt], color: '#0d9b87', dashArray: '4 8', weight: 3 }] : [];
 
   return (
     <main className="page">
