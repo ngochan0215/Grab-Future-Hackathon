@@ -1,0 +1,117 @@
+{
+  "users": [
+    {
+      "user_id": 1001,
+      "name": "Tran Van Binh",
+      "email": "binhtran@gmail.com",
+      "password": "$2b$10$fJ32iZbSF8YCjQm3JO4L4u6o1BF9X8PeU1pT25DBVENy0XI/UugO2",
+      "mobility_type": "wheelchair_manual",
+      "max_walking_distance": 200,
+      "created_at": "2026-06-27T08:00:00Z"
+    },
+    {
+      "user_id": 1002,
+      "name": "Le Minh Hoang",
+      "email": "hoangle@gmail.com",
+      "password": "$2b$10$fJ32iZbSF8YCjQm3JO4L4u6o1BF9X8PeU1pT25DBVENy0XI/UugO2",
+      "mobility_type": "none",
+      "max_walking_distance": 5000,
+      "created_at": "2026-06-27T09:15:00Z"
+    }
+  ],
+  "accessible_places": [
+    {
+      "place_id": 501,
+      "place_name": "Nha van hoa Sinh vien DHQG HCM",
+      "category": "Community Center",
+      "latitude": 10.875,
+      "longitude": 106.801,
+      "has_ramp_entrance": true,
+      "has_accessible_toilet": true
+    }
+  ],
+  "user_reviews": [
+    {
+      "review_id": 801,
+      "place_id": 501,
+      "user_id": 1001,
+      "rating_score": 4,
+      "comment": "Loi vao phia truoc co doc dat chuan.",
+      "created_at": "2026-06-27T14:20:00Z"
+    }
+  ],
+  "route_segments": [
+    {
+      "segment_id": 201,
+      "street_name": "Duong Quang Truong DHQG (Doan vao NVH Sinh Vien)",
+      "surface_quality": "smooth",
+      "has_sidewalk_ramp": true,
+      "sidewalk_width": 2.0,
+      "safety_score": 5.0
+    },
+    {
+      "segment_id": 202,
+      "street_name": "Duong phia sau KTX Khu A",
+      "surface_quality": "damaged",
+      "has_sidewalk_ramp": false,
+      "sidewalk_width": 0.5,
+      "safety_score": 1.2
+    }
+  ],
+  "realtime_alerts": [
+    {
+      "alert_id": 301,
+      "segment_id": 202,
+      "user_id": 1002,
+      "issue_type": "pothole_and_flooded",
+      "description": "Duong dang thi cong ",
+      "detected_by": "User_Report_App",
+      "status": "active",
+      "created_at": "2026-06-27T21:05:00Z"
+    }
+  ],
+  "bus_lines": [
+    {
+      "line_id": 401,
+      "line_number": "Bus 53",
+      "route_name": "Tuyen Le Hong Phong - Dai hoc Quoc Te",
+      "has_low_floor_bus": true
+    }
+  ],
+  "bus_stops": [
+    {
+      "stop_id": 601,
+      "stop_name": "Tram dung truoc NVH Sinh Vien",
+      "latitude": 10.874,
+      "longitude": 106.802,
+      "wheelchair_accessible": true
+    }
+  ],
+  "segment_bus_mapping": [
+    {
+      "mapping_id": 701,
+      "segment_id": 201,
+      "stop_id": 601
+    }
+  ],
+  "saved_routes": [
+    {
+      "route_id": 101,
+      "user_id": 1001,
+      "origin": "KTX Khu A",
+      "destination": "Nha van hoa Sinh vien",
+      "total_distance": 800,
+      "total_duration": 15,
+      "total_cost": 0,
+      "transport_mode": "walk_only"
+    }
+  ],
+  "route_details": [
+    {
+      "route_detail_id": 11,
+      "route_id": 101,
+      "segment_id": 201,
+      "sequence_order": 1
+    }
+  ]
+}

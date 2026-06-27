@@ -1,24 +1,33 @@
-import dotenv from 'dotenv';
-import express from 'express';
-import cors from 'cors';
+import express from "express";
+import cors from "cors";
+import authRoute from "./routes/auth.route.js";
 
-dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-app.use(cors({
-  origin: process.env.FRONTEND_URL || '*'
-}));
-
+app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-async function startServer() {
-    // await connectDB();
-    app.listen(PORT, () => {
-        console.log(`Server is running at http://localhost:${PORT}`);
-    });
+app.use("/api/auth", authRoute);
 
-    // app.use('/api', scoresRoute);
-}
+// Health check
+app.get("/", (req, res) => {
+  res.json({ message: "Auth API is running 🚀" });
+});
 
-startServer();
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ success: false, message: `Route ${req.path} không tồn tại.` });
+});
+
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ success: false, message: "Đã xảy ra lỗi server." });
+});
+
+// ── Start ─────────────────────────────────────────────────
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`✅ Server đang chạy tại http://localhost:${PORT}`);
+});
