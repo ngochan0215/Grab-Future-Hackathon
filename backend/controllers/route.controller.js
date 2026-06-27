@@ -6,14 +6,14 @@ import { buildRankedRoutes } from "../services/routeService.js";
 // Trả về danh sách tuyến đã xếp hạng theo độ ưu tiên (an toàn + tiếp cận).
 const search = (req, res) => {
   try {
-    const { origin, destination, transport_mode } = req.body;
+    const { origin, destination, transport_mode, priority } = req.body;
     if (!origin || !destination) {
       return res
         .status(400)
         .json({ success: false, message: "Cần điểm đi (origin) và điểm đến (destination)." });
     }
     const user = findById(req.user.user_id);
-    const routes = buildRankedRoutes({ origin, destination, transport_mode }, user);
+    const routes = buildRankedRoutes({ origin, destination, transport_mode, priority }, user);
 
     return res.status(200).json({
       success: true,
@@ -35,14 +35,14 @@ const search = (req, res) => {
 // Trả về so sánh tuyến tối ưu vs tuyến thông thường (màn hình "see the difference").
 const compare = (req, res) => {
   try {
-    const { origin, destination, transport_mode } = req.body;
+    const { origin, destination, transport_mode, priority } = req.body;
     if (!origin || !destination) {
       return res
         .status(400)
         .json({ success: false, message: "Cần điểm đi (origin) và điểm đến (destination)." });
     }
     const user = findById(req.user.user_id);
-    const routes = buildRankedRoutes({ origin, destination, transport_mode }, user);
+    const routes = buildRankedRoutes({ origin, destination, transport_mode, priority }, user);
 
     const optimized = routes.find((r) => r.route_type === "optimized") || routes[0];
     const normal = routes.find((r) => r.route_type === "normal") || routes[1] || routes[0];

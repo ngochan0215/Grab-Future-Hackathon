@@ -1,4 +1,4 @@
-import { getSegments, getActiveAlerts } from "../data/mockDB.js";
+import { getSegmentById, getActiveAlerts } from "../data/mockDB.js";
 
 // ════════════════════════════════════════════════════════════
 //  Route scoring (demo optimizer)
@@ -90,53 +90,108 @@ const scoreRoute = (segments, user, activeAlerts) => {
   };
 };
 
-/**
- * Demo: tạo các tuyến ứng viên từ segment hiện có rồi xếp hạng.
- * Trong sản phẩm thật, đây là nơi gọi graph/routing engine.
- */
-const buildRankedRoutes = ({ origin, destination, transport_mode }, user) => {
-  const segments = getSegments();
+// Các tuyến ứng viên (chuỗi segment đã KẾT NỐI tại các node chung).
+// Cả hai cùng đi KTX Khu A → NVH Sinh Vien nhưng khác đường:
+//  - optimized: 201 → 203 → 204 (bằng phẳng, có dốc, tránh cảnh báo — dài hơn)
+//  - normal:    202 → 205      (lối tắt sau KTX, hư hỏng + ngập — ngắn hơn)
+// Trong sản phẩm thật, đây là nơi gọi graph/routing engine để sinh chuỗi này.
+const CANDIDATES = [
+  {
+    route_type: "optimized",
+    label: "Tuyến tối ưu (an toàn & dễ tiếp cận)",
+    segment_ids: [201, 203, 204],
+  },
+  {
+    route_type: "normal",
+    label: "Tuyến thông thường (lối tắt, ngắn hơn)",
+    segment_ids: [202, 205],
+  },
+];
+
+// Cho điểm ưu tiên (priority_score) tuỳ tiêu chí người dùng chọn.
+const priorityScore = (priority, r) => {
+  const s = r.safety_score, a = r.accessibility_score, t = r.time_score, c = r.cost_score;
+  switch (priority) {
+    case "time":
+      return Math.round(0.7 * t + 0.2 * s + 0.1 * a);
+    case "cost":
+      return Math.round(0.6 * c + 0.2 * s + 0.2 * a);
+    case "accessibility":
+      return Math.round(0.6 * a + 0.3 * s + 0.1 * t);
+    case "safety":
+    default:
+      return Math.round(0.55 * s + 0.3 * a + 0.15 * t);
+  }
+};
+
+// Nối path của các segment thành 1 polyline, bỏ điểm trùng tại node nối.
+const concatPaths = (segments) => {
+  const coords = [];
+  for (const seg of segments) {
+    for (const pt of seg.path || []) {
+      const last = coords[coords.length - 1];
+      if (last && last[0] === pt[0] && last[1] === pt[1]) continue; // tránh lặp node nối
+      coords.push(pt);
+    }
+  }
+  return coords;
+};
+
+const BUS_FARE = 7000; // VND/chuyến (demo) khi có đi xe buýt
+
+const buildRankedRoutes = ({ origin, destination, transport_mode, priority }, user) => {
   const activeAlerts = getActiveAlerts();
-  const alertedSegmentIds = new Set(activeAlerts.map((a) => a.segment_id));
+  const mode = transport_mode || "walk_only";
+  const pri = priority || "safety";
 
-  // Tuyến "tối ưu": ưu tiên segment KHÔNG có cảnh báo, bề mặt tốt
-  const optimizedSegments = segments.filter((s) => !alertedSegmentIds.has(s.segment_id));
-  // Tuyến "thông thường" (như bản đồ phổ thông): tất cả segment, kể cả có cảnh báo
-  const normalSegments = segments;
+  const routes = CANDIDATES.map((c, i) => {
+    const segments = c.segment_ids.map(getSegmentById).filter(Boolean);
+    const scored = scoreRoute(segments, user, activeAlerts);
 
-  const candidates = [
-    { route_type: "optimized", label: "Tuyến tối ưu (an toàn & dễ tiếp cận)", segments: optimizedSegments },
-    { route_type: "normal", label: "Tuyến thông thường (ngắn nhất)", segments: normalSegments },
-  ];
+    // Cảnh báo mà tuyến này TRÁNH được = cảnh báo không nằm trên tuyến
+    const onRoute = new Set(segments.map((s) => s.segment_id));
+    const avoids = [
+      ...new Set(
+        activeAlerts.filter((a) => !onRoute.has(a.segment_id)).map((a) => a.issue_type)
+      ),
+    ];
 
-  const routes = candidates.map((c, i) => {
-    const scored = scoreRoute(c.segments, user, activeAlerts);
-    // Obstacle mà tuyến này tránh được = các cảnh báo không nằm trên tuyến
-    const onRoute = new Set(c.segments.map((s) => s.segment_id));
-    const avoids = activeAlerts
-      .filter((a) => !onRoute.has(a.segment_id))
-      .map((a) => a.issue_type);
+    const path = concatPaths(segments);
+    const totalDistance = segments.reduce((sum, s) => sum + (s.distance || 0), 0);
 
-    const totalDistance = c.segments.reduce((sum) => sum + 400, 0); // demo ước lượng
     return {
       route_id: `opt-${i + 1}`,
       route_type: c.route_type,
       label: c.label,
       origin,
       destination,
-      transport_mode: transport_mode || "walk_only",
-      segment_ids: c.segments.map((s) => s.segment_id),
-      segments: c.segments,
+      transport_mode: mode,
+      segment_ids: segments.map((s) => s.segment_id),
+      segments,
+      path, // [[lat,lng], ...] để vẽ trên bản đồ
+      origin_point: path[0] || null,
+      destination_point: path[path.length - 1] || null,
       total_distance: totalDistance,
       total_duration: Math.round(totalDistance / 75), // ~75 m/phút đi bộ
+      total_cost: mode === "walk_and_bus" ? BUS_FARE : 0,
       ...scored,
       avoids,
     };
   });
 
-  // Xếp hạng theo độ ưu tiên giảm dần
+  // Điểm thời gian/chi phí tương đối (so với tuyến tốt nhất trong nhóm)
+  const minDur = Math.min(...routes.map((r) => r.total_duration || 1));
+  const minCost = Math.min(...routes.map((r) => r.total_cost || 0));
+  routes.forEach((r) => {
+    r.time_score = Math.round((100 * minDur) / (r.total_duration || 1));
+    r.cost_score = (r.total_cost || 0) === 0 ? 100 : Math.round((100 * (minCost || 1)) / r.total_cost);
+    r.priority_score = priorityScore(pri, r);
+  });
+
+  // Xếp hạng theo độ ưu tiên giảm dần; tuyến đầu là tuyến được đề xuất.
   routes.sort((a, b) => b.priority_score - a.priority_score);
+  if (routes.length) routes[0].recommended = true;
   return routes;
 };
 
-export { scoreRoute, buildRankedRoutes, segmentAccessibility };
+export { scoreRoute, buildRankedRoutes, segmentAccessibility, concatPaths };

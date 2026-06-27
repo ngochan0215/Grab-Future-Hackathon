@@ -29,11 +29,7 @@ app.get("/", (req, res) => {
 });
 
 // 404 handler
-app.use((req, res) => {
-  res.status(404).json({ success: false, message: `Route ${req.path} không tồn tại.` });
-});
-
-// Global error handler
+    
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ success: false, message: "Đã xảy ra lỗi server." });
