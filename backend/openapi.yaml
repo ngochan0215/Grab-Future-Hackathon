@@ -774,8 +774,23 @@ components:
         segments:
           type: array
           items: { $ref: "#/components/schemas/Segment" }
-        total_distance: { type: integer, example: 400 }
-        total_duration: { type: integer, example: 5 }
+        path:
+          type: array
+          description: "Polyline [lat, lng] đã nối từ các segment — dùng để vẽ tuyến."
+          items:
+            type: array
+            items: { type: number }
+          example: [[10.8812, 106.7869], [10.8795, 106.793], [10.8782, 106.7972], [10.875, 106.801]]
+        origin_point:
+          type: array
+          items: { type: number }
+          example: [10.8812, 106.7869]
+        destination_point:
+          type: array
+          items: { type: number }
+          example: [10.875, 106.801]
+        total_distance: { type: integer, example: 1380 }
+        total_duration: { type: integer, example: 18 }
         accessibility_score: { type: integer, example: 100 }
         safety_score: { type: integer, example: 100 }
         priority_score: { type: integer, example: 100 }
@@ -796,6 +811,16 @@ components:
         has_sidewalk_ramp: { type: boolean }
         sidewalk_width: { type: number, example: 2.0 }
         safety_score: { type: number, example: 5.0 }
+        distance: { type: integer, description: "Chiều dài đoạn (mét)", example: 480 }
+        start_node: { type: string, example: "KTX_A" }
+        end_node: { type: string, example: "J1" }
+        path:
+          type: array
+          description: "Chuỗi toạ độ [lat, lng] của đoạn đường, để vẽ trên bản đồ."
+          items:
+            type: array
+            items: { type: number }
+          example: [[10.8812, 106.7869], [10.8806, 106.7895], [10.8795, 106.793]]
 
     Alert:
       type: object

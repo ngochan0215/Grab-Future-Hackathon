@@ -142,7 +142,15 @@
       "surface_quality": "smooth",
       "has_sidewalk_ramp": true,
       "sidewalk_width": 2.0,
-      "safety_score": 5.0
+      "safety_score": 5.0,
+      "distance": 480,
+      "start_node": "KTX_A",
+      "end_node": "J1",
+      "path": [
+        [10.8812, 106.7869],
+        [10.8806, 106.7895],
+        [10.8795, 106.793]
+      ]
     },
     {
       "segment_id": 202,
@@ -150,7 +158,15 @@
       "surface_quality": "damaged",
       "has_sidewalk_ramp": false,
       "sidewalk_width": 0.5,
-      "safety_score": 1.2
+      "safety_score": 1.2,
+      "distance": 350,
+      "start_node": "KTX_A",
+      "end_node": "J1",
+      "path": [
+        [10.8812, 106.7869],
+        [10.8801, 106.7901],
+        [10.8795, 106.793]
+      ]
     },
     {
       "segment_id": 203,
@@ -158,7 +174,15 @@
       "surface_quality": "moderate",
       "has_sidewalk_ramp": true,
       "sidewalk_width": 1.8,
-      "safety_score": 4.0
+      "safety_score": 4.0,
+      "distance": 380,
+      "start_node": "J1",
+      "end_node": "J2",
+      "path": [
+        [10.8795, 106.793],
+        [10.8789, 106.7951],
+        [10.8782, 106.7972]
+      ]
     },
     {
       "segment_id": 204,
@@ -166,15 +190,31 @@
       "surface_quality": "smooth",
       "has_sidewalk_ramp": true,
       "sidewalk_width": 2.5,
-      "safety_score": 4.8
+      "safety_score": 4.8,
+      "distance": 520,
+      "start_node": "J2",
+      "end_node": "NVH",
+      "path": [
+        [10.8782, 106.7972],
+        [10.8766, 106.7992],
+        [10.875, 106.801]
+      ]
     },
     {
       "segment_id": 205,
-      "street_name": "Duong Vo Truong Toan",
-      "surface_quality": "moderate",
+      "street_name": "Duong Vo Truong Toan (loi tat)",
+      "surface_quality": "damaged",
       "has_sidewalk_ramp": false,
-      "sidewalk_width": 1.2,
-      "safety_score": 3.2
+      "sidewalk_width": 0.9,
+      "safety_score": 2.2,
+      "distance": 520,
+      "start_node": "J1",
+      "end_node": "NVH",
+      "path": [
+        [10.8795, 106.793],
+        [10.8773, 106.7996],
+        [10.875, 106.801]
+      ]
     },
     {
       "segment_id": 206,
@@ -182,7 +222,15 @@
       "surface_quality": "smooth",
       "has_sidewalk_ramp": true,
       "sidewalk_width": 2.2,
-      "safety_score": 4.5
+      "safety_score": 4.5,
+      "distance": 300,
+      "start_node": "KTX_B",
+      "end_node": "J1",
+      "path": [
+        [10.8805, 106.7901],
+        [10.88, 106.7917],
+        [10.8795, 106.793]
+      ]
     },
     {
       "segment_id": 207,
@@ -190,7 +238,15 @@
       "surface_quality": "damaged",
       "has_sidewalk_ramp": false,
       "sidewalk_width": 0.8,
-      "safety_score": 2.0
+      "safety_score": 2.0,
+      "distance": 560,
+      "start_node": "J2",
+      "end_node": "LIB",
+      "path": [
+        [10.8782, 106.7972],
+        [10.8773, 106.8001],
+        [10.8765, 106.8025]
+      ]
     },
     {
       "segment_id": 208,
@@ -198,7 +254,15 @@
       "surface_quality": "smooth",
       "has_sidewalk_ramp": true,
       "sidewalk_width": 3.0,
-      "safety_score": 5.0
+      "safety_score": 5.0,
+      "distance": 430,
+      "start_node": "NVH",
+      "end_node": "SPORT",
+      "path": [
+        [10.875, 106.801],
+        [10.8763, 106.8027],
+        [10.8779, 106.8041]
+      ]
     }
   ],
   "realtime_alerts": [
@@ -234,10 +298,10 @@
     },
     {
       "alert_id": 304,
-      "segment_id": 203,
+      "segment_id": 202,
       "user_id": 1004,
       "issue_type": "minor_pothole",
-      "description": "O ga nho gan le duong.",
+      "description": "O ga nho gan le duong phia sau KTX.",
       "detected_by": "AI_Road_Scan",
       "status": "active",
       "created_at": "2026-06-28T07:15:00Z"
@@ -321,8 +385,8 @@
       "user_id": 1001,
       "origin": "KTX Khu A",
       "destination": "Nha van hoa Sinh vien",
-      "total_distance": 800,
-      "total_duration": 15,
+      "total_distance": 1380,
+      "total_duration": 18,
       "total_cost": 0,
       "transport_mode": "walk_only"
     },
@@ -331,8 +395,8 @@
       "user_id": 1002,
       "origin": "KTX Khu B",
       "destination": "Thu vien Trung tam",
-      "total_distance": 1200,
-      "total_duration": 20,
+      "total_distance": 1240,
+      "total_duration": 17,
       "total_cost": 0,
       "transport_mode": "walk_only"
     },
@@ -341,10 +405,10 @@
       "user_id": 1003,
       "origin": "Nha van hoa Sinh vien",
       "destination": "Trung tam The duc The thao",
-      "total_distance": 1500,
-      "total_duration": 12,
-      "total_cost": 7000,
-      "transport_mode": "walk_and_bus"
+      "total_distance": 430,
+      "total_duration": 6,
+      "total_cost": 0,
+      "transport_mode": "walk_only"
     }
   ],
   "route_details": [
@@ -356,27 +420,39 @@
     },
     {
       "route_detail_id": 12,
+      "route_id": 101,
+      "segment_id": 203,
+      "sequence_order": 2
+    },
+    {
+      "route_detail_id": 13,
+      "route_id": 101,
+      "segment_id": 204,
+      "sequence_order": 3
+    },
+    {
+      "route_detail_id": 14,
       "route_id": 102,
       "segment_id": 206,
       "sequence_order": 1
     },
     {
-      "route_detail_id": 13,
+      "route_detail_id": 15,
       "route_id": 102,
-      "segment_id": 204,
+      "segment_id": 203,
       "sequence_order": 2
     },
     {
-      "route_detail_id": 14,
+      "route_detail_id": 16,
+      "route_id": 102,
+      "segment_id": 207,
+      "sequence_order": 3
+    },
+    {
+      "route_detail_id": 17,
       "route_id": 103,
       "segment_id": 208,
       "sequence_order": 1
-    },
-    {
-      "route_detail_id": 15,
-      "route_id": 103,
-      "segment_id": 204,
-      "sequence_order": 2
     }
   ],
   "saved_addresses": [
@@ -433,7 +509,7 @@
       "origin": "KTX Khu A",
       "destination": "Nha van hoa Sinh vien",
       "route_id": 101,
-      "segment_ids": [201],
+      "segment_ids": [201, 203, 204],
       "status": "completed",
       "started_at": "2026-06-27T13:00:00Z",
       "finished_at": "2026-06-27T13:18:00Z",
@@ -446,7 +522,7 @@
       "origin": "KTX Khu B",
       "destination": "Thu vien Trung tam",
       "route_id": 102,
-      "segment_ids": [206, 204],
+      "segment_ids": [206, 203, 207],
       "status": "completed",
       "started_at": "2026-06-27T14:30:00Z",
       "finished_at": "2026-06-27T14:52:00Z",
@@ -459,7 +535,7 @@
       "origin": "Nha van hoa Sinh vien",
       "destination": "Trung tam The duc The thao",
       "route_id": 103,
-      "segment_ids": [208, 204],
+      "segment_ids": [208],
       "status": "in_progress",
       "started_at": "2026-06-28T07:40:00Z",
       "finished_at": null,
