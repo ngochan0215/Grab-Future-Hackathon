@@ -1,6 +1,6 @@
 import { ScoreBar } from './ui';
 import { formatDuration, formatDistance } from '../utils/formatRoute';
-import { issueLabel } from '../constants/labels';
+import { issueLabel, formatWarning } from '../constants/labels';
 
 // Compact card for one ranked route option.
 export default function RouteCard({ route, onClick }) {
@@ -41,7 +41,7 @@ export default function RouteCard({ route, onClick }) {
       {route.warnings?.length > 0 && (
         <div className="chips" style={{ marginTop: 8 }}>
           {route.warnings.map((w, i) => (
-            <span key={i} className="badge badge--warn small">⚠ {w}</span>
+            <span key={i} className="badge badge--warn small">⚠ {formatWarning(w)}</span>
           ))}
         </div>
       )}

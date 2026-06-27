@@ -5,7 +5,7 @@ import { Spinner, ErrorMsg, OkMsg } from '../components/ui';
 
 export default function ReportPage() {
   const [segments, setSegments] = useState(null);
-  const [form, setForm] = useState({ segment_id: '', issue_type: 'obstacle', description: '' });
+  const [form, setForm] = useState({ segment_id: '', issues: [], description: '' });
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
@@ -19,19 +19,26 @@ export default function ReportPage() {
       .catch((e) => { setError(e.message); setSegments([]); });
   }, []);
 
+  const toggleIssue = (id) =>
+    setForm((f) => ({
+      ...f,
+      issues: f.issues.includes(id) ? f.issues.filter((x) => x !== id) : [...f.issues, id],
+    }));
+
   async function submit() {
     if (!form.segment_id) return setError('Vui lòng chọn đoạn đường.');
+    if (form.issues.length === 0) return setError('Vui lòng chọn ít nhất một loại sự cố.');
     setBusy(true);
     setError('');
     setNotice('');
     try {
       await reportAlert({
         segment_id: Number(form.segment_id),
-        issue_type: form.issue_type,
+        issue_type: form.issues, // mảng token
         description: form.description,
       });
       setNotice('Đã gửi báo cáo. Cảm ơn bạn đã đóng góp!');
-      setForm((f) => ({ ...f, description: '' }));
+      setForm((f) => ({ ...f, issues: [], description: '' }));
     } catch (e) {
       setError(e.message);
     } finally {
@@ -70,16 +77,19 @@ export default function ReportPage() {
         </div>
 
         <div className="field">
-          <label>Loại sự cố</label>
-          <select
-            className="select"
-            value={form.issue_type}
-            onChange={(e) => setForm((f) => ({ ...f, issue_type: e.target.value }))}
-          >
+          <label>Loại sự cố (chọn một hoặc nhiều)</label>
+          <div className="chips">
             {ISSUE_TYPES.map((i) => (
-              <option key={i.id} value={i.id}>{i.label}</option>
+              <button
+                key={i.id}
+                type="button"
+                className={`chip ${form.issues.includes(i.id) ? 'chip--active' : ''}`}
+                onClick={() => toggleIssue(i.id)}
+              >
+                {i.label}
+              </button>
             ))}
-          </select>
+          </div>
         </div>
 
         <div className="field">

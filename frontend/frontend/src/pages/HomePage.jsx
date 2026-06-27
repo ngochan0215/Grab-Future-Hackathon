@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Home, Briefcase, GraduationCap, Building2, MapPin,
-  Clock, Droplets, Construction, HardHat, ArrowUpDown, AlertTriangle,
+  Clock, Droplets, Construction, HardHat, ArrowUpDown, AlertTriangle, Users,
   User,
 } from 'lucide-react';
 import styles from '../styles/HomePage.module.css';
@@ -14,7 +14,7 @@ import { listAddresses } from '../services/address.api';
 import { getAlerts } from '../services/map.api';
 import { listTrips } from '../services/trip.api';
 import { listSavedRoutes, getSavedRoute } from '../services/savedRoute.api';
-import { issueLabel } from '../constants/labels';
+import { issueLabels } from '../constants/labels';
 import { pathFromSegments } from '../utils/geo';
 
 // ── helpers ─────────────────────────────────────────────
@@ -43,14 +43,32 @@ const placeIcon = (label = '') => {
   return MapPin;
 };
 
-const ALERT_MAP = {
+// Per-token severity + icon. An alert combines several tokens.
+const ALERT_TOKEN = {
   flooded: { severity: 'danger', icon: Droplets },
-  pothole_and_flooded: { severity: 'danger', icon: Droplets },
-  minor_pothole: { severity: 'caution', icon: AlertTriangle },
+  pothole: { severity: 'caution', icon: AlertTriangle },
   obstacle: { severity: 'warning', icon: Construction },
   construction: { severity: 'warning', icon: HardHat },
   broken_ramp: { severity: 'warning', icon: ArrowUpDown },
+  steep_slope: { severity: 'warning', icon: ArrowUpDown },
+  narrow_path: { severity: 'caution', icon: AlertTriangle },
+  no_sidewalk: { severity: 'warning', icon: AlertTriangle },
+  crowded: { severity: 'caution', icon: Users },
+  slippery: { severity: 'danger', icon: Droplets },
 };
+
+const SEVERITY_RANK = { danger: 3, warning: 2, caution: 1 };
+
+// Reduce an issue_type token array to a single AlertCard style.
+function alertStyle(tokens = []) {
+  const mapped = tokens.map((t) => ALERT_TOKEN[t]).filter(Boolean);
+  if (!mapped.length) return { severity: 'warning', icon: AlertTriangle };
+  const severity = mapped.reduce(
+    (s, m) => (SEVERITY_RANK[m.severity] > SEVERITY_RANK[s] ? m.severity : s),
+    'caution'
+  );
+  return { severity, icon: mapped[0].icon };
+}
 
 const SURFACE = { smooth: 1, moderate: 0.6, damaged: 0.2 };
 const routeScore = (segs = []) => {
@@ -263,13 +281,13 @@ export default function HomePage() {
               <AlertCard severity="caution" icon={AlertTriangle} title="No active alerts" desc="All monitored routes are clear right now." />
             ) : (
               alerts.map((a) => {
-                const m = ALERT_MAP[a.issue_type] || { severity: 'warning', icon: AlertTriangle };
+                const m = alertStyle(a.issue_type);
                 return (
                   <AlertCard
                     key={a.alert_id}
                     severity={m.severity}
                     icon={m.icon}
-                    title={issueLabel(a.issue_type)}
+                    title={issueLabels(a.issue_type) || 'Cảnh báo'}
                     desc={a.description || `Đoạn đường #${a.segment_id}`}
                   />
                 );

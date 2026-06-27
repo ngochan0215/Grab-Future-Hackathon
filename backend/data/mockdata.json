@@ -2,7 +2,7 @@
   "users": [
     {
       "user_id": 1001,
-      "name": "Tran Van Binh",
+      "name": "Trần Văn Bình",
       "email": "binhtran@gmail.com",
       "password": "$2b$10$fJ32iZbSF8YCjQm3JO4L4u6o1BF9X8PeU1pT25DBVENy0XI/UugO2",
       "mobility_type": "wheelchair_manual",
@@ -11,7 +11,7 @@
     },
     {
       "user_id": 1002,
-      "name": "Le Minh Hoang",
+      "name": "Lê Minh Hoàng",
       "email": "hoangle@gmail.com",
       "password": "$2b$10$fJ32iZbSF8YCjQm3JO4L4u6o1BF9X8PeU1pT25DBVENy0XI/UugO2",
       "mobility_type": "none",
@@ -20,7 +20,7 @@
     },
     {
       "user_id": 1003,
-      "name": "Pham Thi Mai",
+      "name": "Phạm Thị Mai",
       "email": "maipham@gmail.com",
       "password": "$2b$10$fJ32iZbSF8YCjQm3JO4L4u6o1BF9X8PeU1pT25DBVENy0XI/UugO2",
       "mobility_type": "wheelchair_electric",
@@ -29,18 +29,36 @@
     },
     {
       "user_id": 1004,
-      "name": "Nguyen Quoc Dat",
+      "name": "Nguyễn Quốc Đạt",
       "email": "datnguyen@gmail.com",
       "password": "$2b$10$fJ32iZbSF8YCjQm3JO4L4u6o1BF9X8PeU1pT25DBVENy0XI/UugO2",
       "mobility_type": "crutches",
       "max_walking_distance": 800,
       "created_at": "2026-06-27T11:45:00Z"
+    },
+    {
+      "user_id": 1005,
+      "name": "Võ Thị Hồng",
+      "email": "hongvo@gmail.com",
+      "password": "$2b$10$fJ32iZbSF8YCjQm3JO4L4u6o1BF9X8PeU1pT25DBVENy0XI/UugO2",
+      "mobility_type": "wheelchair_manual",
+      "max_walking_distance": 300,
+      "created_at": "2026-06-27T12:20:00Z"
+    },
+    {
+      "user_id": 1006,
+      "name": "Bùi Thanh Tùng",
+      "email": "tungbui@gmail.com",
+      "password": "$2b$10$fJ32iZbSF8YCjQm3JO4L4u6o1BF9X8PeU1pT25DBVENy0XI/UugO2",
+      "mobility_type": "scooter",
+      "max_walking_distance": 2000,
+      "created_at": "2026-06-27T13:05:00Z"
     }
   ],
   "accessible_places": [
     {
       "place_id": 501,
-      "place_name": "Nha van hoa Sinh vien DHQG HCM",
+      "place_name": "Nhà Văn hóa Sinh viên ĐHQG-HCM",
       "category": "Community Center",
       "latitude": 10.875,
       "longitude": 106.801,
@@ -49,7 +67,7 @@
     },
     {
       "place_id": 502,
-      "place_name": "Thu vien Trung tam DHQG HCM",
+      "place_name": "Thư viện Trung tâm ĐHQG-HCM",
       "category": "Library",
       "latitude": 10.8765,
       "longitude": 106.8025,
@@ -58,7 +76,7 @@
     },
     {
       "place_id": 503,
-      "place_name": "Tram y te DHQG",
+      "place_name": "Trạm Y tế ĐHQG",
       "category": "Clinic",
       "latitude": 10.8758,
       "longitude": 106.8002,
@@ -67,7 +85,7 @@
     },
     {
       "place_id": 504,
-      "place_name": "Khu pho am thuc KTX Khu B",
+      "place_name": "Khu phố ẩm thực KTX Khu B",
       "category": "Food Court",
       "latitude": 10.8801,
       "longitude": 106.7895,
@@ -76,7 +94,7 @@
     },
     {
       "place_id": 505,
-      "place_name": "Trung tam The duc The thao DHQG",
+      "place_name": "Trung tâm Thể dục Thể thao ĐHQG",
       "category": "Sports Center",
       "latitude": 10.8779,
       "longitude": 106.8041,
@@ -85,11 +103,47 @@
     },
     {
       "place_id": 506,
-      "place_name": "Nha Dieu Hanh DHQG",
+      "place_name": "Nhà Điều hành ĐHQG",
       "category": "Administrative",
       "latitude": 10.8731,
       "longitude": 106.8009,
       "has_ramp_entrance": true,
+      "has_accessible_toilet": false
+    },
+    {
+      "place_id": 507,
+      "place_name": "Trường Đại học Khoa học Tự nhiên",
+      "category": "Education",
+      "latitude": 10.8769,
+      "longitude": 106.7995,
+      "has_ramp_entrance": true,
+      "has_accessible_toilet": true
+    },
+    {
+      "place_id": 508,
+      "place_name": "Trường Đại học Bách Khoa (Cơ sở 2)",
+      "category": "Education",
+      "latitude": 10.8745,
+      "longitude": 106.7985,
+      "has_ramp_entrance": true,
+      "has_accessible_toilet": false
+    },
+    {
+      "place_id": 509,
+      "place_name": "Ký túc xá Khu A",
+      "category": "Dormitory",
+      "latitude": 10.8815,
+      "longitude": 106.7872,
+      "has_ramp_entrance": false,
+      "has_accessible_toilet": false
+    },
+    {
+      "place_id": 510,
+      "place_name": "Công viên Hồ Đá ĐHQG",
+      "category": "Park",
+      "latitude": 10.8735,
+      "longitude": 106.7958,
+      "has_ramp_entrance": false,
       "has_accessible_toilet": false
     }
   ],
@@ -99,7 +153,7 @@
       "place_id": 501,
       "user_id": 1001,
       "rating_score": 4,
-      "comment": "Loi vao phia truoc co doc dat chuan.",
+      "comment": "Lối vào phía trước có dốc đạt chuẩn.",
       "created_at": "2026-06-27T14:20:00Z"
     },
     {
@@ -107,7 +161,7 @@
       "place_id": 502,
       "user_id": 1002,
       "rating_score": 5,
-      "comment": "Thang may va WC tiep can rat tot.",
+      "comment": "Thang máy và nhà vệ sinh tiếp cận rất tốt.",
       "created_at": "2026-06-27T15:00:00Z"
     },
     {
@@ -115,7 +169,7 @@
       "place_id": 503,
       "user_id": 1003,
       "rating_score": 4,
-      "comment": "Co doc nhung hoi cao mot chut voi xe lan tay.",
+      "comment": "Có dốc nhưng hơi cao một chút với xe lăn tay.",
       "created_at": "2026-06-27T16:10:00Z"
     },
     {
@@ -123,7 +177,7 @@
       "place_id": 504,
       "user_id": 1001,
       "rating_score": 2,
-      "comment": "Khong co loi doc, phai nho nguoi ho tro.",
+      "comment": "Không có lối dốc, phải nhờ người hỗ trợ.",
       "created_at": "2026-06-27T17:25:00Z"
     },
     {
@@ -131,14 +185,38 @@
       "place_id": 505,
       "user_id": 1003,
       "rating_score": 5,
-      "comment": "Khu the thao co duong doc va cho dau xe lan rong rai.",
+      "comment": "Khu thể thao có đường dốc và chỗ đậu xe lăn rộng rãi.",
       "created_at": "2026-06-27T18:40:00Z"
+    },
+    {
+      "review_id": 806,
+      "place_id": 507,
+      "user_id": 1005,
+      "rating_score": 5,
+      "comment": "Sảnh chính có lối dốc và thang máy tiện lợi.",
+      "created_at": "2026-06-27T19:30:00Z"
+    },
+    {
+      "review_id": 807,
+      "place_id": 509,
+      "user_id": 1004,
+      "rating_score": 3,
+      "comment": "Lối vào ký túc xá hơi gờ cao, cần để ý.",
+      "created_at": "2026-06-27T20:05:00Z"
+    },
+    {
+      "review_id": 808,
+      "place_id": 502,
+      "user_id": 1003,
+      "rating_score": 5,
+      "comment": "Thư viện rất thân thiện với người dùng xe lăn.",
+      "created_at": "2026-06-27T20:45:00Z"
     }
   ],
   "route_segments": [
     {
       "segment_id": 201,
-      "street_name": "Duong Quang Truong DHQG (Doan vao NVH Sinh Vien)",
+      "street_name": "Đường Quảng Trường ĐHQG (đoạn vào NVH Sinh viên)",
       "surface_quality": "smooth",
       "has_sidewalk_ramp": true,
       "sidewalk_width": 2.0,
@@ -154,7 +232,7 @@
     },
     {
       "segment_id": 202,
-      "street_name": "Duong phia sau KTX Khu A",
+      "street_name": "Đường phía sau KTX Khu A",
       "surface_quality": "damaged",
       "has_sidewalk_ramp": false,
       "sidewalk_width": 0.5,
@@ -170,7 +248,7 @@
     },
     {
       "segment_id": 203,
-      "street_name": "Duong Tran Dai Nghia",
+      "street_name": "Đường Trần Đại Nghĩa",
       "surface_quality": "moderate",
       "has_sidewalk_ramp": true,
       "sidewalk_width": 1.8,
@@ -186,7 +264,7 @@
     },
     {
       "segment_id": 204,
-      "street_name": "Duong noi bo NVH Sinh Vien",
+      "street_name": "Đường nội bộ NVH Sinh viên",
       "surface_quality": "smooth",
       "has_sidewalk_ramp": true,
       "sidewalk_width": 2.5,
@@ -202,7 +280,7 @@
     },
     {
       "segment_id": 205,
-      "street_name": "Duong Vo Truong Toan (loi tat)",
+      "street_name": "Đường Võ Trường Toản (lối tắt)",
       "surface_quality": "damaged",
       "has_sidewalk_ramp": false,
       "sidewalk_width": 0.9,
@@ -218,7 +296,7 @@
     },
     {
       "segment_id": 206,
-      "street_name": "Duong truoc KTX Khu B",
+      "street_name": "Đường trước KTX Khu B",
       "surface_quality": "smooth",
       "has_sidewalk_ramp": true,
       "sidewalk_width": 2.2,
@@ -234,7 +312,7 @@
     },
     {
       "segment_id": 207,
-      "street_name": "Hem ben hong Thu vien Trung tam",
+      "street_name": "Hẻm bên hông Thư viện Trung tâm",
       "surface_quality": "damaged",
       "has_sidewalk_ramp": false,
       "sidewalk_width": 0.8,
@@ -250,7 +328,7 @@
     },
     {
       "segment_id": 208,
-      "street_name": "Truc duong chinh DHQG",
+      "street_name": "Trục đường chính ĐHQG",
       "surface_quality": "smooth",
       "has_sidewalk_ramp": true,
       "sidewalk_width": 3.0,
@@ -263,6 +341,54 @@
         [10.8763, 106.8027],
         [10.8779, 106.8041]
       ]
+    },
+    {
+      "segment_id": 209,
+      "street_name": "Đường vành đai ĐHQG",
+      "surface_quality": "smooth",
+      "has_sidewalk_ramp": true,
+      "sidewalk_width": 2.0,
+      "safety_score": 4.5,
+      "distance": 320,
+      "start_node": "NVH",
+      "end_node": "LIB",
+      "path": [
+        [10.875, 106.801],
+        [10.8758, 106.8019],
+        [10.8765, 106.8025]
+      ]
+    },
+    {
+      "segment_id": 210,
+      "street_name": "Đường trước Nhà Điều hành",
+      "surface_quality": "moderate",
+      "has_sidewalk_ramp": true,
+      "sidewalk_width": 1.6,
+      "safety_score": 3.8,
+      "distance": 260,
+      "start_node": "NVH",
+      "end_node": "ADMIN",
+      "path": [
+        [10.875, 106.801],
+        [10.8741, 106.801],
+        [10.8731, 106.8009]
+      ]
+    },
+    {
+      "segment_id": 211,
+      "street_name": "Đường nối KTX Khu B - Khu A",
+      "surface_quality": "smooth",
+      "has_sidewalk_ramp": true,
+      "sidewalk_width": 2.4,
+      "safety_score": 4.6,
+      "distance": 360,
+      "start_node": "KTX_B",
+      "end_node": "KTX_A",
+      "path": [
+        [10.8805, 106.7901],
+        [10.8809, 106.7885],
+        [10.8812, 106.7869]
+      ]
     }
   ],
   "realtime_alerts": [
@@ -270,8 +396,8 @@
       "alert_id": 301,
       "segment_id": 202,
       "user_id": 1002,
-      "issue_type": "pothole_and_flooded",
-      "description": "Duong dang thi cong ",
+      "issue_type": ["pothole", "flooded"],
+      "description": "Đường đang thi công, đọng nước và ổ gà.",
       "detected_by": "User_Report_App",
       "status": "active",
       "created_at": "2026-06-27T21:05:00Z"
@@ -280,8 +406,8 @@
       "alert_id": 302,
       "segment_id": 207,
       "user_id": 1001,
-      "issue_type": "obstacle",
-      "description": "Vat lieu xay dung chan loi di.",
+      "issue_type": ["obstacle", "construction"],
+      "description": "Vật liệu xây dựng chắn lối đi.",
       "detected_by": "User_Report_App",
       "status": "active",
       "created_at": "2026-06-28T06:30:00Z"
@@ -290,8 +416,8 @@
       "alert_id": 303,
       "segment_id": 205,
       "user_id": 1003,
-      "issue_type": "flooded",
-      "description": "Ngap sau mua, da rut nuoc.",
+      "issue_type": ["flooded"],
+      "description": "Ngập sau mưa, đã rút nước.",
       "detected_by": "User_Report_App",
       "status": "resolved",
       "created_at": "2026-06-27T22:50:00Z"
@@ -300,60 +426,120 @@
       "alert_id": 304,
       "segment_id": 202,
       "user_id": 1004,
-      "issue_type": "minor_pothole",
-      "description": "O ga nho gan le duong phia sau KTX.",
+      "issue_type": ["pothole"],
+      "description": "Ổ gà nhỏ gần lề đường phía sau KTX.",
       "detected_by": "AI_Road_Scan",
       "status": "active",
       "created_at": "2026-06-28T07:15:00Z"
+    },
+    {
+      "alert_id": 305,
+      "segment_id": 210,
+      "user_id": 1003,
+      "issue_type": ["steep_slope"],
+      "description": "Dốc hơi cao, cần hỗ trợ khi dùng xe lăn tay.",
+      "detected_by": "User_Report_App",
+      "status": "active",
+      "created_at": "2026-06-28T07:40:00Z"
+    },
+    {
+      "alert_id": 306,
+      "segment_id": 207,
+      "user_id": 1005,
+      "issue_type": ["narrow_path"],
+      "description": "Lối đi hẹp, khó cho xe lăn di chuyển.",
+      "detected_by": "User_Report_App",
+      "status": "active",
+      "created_at": "2026-06-28T08:00:00Z"
+    },
+    {
+      "alert_id": 307,
+      "segment_id": 206,
+      "user_id": 1001,
+      "issue_type": ["crowded"],
+      "description": "Đông người vào giờ tan học.",
+      "detected_by": "User_Report_App",
+      "status": "active",
+      "created_at": "2026-06-28T08:20:00Z"
+    },
+    {
+      "alert_id": 308,
+      "segment_id": 208,
+      "user_id": 1002,
+      "issue_type": ["slippery"],
+      "description": "Mặt đường trơn sau cơn mưa nhỏ.",
+      "detected_by": "AI_Road_Scan",
+      "status": "resolved",
+      "created_at": "2026-06-28T05:10:00Z"
     }
   ],
   "bus_lines": [
     {
       "line_id": 401,
       "line_number": "Bus 53",
-      "route_name": "Tuyen Le Hong Phong - Dai hoc Quoc Te",
+      "route_name": "Tuyến Lê Hồng Phong - Đại học Quốc tế",
       "has_low_floor_bus": true
     },
     {
       "line_id": 402,
       "line_number": "Bus 8",
-      "route_name": "Tuyen DHQG - Ben xe Mien Dong",
+      "route_name": "Tuyến ĐHQG - Bến xe Miền Đông",
       "has_low_floor_bus": true
     },
     {
       "line_id": 403,
       "line_number": "Bus 99",
-      "route_name": "Tuyen KTX Khu B - Khu du lich Suoi Tien",
+      "route_name": "Tuyến KTX Khu B - Khu du lịch Suối Tiên",
       "has_low_floor_bus": false
+    },
+    {
+      "line_id": 404,
+      "line_number": "Bus 30",
+      "route_name": "Tuyến Bến Thành - ĐHQG",
+      "has_low_floor_bus": true
     }
   ],
   "bus_stops": [
     {
       "stop_id": 601,
-      "stop_name": "Tram dung truoc NVH Sinh Vien",
+      "stop_name": "Trạm dừng trước NVH Sinh viên",
       "latitude": 10.874,
       "longitude": 106.802,
       "wheelchair_accessible": true
     },
     {
       "stop_id": 602,
-      "stop_name": "Tram Thu vien Trung tam",
+      "stop_name": "Trạm Thư viện Trung tâm",
       "latitude": 10.8762,
       "longitude": 106.8028,
       "wheelchair_accessible": true
     },
     {
       "stop_id": 603,
-      "stop_name": "Tram KTX Khu B",
+      "stop_name": "Trạm KTX Khu B",
       "latitude": 10.8805,
       "longitude": 106.7901,
       "wheelchair_accessible": false
     },
     {
       "stop_id": 604,
-      "stop_name": "Tram Nha Dieu Hanh DHQG",
+      "stop_name": "Trạm Nhà Điều hành ĐHQG",
       "latitude": 10.8729,
       "longitude": 106.8011,
+      "wheelchair_accessible": true
+    },
+    {
+      "stop_id": 605,
+      "stop_name": "Trạm Trường ĐH Khoa học Tự nhiên",
+      "latitude": 10.8769,
+      "longitude": 106.7998,
+      "wheelchair_accessible": true
+    },
+    {
+      "stop_id": 606,
+      "stop_name": "Trạm KTX Khu A",
+      "latitude": 10.881,
+      "longitude": 106.7875,
       "wheelchair_accessible": true
     }
   ],
@@ -377,6 +563,16 @@
       "mapping_id": 704,
       "segment_id": 204,
       "stop_id": 602
+    },
+    {
+      "mapping_id": 705,
+      "segment_id": 211,
+      "stop_id": 606
+    },
+    {
+      "mapping_id": 706,
+      "segment_id": 207,
+      "stop_id": 602
     }
   ],
   "saved_routes": [
@@ -384,7 +580,7 @@
       "route_id": 101,
       "user_id": 1001,
       "origin": "KTX Khu A",
-      "destination": "Nha van hoa Sinh vien",
+      "destination": "Nhà Văn hóa Sinh viên",
       "total_distance": 1380,
       "total_duration": 18,
       "total_cost": 0,
@@ -394,7 +590,7 @@
       "route_id": 102,
       "user_id": 1002,
       "origin": "KTX Khu B",
-      "destination": "Thu vien Trung tam",
+      "destination": "Thư viện Trung tâm",
       "total_distance": 1240,
       "total_duration": 17,
       "total_cost": 0,
@@ -403,64 +599,53 @@
     {
       "route_id": 103,
       "user_id": 1003,
-      "origin": "Nha van hoa Sinh vien",
-      "destination": "Trung tam The duc The thao",
+      "origin": "Nhà Văn hóa Sinh viên",
+      "destination": "Trung tâm Thể thao",
       "total_distance": 430,
       "total_duration": 6,
+      "total_cost": 0,
+      "transport_mode": "walk_only"
+    },
+    {
+      "route_id": 104,
+      "user_id": 1005,
+      "origin": "KTX Khu A",
+      "destination": "Thư viện Trung tâm",
+      "total_distance": 1420,
+      "total_duration": 19,
+      "total_cost": 0,
+      "transport_mode": "walk_only"
+    },
+    {
+      "route_id": 105,
+      "user_id": 1002,
+      "origin": "Nhà Văn hóa Sinh viên",
+      "destination": "Nhà Điều hành",
+      "total_distance": 260,
+      "total_duration": 3,
       "total_cost": 0,
       "transport_mode": "walk_only"
     }
   ],
   "route_details": [
-    {
-      "route_detail_id": 11,
-      "route_id": 101,
-      "segment_id": 201,
-      "sequence_order": 1
-    },
-    {
-      "route_detail_id": 12,
-      "route_id": 101,
-      "segment_id": 203,
-      "sequence_order": 2
-    },
-    {
-      "route_detail_id": 13,
-      "route_id": 101,
-      "segment_id": 204,
-      "sequence_order": 3
-    },
-    {
-      "route_detail_id": 14,
-      "route_id": 102,
-      "segment_id": 206,
-      "sequence_order": 1
-    },
-    {
-      "route_detail_id": 15,
-      "route_id": 102,
-      "segment_id": 203,
-      "sequence_order": 2
-    },
-    {
-      "route_detail_id": 16,
-      "route_id": 102,
-      "segment_id": 207,
-      "sequence_order": 3
-    },
-    {
-      "route_detail_id": 17,
-      "route_id": 103,
-      "segment_id": 208,
-      "sequence_order": 1
-    }
+    { "route_detail_id": 11, "route_id": 101, "segment_id": 201, "sequence_order": 1 },
+    { "route_detail_id": 12, "route_id": 101, "segment_id": 203, "sequence_order": 2 },
+    { "route_detail_id": 13, "route_id": 101, "segment_id": 204, "sequence_order": 3 },
+    { "route_detail_id": 14, "route_id": 102, "segment_id": 206, "sequence_order": 1 },
+    { "route_detail_id": 15, "route_id": 102, "segment_id": 203, "sequence_order": 2 },
+    { "route_detail_id": 16, "route_id": 102, "segment_id": 207, "sequence_order": 3 },
+    { "route_detail_id": 17, "route_id": 103, "segment_id": 208, "sequence_order": 1 },
+    { "route_detail_id": 18, "route_id": 104, "segment_id": 201, "sequence_order": 1 },
+    { "route_detail_id": 19, "route_id": 104, "segment_id": 203, "sequence_order": 2 },
+    { "route_detail_id": 20, "route_id": 104, "segment_id": 207, "sequence_order": 3 },
+    { "route_detail_id": 21, "route_id": 105, "segment_id": 210, "sequence_order": 1 }
   ],
   "saved_addresses": [
     {
       "address_id": 901,
       "user_id": 1001,
-      "label": "Nha",
-      "address": "KTX Khu A, DHQG HCM",
+      "label": "Nhà",
+      "address": "KTX Khu A, ĐHQG-HCM",
       "latitude": 10.8812,
       "longitude": 106.7869,
       "created_at": "2026-06-27T08:05:00Z"
@@ -468,8 +653,8 @@
     {
       "address_id": 902,
       "user_id": 1001,
-      "label": "Truong",
-      "address": "Nha van hoa Sinh vien DHQG HCM",
+      "label": "Trường",
+      "address": "Nhà Văn hóa Sinh viên ĐHQG-HCM",
       "latitude": 10.875,
       "longitude": 106.801,
       "created_at": "2026-06-27T08:06:00Z"
@@ -477,8 +662,8 @@
     {
       "address_id": 903,
       "user_id": 1002,
-      "label": "Nha",
-      "address": "KTX Khu B, DHQG HCM",
+      "label": "Nhà",
+      "address": "KTX Khu B, ĐHQG-HCM",
       "latitude": 10.8805,
       "longitude": 106.7901,
       "created_at": "2026-06-27T09:20:00Z"
@@ -486,8 +671,8 @@
     {
       "address_id": 904,
       "user_id": 1002,
-      "label": "Thu vien",
-      "address": "Thu vien Trung tam DHQG HCM",
+      "label": "Thư viện",
+      "address": "Thư viện Trung tâm ĐHQG-HCM",
       "latitude": 10.8765,
       "longitude": 106.8025,
       "created_at": "2026-06-27T09:21:00Z"
@@ -495,11 +680,29 @@
     {
       "address_id": 905,
       "user_id": 1003,
-      "label": "Phong tap",
-      "address": "Trung tam The duc The thao DHQG",
+      "label": "Phòng tập",
+      "address": "Trung tâm Thể dục Thể thao ĐHQG",
       "latitude": 10.8779,
       "longitude": 106.8041,
       "created_at": "2026-06-27T10:35:00Z"
+    },
+    {
+      "address_id": 906,
+      "user_id": 1005,
+      "label": "Lớp học",
+      "address": "Trường Đại học Khoa học Tự nhiên",
+      "latitude": 10.8769,
+      "longitude": 106.7995,
+      "created_at": "2026-06-27T12:25:00Z"
+    },
+    {
+      "address_id": 907,
+      "user_id": 1004,
+      "label": "Nhà",
+      "address": "Ký túc xá Khu A, ĐHQG-HCM",
+      "latitude": 10.8815,
+      "longitude": 106.7872,
+      "created_at": "2026-06-27T11:50:00Z"
     }
   ],
   "trips": [
@@ -507,33 +710,33 @@
       "trip_id": "trip-0001",
       "user_id": 1001,
       "origin": "KTX Khu A",
-      "destination": "Nha van hoa Sinh vien",
+      "destination": "Nhà Văn hóa Sinh viên",
       "route_id": 101,
       "segment_ids": [201, 203, 204],
       "status": "completed",
       "started_at": "2026-06-27T13:00:00Z",
       "finished_at": "2026-06-27T13:18:00Z",
-      "actual_distance": 820,
-      "actual_duration": 18
+      "actual_distance": 1410,
+      "actual_duration": 19
     },
     {
       "trip_id": "trip-0002",
       "user_id": 1002,
       "origin": "KTX Khu B",
-      "destination": "Thu vien Trung tam",
+      "destination": "Thư viện Trung tâm",
       "route_id": 102,
       "segment_ids": [206, 203, 207],
       "status": "completed",
       "started_at": "2026-06-27T14:30:00Z",
       "finished_at": "2026-06-27T14:52:00Z",
-      "actual_distance": 1180,
+      "actual_distance": 1260,
       "actual_duration": 22
     },
     {
       "trip_id": "trip-0003",
       "user_id": 1003,
-      "origin": "Nha van hoa Sinh vien",
-      "destination": "Trung tam The duc The thao",
+      "origin": "Nhà Văn hóa Sinh viên",
+      "destination": "Trung tâm Thể thao",
       "route_id": 103,
       "segment_ids": [208],
       "status": "in_progress",
@@ -541,6 +744,32 @@
       "finished_at": null,
       "actual_distance": null,
       "actual_duration": null
+    },
+    {
+      "trip_id": "trip-0004",
+      "user_id": 1005,
+      "origin": "KTX Khu A",
+      "destination": "Thư viện Trung tâm",
+      "route_id": 104,
+      "segment_ids": [201, 203, 207],
+      "status": "completed",
+      "started_at": "2026-06-27T16:00:00Z",
+      "finished_at": "2026-06-27T16:24:00Z",
+      "actual_distance": 1450,
+      "actual_duration": 24
+    },
+    {
+      "trip_id": "trip-0005",
+      "user_id": 1004,
+      "origin": "Nhà Văn hóa Sinh viên",
+      "destination": "Nhà Điều hành",
+      "route_id": 105,
+      "segment_ids": [210],
+      "status": "completed",
+      "started_at": "2026-06-28T06:50:00Z",
+      "finished_at": "2026-06-28T06:55:00Z",
+      "actual_distance": 270,
+      "actual_duration": 4
     }
   ],
   "route_reviews": [
@@ -549,7 +778,7 @@
       "route_id": 101,
       "user_id": 1001,
       "rating_score": 5,
-      "comment": "Duong bang phang, de di xe lan, rat an toan.",
+      "comment": "Đường bằng phẳng, dễ đi xe lăn, rất an toàn.",
       "created_at": "2026-06-27T13:25:00Z"
     },
     {
@@ -557,7 +786,7 @@
       "route_id": 102,
       "user_id": 1002,
       "rating_score": 4,
-      "comment": "Tuyen ok nhung doan cuoi hoi dong nguoi.",
+      "comment": "Tuyến ổn nhưng đoạn cuối hơi đông người.",
       "created_at": "2026-06-27T14:55:00Z"
     },
     {
@@ -565,8 +794,24 @@
       "route_id": 101,
       "user_id": 1003,
       "rating_score": 4,
-      "comment": "Doc vao chuan, nhung thieu mai che khi mua.",
+      "comment": "Dốc vào chuẩn, nhưng thiếu mái che khi mưa.",
       "created_at": "2026-06-27T19:10:00Z"
+    },
+    {
+      "route_review_id": 8504,
+      "route_id": 104,
+      "user_id": 1005,
+      "rating_score": 4,
+      "comment": "Đường khá tốt, chỉ có đoạn hẻm hơi hẹp.",
+      "created_at": "2026-06-27T16:30:00Z"
+    },
+    {
+      "route_review_id": 8505,
+      "route_id": 102,
+      "user_id": 1004,
+      "rating_score": 5,
+      "comment": "Rất hài lòng, lối đi tiếp cận tốt.",
+      "created_at": "2026-06-27T15:10:00Z"
     }
   ]
 }

@@ -28,7 +28,8 @@ const segments = (req, res) =>
 const alerts = (req, res) => {
   let result = req.query.status === "active" ? getActiveAlerts() : getAlerts();
   if (req.query.issue_type) {
-    result = result.filter((a) => a.issue_type === req.query.issue_type);
+    // issue_type là mảng token → lọc theo token chứa trong mảng
+    result = result.filter((a) => (a.issue_type || []).includes(req.query.issue_type));
   }
   return res.status(200).json({ success: true, data: { alerts: result } });
 };
@@ -36,12 +37,14 @@ const alerts = (req, res) => {
 // POST /api/alerts — user báo cáo vật cản / ngập
 const reportAlert = (req, res) => {
   const { segment_id, issue_type, description } = req.body;
-  if (!segment_id || !issue_type) {
+  // issue_type có thể là mảng ["pothole","flooded"] hoặc 1 chuỗi
+  const issues = Array.isArray(issue_type) ? issue_type : issue_type ? [issue_type] : [];
+  if (!segment_id || issues.length === 0) {
     return res
       .status(400)
-      .json({ success: false, message: "Cần segment_id và issue_type." });
+      .json({ success: false, message: "Cần segment_id và ít nhất một loại sự cố." });
   }
-  const alert = createAlert(req.user.user_id, { segment_id, issue_type, description });
+  const alert = createAlert(req.user.user_id, { segment_id, issue_type: issues, description });
   return res.status(201).json({ success: true, message: "Đã ghi nhận báo cáo.", data: { alert } });
 };
 

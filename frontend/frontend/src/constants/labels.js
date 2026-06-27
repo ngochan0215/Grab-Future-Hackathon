@@ -20,18 +20,30 @@ export const SURFACE_LABEL = {
   damaged: 'Hư hỏng',
 };
 
+// Atomic issue tokens — an alert's issue_type is an array of these.
 export const ISSUE_TYPES = [
+  { id: 'pothole', label: 'Ổ gà' },
   { id: 'flooded', label: 'Ngập nước' },
-  { id: 'pothole_and_flooded', label: 'Ổ gà & ngập' },
-  { id: 'minor_pothole', label: 'Ổ gà nhỏ' },
   { id: 'obstacle', label: 'Vật cản' },
   { id: 'construction', label: 'Đang thi công' },
   { id: 'broken_ramp', label: 'Hỏng lối dốc' },
+  { id: 'steep_slope', label: 'Dốc cao' },
+  { id: 'narrow_path', label: 'Lối đi hẹp' },
+  { id: 'no_sidewalk', label: 'Không có vỉa hè' },
+  { id: 'crowded', label: 'Đông người' },
+  { id: 'slippery', label: 'Trơn trượt' },
   { id: 'other', label: 'Khác' },
 ];
 
 export const issueLabel = (id) =>
   ISSUE_TYPES.find((i) => i.id === id)?.label || id;
+
+// Join an array of issue tokens into one readable string.
+export const issueLabels = (arr) => (arr || []).map(issueLabel).join(', ');
+
+// Format a route warning, which the backend sends as { street_name, issues }.
+export const formatWarning = (w) =>
+  typeof w === 'string' ? w : `${w.street_name}: ${issueLabels(w.issues)}`;
 
 export const TRANSPORT_MODES = [
   { id: 'walk_only', label: 'Đi bộ', icon: '🚶' },

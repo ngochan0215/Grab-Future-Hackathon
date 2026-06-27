@@ -5,7 +5,7 @@ import { compareRoutes } from '../services/route.api';
 import { getAlerts } from '../services/map.api';
 import MapView from '../components/map/MapView';
 import { ScoreBar, Spinner, ErrorMsg } from '../components/ui';
-import { issueLabel } from '../constants/labels';
+import { issueLabel, issueLabels, formatWarning } from '../constants/labels';
 import { routePath, segmentMidpoint } from '../utils/geo';
 import { formatDuration, formatDistance } from '../utils/formatRoute';
 
@@ -65,7 +65,7 @@ export default function ComparePage() {
     .filter((a) => normalSegIds.has(a.segment_id))
     .map((a) => {
       const mid = segmentMidpoint(normalSegById.get(a.segment_id));
-      return mid ? { position: mid, label: issueLabel(a.issue_type) } : null;
+      return mid ? { position: mid, label: issueLabels(a.issue_type) } : null;
     })
     .filter(Boolean);
 
@@ -107,7 +107,7 @@ export default function ComparePage() {
           normal.warnings.map((w, i) => (
             <div key={i} className="row" style={{ gap: 8, padding: '4px 0' }}>
               <span className="badge badge--danger small">⚠</span>
-              <span className="muted small">{w}</span>
+              <span className="muted small">{formatWarning(w)}</span>
             </div>
           ))
         ) : (

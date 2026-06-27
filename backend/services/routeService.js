@@ -69,7 +69,8 @@ const scoreRoute = (segments, user, activeAlerts) => {
     safety = clamp(safety, 0, 1);
 
     for (const a of segAlerts) {
-      warnings.push(`${seg.street_name}: ${a.issue_type}`);
+      // issue_type là mảng token (vd ["pothole","flooded"]); frontend dịch sang nhãn.
+      warnings.push({ street_name: seg.street_name, issues: a.issue_type });
     }
 
     accSum += acc;
@@ -152,7 +153,9 @@ const buildRankedRoutes = ({ origin, destination, transport_mode, priority }, us
     const onRoute = new Set(segments.map((s) => s.segment_id));
     const avoids = [
       ...new Set(
-        activeAlerts.filter((a) => !onRoute.has(a.segment_id)).map((a) => a.issue_type)
+        activeAlerts
+          .filter((a) => !onRoute.has(a.segment_id))
+          .flatMap((a) => a.issue_type) // mỗi alert có mảng token
       ),
     ];
 
