@@ -1,0 +1,898 @@
+openapi: 3.0.3
+info:
+  title: AccessRoute API (Grab Hackathon)
+  version: 1.0.0
+  description: >
+    Backend cho mini app điều hướng dành cho người khuyết tật vận động.
+    Gợi ý danh sách tuyến đường tối ưu & an toàn (xếp theo độ ưu tiên),
+    so sánh tuyến tối ưu vs tuyến thông thường, điều hướng (start/finish),
+    lưu tuyến & địa chỉ, đánh giá tuyến/địa điểm, và các lớp bản đồ tiếp cận
+    (địa điểm, chất lượng đường, cảnh báo ngập/vật cản real-time, xe buýt).
+
+    Lưu ý: đây là DB giả lập trong bộ nhớ (mockdata.json) — dữ liệu reset mỗi
+    lần restart server.
+servers:
+  - url: http://localhost:3000
+    description: Local dev
+
+tags:
+  - name: Auth
+  - name: Users
+  - name: Addresses
+  - name: Routes
+  - name: Map
+  - name: Saved Routes
+  - name: Trips
+
+security:
+  - bearerAuth: []
+
+paths:
+  # ─────────────────────────── Auth ───────────────────────────
+  /api/auth/register:
+    post:
+      tags: [Auth]
+      summary: Đăng ký tài khoản
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, password]
+              properties:
+                name: { type: string, example: "Tran Van Binh" }
+                email: { type: string, format: email, example: "new@example.com" }
+                password: { type: string, minLength: 6, example: "password123" }
+                mobility_type: { $ref: "#/components/schemas/MobilityType" }
+                max_walking_distance: { type: integer, example: 1000 }
+      responses:
+        "201":
+          description: Đăng ký thành công
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AuthResponse" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "409":
+          description: Email đã được sử dụng
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+
+  /api/auth/login:
+    post:
+      tags: [Auth]
+      summary: Đăng nhập
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email, example: "binhtran@gmail.com" }
+                password: { type: string, example: "password123" }
+      responses:
+        "200":
+          description: Đăng nhập thành công
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AuthResponse" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+
+  /api/auth/me:
+    get:
+      tags: [Auth]
+      summary: Lấy thông tin user hiện tại
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          user: { $ref: "#/components/schemas/User" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+
+  # ─────────────────────────── Users ──────────────────────────
+  /api/users/me:
+    patch:
+      tags: [Users]
+      summary: Cập nhật hồ sơ (name, mobility_type, max_walking_distance)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string, example: "Tran Van Binh" }
+                mobility_type: { $ref: "#/components/schemas/MobilityType" }
+                max_walking_distance: { type: integer, example: 1500 }
+      responses:
+        "200":
+          description: Cập nhật thành công
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          user: { $ref: "#/components/schemas/User" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+
+  # ───────────────────────── Addresses ────────────────────────
+  /api/addresses:
+    get:
+      tags: [Addresses]
+      summary: Danh sách địa chỉ đã lưu
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          addresses:
+                            type: array
+                            items: { $ref: "#/components/schemas/SavedAddress" }
+    post:
+      tags: [Addresses]
+      summary: Lưu một địa chỉ (điểm đi/đến user hay nhập)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [address]
+              properties:
+                label: { type: string, example: "Nhà" }
+                address: { type: string, example: "KTX Khu A, DHQG" }
+                latitude: { type: number, example: 10.875 }
+                longitude: { type: number, example: 106.801 }
+      responses:
+        "201":
+          description: Đã lưu
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          address: { $ref: "#/components/schemas/SavedAddress" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+
+  /api/addresses/{id}:
+    delete:
+      tags: [Addresses]
+      summary: Xoá địa chỉ đã lưu
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: integer } }
+      responses:
+        "200": { $ref: "#/components/responses/OkMessage" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  # ────────────────────────── Routes ──────────────────────────
+  /api/routes/search:
+    post:
+      tags: [Routes]
+      summary: Tìm & xếp hạng tuyến theo độ ưu tiên (an toàn + tiếp cận)
+      description: >
+        Trả về danh sách tuyến ứng viên đã sắp xếp; tuyến ưu tiên cao nhất
+        đứng đầu. Điểm số được tính từ chất lượng segment + cảnh báo real-time,
+        có trọng số theo mobility_type của user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/RouteQuery" }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          origin: { type: string }
+                          destination: { type: string }
+                          count: { type: integer }
+                          routes:
+                            type: array
+                            items: { $ref: "#/components/schemas/RouteOption" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+
+  /api/routes/compare:
+    post:
+      tags: [Routes]
+      summary: So sánh tuyến tối ưu vs tuyến thông thường ("see the difference")
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/RouteQuery" }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          optimized: { $ref: "#/components/schemas/RouteOption" }
+                          normal: { $ref: "#/components/schemas/RouteOption" }
+                          difference:
+                            type: object
+                            properties:
+                              safety_score: { type: integer, example: 50 }
+                              accessibility_score: { type: integer, example: 42 }
+                              extra_distance: { type: integer, example: -400 }
+                              extra_duration: { type: integer, example: -6 }
+                              avoids:
+                                type: array
+                                items: { type: string }
+                                example: ["pothole_and_flooded"]
+        "400": { $ref: "#/components/responses/BadRequest" }
+
+  /api/routes/{id}/review:
+    post:
+      tags: [Routes]
+      summary: Đánh giá tuyến sau khi đi xong
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ReviewInput" }
+      responses:
+        "201":
+          description: Đã đánh giá
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          review: { $ref: "#/components/schemas/RouteReview" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+
+  /api/routes/{id}/reviews:
+    get:
+      tags: [Routes]
+      summary: Danh sách đánh giá của một tuyến
+      security: []
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          reviews:
+                            type: array
+                            items: { $ref: "#/components/schemas/RouteReview" }
+
+  # ─────────────────────────── Map ────────────────────────────
+  /api/places:
+    get:
+      tags: [Map]
+      summary: Địa điểm có hỗ trợ tiếp cận
+      security: []
+      parameters:
+        - { name: ramp, in: query, schema: { type: boolean }, description: "Chỉ nơi có lối dốc vào" }
+        - { name: accessible_toilet, in: query, schema: { type: boolean }, description: "Chỉ nơi có WC tiếp cận" }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          places:
+                            type: array
+                            items: { $ref: "#/components/schemas/Place" }
+
+  /api/places/{id}/reviews:
+    get:
+      tags: [Map]
+      summary: Đánh giá của một địa điểm
+      security: []
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: integer } }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          reviews:
+                            type: array
+                            items: { $ref: "#/components/schemas/PlaceReview" }
+        "404": { $ref: "#/components/responses/NotFound" }
+    post:
+      tags: [Map]
+      summary: Đánh giá một địa điểm
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: integer } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ReviewInput" }
+      responses:
+        "201":
+          description: Đã gửi đánh giá
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          review: { $ref: "#/components/schemas/PlaceReview" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /api/segments:
+    get:
+      tags: [Map]
+      summary: Các đoạn đường (overlay chất lượng đường — AI Road Quality)
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          segments:
+                            type: array
+                            items: { $ref: "#/components/schemas/Segment" }
+
+  /api/alerts:
+    get:
+      tags: [Map]
+      summary: Cảnh báo real-time (ngập / vật cản / ổ gà)
+      security: []
+      parameters:
+        - { name: status, in: query, schema: { type: string, enum: [active, resolved] } }
+        - { name: issue_type, in: query, schema: { type: string }, example: "pothole_and_flooded" }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          alerts:
+                            type: array
+                            items: { $ref: "#/components/schemas/Alert" }
+    post:
+      tags: [Map]
+      summary: User báo cáo vật cản / ngập
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [segment_id, issue_type]
+              properties:
+                segment_id: { type: integer, example: 202 }
+                issue_type: { type: string, example: "flooded" }
+                description: { type: string, example: "Ngập tới mắt cá chân" }
+      responses:
+        "201":
+          description: Đã ghi nhận
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          alert: { $ref: "#/components/schemas/Alert" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+
+  /api/bus/lines:
+    get:
+      tags: [Map]
+      summary: Tuyến xe buýt (có sàn thấp / tiếp cận)
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          bus_lines:
+                            type: array
+                            items: { $ref: "#/components/schemas/BusLine" }
+
+  /api/bus/stops:
+    get:
+      tags: [Map]
+      summary: Trạm xe buýt (tiếp cận xe lăn)
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          bus_stops:
+                            type: array
+                            items: { $ref: "#/components/schemas/BusStop" }
+
+  # ───────────────────────── Saved Routes ─────────────────────
+  /api/saved-routes:
+    get:
+      tags: [Saved Routes]
+      summary: Danh sách tuyến đã lưu
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          routes:
+                            type: array
+                            items: { $ref: "#/components/schemas/SavedRoute" }
+    post:
+      tags: [Saved Routes]
+      summary: Lưu một tuyến
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [origin, destination]
+              properties:
+                origin: { type: string, example: "KTX Khu A" }
+                destination: { type: string, example: "Nha van hoa Sinh vien" }
+                total_distance: { type: integer, example: 800 }
+                total_duration: { type: integer, example: 15 }
+                total_cost: { type: integer, example: 0 }
+                transport_mode: { type: string, example: "walk_only" }
+                segment_ids:
+                  type: array
+                  items: { type: integer }
+                  example: [201]
+      responses:
+        "201":
+          description: Đã lưu tuyến
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          route: { $ref: "#/components/schemas/SavedRoute" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+
+  /api/saved-routes/{id}:
+    get:
+      tags: [Saved Routes]
+      summary: Chi tiết tuyến đã lưu (kèm segment theo thứ tự)
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: integer } }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          route: { $ref: "#/components/schemas/SavedRoute" }
+        "404": { $ref: "#/components/responses/NotFound" }
+    delete:
+      tags: [Saved Routes]
+      summary: Xoá tuyến đã lưu
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: integer } }
+      responses:
+        "200": { $ref: "#/components/responses/OkMessage" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  # ─────────────────────────── Trips ──────────────────────────
+  /api/trips:
+    get:
+      tags: [Trips]
+      summary: Lịch sử chuyến đi
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          trips:
+                            type: array
+                            items: { $ref: "#/components/schemas/Trip" }
+
+  /api/trips/start:
+    post:
+      tags: [Trips]
+      summary: Bắt đầu điều hướng (nút "Start" như Google Maps)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [origin, destination]
+              properties:
+                origin: { type: string }
+                destination: { type: string }
+                route_id: { type: string, description: "id tuyến đang đi (tùy chọn)" }
+                segment_ids:
+                  type: array
+                  items: { type: integer }
+      responses:
+        "201":
+          description: Đã bắt đầu
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          trip: { $ref: "#/components/schemas/Trip" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+
+  /api/trips/{id}/finish:
+    post:
+      tags: [Trips]
+      summary: Kết thúc chuyến đi
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                actual_distance: { type: integer, example: 820 }
+                actual_duration: { type: integer, example: 17 }
+      responses:
+        "200":
+          description: Đã kết thúc
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Success"
+                  - properties:
+                      data:
+                        type: object
+                        properties:
+                          trip: { $ref: "#/components/schemas/Trip" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    BadRequest:
+      description: Dữ liệu không hợp lệ
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+    Unauthorized:
+      description: Thiếu/sai token hoặc thông tin đăng nhập
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+    NotFound:
+      description: Không tìm thấy
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+    OkMessage:
+      description: Thành công
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Success" }
+
+  schemas:
+    MobilityType:
+      type: string
+      enum: [walking, wheelchair, wheelchair_manual, wheelchair_electric, crutches, scooter, none, other]
+      example: wheelchair_manual
+
+    Success:
+      type: object
+      properties:
+        success: { type: boolean, example: true }
+        message: { type: string }
+
+    Error:
+      type: object
+      properties:
+        success: { type: boolean, example: false }
+        message: { type: string, example: "Thông báo lỗi." }
+
+    User:
+      type: object
+      properties:
+        user_id: { type: string, example: "1001" }
+        name: { type: string, example: "Tran Van Binh" }
+        email: { type: string, example: "binhtran@gmail.com" }
+        mobility_type: { $ref: "#/components/schemas/MobilityType" }
+        max_walking_distance: { type: integer, example: 200 }
+        created_at: { type: string, format: date-time }
+
+    AuthResponse:
+      allOf:
+        - $ref: "#/components/schemas/Success"
+        - properties:
+            data:
+              type: object
+              properties:
+                token: { type: string, example: "eyJhbGciOiJIUzI1NiIs..." }
+                user: { $ref: "#/components/schemas/User" }
+
+    SavedAddress:
+      type: object
+      properties:
+        address_id: { type: integer, example: 1 }
+        user_id: { type: string }
+        label: { type: string, nullable: true, example: "Nhà" }
+        address: { type: string, example: "KTX Khu A, DHQG" }
+        latitude: { type: number, nullable: true }
+        longitude: { type: number, nullable: true }
+        created_at: { type: string, format: date-time }
+
+    RouteQuery:
+      type: object
+      required: [origin, destination]
+      properties:
+        origin: { type: string, example: "KTX Khu A" }
+        destination: { type: string, example: "Nha van hoa Sinh vien" }
+        transport_mode: { type: string, example: "walk_only" }
+
+    RouteOption:
+      type: object
+      description: Một tuyến ứng viên đã được chấm điểm (thang 0–100).
+      properties:
+        route_id: { type: string, example: "opt-1" }
+        route_type: { type: string, enum: [optimized, normal], example: "optimized" }
+        label: { type: string, example: "Tuyến tối ưu (an toàn & dễ tiếp cận)" }
+        origin: { type: string }
+        destination: { type: string }
+        transport_mode: { type: string, example: "walk_only" }
+        segment_ids:
+          type: array
+          items: { type: integer }
+          example: [201]
+        segments:
+          type: array
+          items: { $ref: "#/components/schemas/Segment" }
+        total_distance: { type: integer, example: 400 }
+        total_duration: { type: integer, example: 5 }
+        accessibility_score: { type: integer, example: 100 }
+        safety_score: { type: integer, example: 100 }
+        priority_score: { type: integer, example: 100 }
+        warnings:
+          type: array
+          items: { type: string }
+        avoids:
+          type: array
+          items: { type: string }
+          example: ["pothole_and_flooded"]
+
+    Segment:
+      type: object
+      properties:
+        segment_id: { type: integer, example: 201 }
+        street_name: { type: string }
+        surface_quality: { type: string, enum: [smooth, moderate, damaged], example: "smooth" }
+        has_sidewalk_ramp: { type: boolean }
+        sidewalk_width: { type: number, example: 2.0 }
+        safety_score: { type: number, example: 5.0 }
+
+    Alert:
+      type: object
+      properties:
+        alert_id: { type: integer, example: 301 }
+        segment_id: { type: integer, example: 202 }
+        user_id: { type: string }
+        issue_type: { type: string, example: "pothole_and_flooded" }
+        description: { type: string, nullable: true }
+        detected_by: { type: string, example: "User_Report_App" }
+        status: { type: string, enum: [active, resolved], example: "active" }
+        created_at: { type: string, format: date-time }
+
+    Place:
+      type: object
+      properties:
+        place_id: { type: integer, example: 501 }
+        place_name: { type: string }
+        category: { type: string, example: "Community Center" }
+        latitude: { type: number }
+        longitude: { type: number }
+        has_ramp_entrance: { type: boolean }
+        has_accessible_toilet: { type: boolean }
+
+    BusLine:
+      type: object
+      properties:
+        line_id: { type: integer, example: 401 }
+        line_number: { type: string, example: "Bus 53" }
+        route_name: { type: string }
+        has_low_floor_bus: { type: boolean }
+
+    BusStop:
+      type: object
+      properties:
+        stop_id: { type: integer, example: 601 }
+        stop_name: { type: string }
+        latitude: { type: number }
+        longitude: { type: number }
+        wheelchair_accessible: { type: boolean }
+
+    SavedRoute:
+      type: object
+      properties:
+        route_id: { type: integer, example: 101 }
+        user_id: { type: string }
+        origin: { type: string }
+        destination: { type: string }
+        total_distance: { type: integer, nullable: true }
+        total_duration: { type: integer, nullable: true }
+        total_cost: { type: integer, example: 0 }
+        transport_mode: { type: string, example: "walk_only" }
+        segments:
+          type: array
+          description: Có khi GET chi tiết — segment theo sequence_order.
+          items: { $ref: "#/components/schemas/Segment" }
+
+    Trip:
+      type: object
+      properties:
+        trip_id: { type: string, format: uuid }
+        user_id: { type: string }
+        origin: { type: string, nullable: true }
+        destination: { type: string, nullable: true }
+        route_id: { nullable: true }
+        segment_ids:
+          type: array
+          items: { type: integer }
+        status: { type: string, enum: [in_progress, completed], example: "in_progress" }
+        started_at: { type: string, format: date-time }
+        finished_at: { type: string, format: date-time, nullable: true }
+        actual_distance: { type: integer, nullable: true }
+        actual_duration: { type: integer, nullable: true }
+
+    ReviewInput:
+      type: object
+      required: [rating_score]
+      properties:
+        rating_score: { type: integer, minimum: 1, maximum: 5, example: 4 }
+        comment: { type: string, example: "Loi vao co doc dat chuan." }
+
+    RouteReview:
+      type: object
+      properties:
+        route_review_id: { type: integer, example: 1 }
+        route_id: { type: integer }
+        user_id: { type: string }
+        rating_score: { type: integer, example: 4 }
+        comment: { type: string, nullable: true }
+        created_at: { type: string, format: date-time }
+
+    PlaceReview:
+      type: object
+      properties:
+        review_id: { type: integer, example: 801 }
+        place_id: { type: integer }
+        user_id: { type: string }
+        rating_score: { type: integer, example: 4 }
+        comment: { type: string, nullable: true }
+        created_at: { type: string, format: date-time }
