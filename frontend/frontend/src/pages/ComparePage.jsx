@@ -75,14 +75,14 @@ export default function ComparePage() {
   const [pendingRoute, setPendingRoute] = useState(null);
 
   function startNavigation() {
-    // const route = selectedRoute || diff?.optimized;
-    // setSelectedRoute(route);
-    // if (route?.grab_legs?.length) {
-    //   setPendingRoute(route);
-    //   setGrabSheet(true);
-    // } else {
-    //   navigate('/navigate');
-    // }
+    const route = selectedRoute || diff?.optimized;
+    setSelectedRoute(route);
+    if (route?.grab_legs?.length) {
+      setPendingRoute(route);
+      setGrabSheet(true);
+    } else {
+      navigate('/navigate');
+    }
   }
 
   function confirmGrab() {
@@ -306,7 +306,7 @@ export default function ComparePage() {
       </button>
 
       <button className="btn btn--primary btn--block" onClick={startNavigation}>
-        Save Route
+        ▶ Start {chosenIsNormal ? 'selected' : 'safe'} 
       </button>
 
       {buddySheet && (
