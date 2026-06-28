@@ -140,10 +140,21 @@ const concatPaths = (segments) => {
 
 const BUS_FARE = 7000; // VND/chuyến (demo) khi có đi xe buýt
 
+// Các mode cần đề xuất Grab/Be cho đoạn xe máy
+const GRAB_MODES = ["walk_and_motorbike", "mixed"];
+
+// Điểm trung chuyển cố định cho demo (trạm xe buýt NVH Sinh viên)
+const TRANSFER_STOP = {
+  label: "Trạm NVH Sinh viên (điểm trung chuyển)",
+  lat: 10.874,
+  lng: 106.802,
+};
+
 const buildRankedRoutes = ({ origin, destination, transport_mode, priority }, user) => {
   const activeAlerts = getActiveAlerts();
   const mode = transport_mode || "walk_only";
   const pri = priority || "safety";
+  const needsGrab = GRAB_MODES.includes(mode);
 
   const routes = CANDIDATES.map((c, i) => {
     const segments = c.segment_ids.map(getSegmentById).filter(Boolean);
@@ -161,6 +172,24 @@ const buildRankedRoutes = ({ origin, destination, transport_mode, priority }, us
 
     const path = concatPaths(segments);
     const totalDistance = segments.reduce((sum, s) => sum + (s.distance || 0), 0);
+    const grabDistance = 650; // mét — đoạn xe máy từ điểm đi đến điểm trung chuyển
+
+    // Đoạn Grab/Be: xe máy từ điểm đi → điểm trung chuyển (chỉ khi mode cần Grab)
+    const grab_legs = needsGrab
+      ? [
+          {
+            pickup_label: origin,
+            dropoff_label: TRANSFER_STOP.label,
+            pickup_lat: path[0]?.[0] ?? null,
+            pickup_lng: path[0]?.[1] ?? null,
+            dropoff_lat: TRANSFER_STOP.lat,
+            dropoff_lng: TRANSFER_STOP.lng,
+            distance: grabDistance,
+            duration: 5, // phút ước tính
+            vehicle_mode: "motorbike",
+          },
+        ]
+      : [];
 
     return {
       route_id: `opt-${i + 1}`,
@@ -174,9 +203,14 @@ const buildRankedRoutes = ({ origin, destination, transport_mode, priority }, us
       path, // [[lat,lng], ...] để vẽ trên bản đồ
       origin_point: path[0] || null,
       destination_point: path[path.length - 1] || null,
-      total_distance: totalDistance,
-      total_duration: Math.round(totalDistance / 75), // ~75 m/phút đi bộ
-      total_cost: mode === "walk_and_bus" ? BUS_FARE : 0,
+      total_distance: totalDistance + (needsGrab ? grabDistance : 0),
+      total_duration: Math.round(totalDistance / 75) + (needsGrab ? 5 : 0),
+      total_cost:
+        mode === "walk_and_bus" ? BUS_FARE
+        : mode === "walk_and_motorbike" ? 15000
+        : mode === "mixed" ? BUS_FARE + 15000
+        : 0,
+      grab_legs,
       ...scored,
       avoids,
     };

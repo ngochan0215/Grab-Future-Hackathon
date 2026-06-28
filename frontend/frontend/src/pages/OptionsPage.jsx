@@ -24,7 +24,7 @@ export default function OptionsPage() {
   function findRoutes() {
     setTransportMode(mode);
     setPriority(priority);
-    navigate('/routes');
+    navigate('/compare');
   }
 
   return (

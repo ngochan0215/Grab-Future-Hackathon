@@ -296,17 +296,28 @@ export default function HomePage() {
         <section aria-labelledby="alerts-title">
           <div className={styles.rowBetween}>
             <h2 id="alerts-title" className={styles.sectionTitle}>Accessibility Alerts</h2>
-            {alerts.length > 0 && (
-              <span className={styles.alertBadge} aria-label={`${alerts.length} active alerts`}>
-                {alerts.length}
-              </span>
-            )}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              {alerts.length > 0 && (
+                <span className={styles.alertBadge} aria-label={`${alerts.length} active alerts`}>
+                  {alerts.length}
+                </span>
+              )}
+              <button
+                onClick={() => navigate('/alerts')}
+                style={{
+                  fontSize: 12, fontWeight: 600, color: '#0d9b87',
+                  background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+                }}
+              >
+                Xem tất cả →
+              </button>
+            </div>
           </div>
           <div className={styles.alertList}>
             {alerts.length === 0 ? (
               <AlertCard severity="caution" icon={AlertTriangle} title="No active alerts" desc="All monitored routes are clear right now." />
             ) : (
-              alerts.map((a) => {
+              alerts.slice(0, 2).map((a) => {
                 const m = alertStyle(a.issue_type);
                 return (
                   <AlertCard
@@ -314,10 +325,26 @@ export default function HomePage() {
                     severity={m.severity}
                     icon={m.icon}
                     title={issueLabels(a.issue_type) || 'Cảnh báo'}
+                    street={a.street_name}
                     desc={a.description || `Đoạn đường #${a.segment_id}`}
+                    lat={a.latitude}
+                    lng={a.longitude}
                   />
                 );
               })
+            )}
+            {alerts.length > 2 && (
+              <button
+                onClick={() => navigate('/alerts')}
+                style={{
+                  width: '100%', padding: '10px', textAlign: 'center',
+                  background: '#fff', border: '1px solid #E5E7EB',
+                  borderRadius: 14, cursor: 'pointer',
+                  fontSize: 13, fontWeight: 600, color: '#6B7280',
+                }}
+              >
+                + {alerts.length - 2} cảnh báo khác
+              </button>
             )}
           </div>
         </section>

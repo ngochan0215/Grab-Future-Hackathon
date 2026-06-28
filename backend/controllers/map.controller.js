@@ -1,7 +1,7 @@
 import {
   getPlaces,
   getPlaceById,
-  getSegments,
+  getSegments, getSegmentById,
   getAlerts,
   getActiveAlerts,
   createAlert,
@@ -28,9 +28,21 @@ const segments = (req, res) =>
 const alerts = (req, res) => {
   let result = req.query.status === "active" ? getActiveAlerts() : getAlerts();
   if (req.query.issue_type) {
-    // issue_type là mảng token → lọc theo token chứa trong mảng
     result = result.filter((a) => (a.issue_type || []).includes(req.query.issue_type));
   }
+  // Enrich each alert with coordinates and street_name from its segment
+  result = result.map((a) => {
+    const seg = getSegmentById(a.segment_id);
+    if (!seg) return a;
+    const path = seg.path || [];
+    const mid = path[Math.floor(path.length / 2)] || path[0];
+    return {
+      ...a,
+      street_name: seg.street_name || null,
+      latitude: mid ? mid[0] : null,
+      longitude: mid ? mid[1] : null,
+    };
+  });
   return res.status(200).json({ success: true, data: { alerts: result } });
 };
 

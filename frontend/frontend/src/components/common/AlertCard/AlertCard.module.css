@@ -30,3 +30,11 @@
   margin: 0;
   line-height: 1.4;
 }
+
+.coords {
+  font-size: 11px;
+  color: #9CA3AF;
+  margin: 4px 0 0;
+  font-variant-numeric: tabular-nums;
+  font-family: ui-monospace, monospace;
+}

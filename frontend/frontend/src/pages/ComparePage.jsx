@@ -46,10 +46,27 @@ export default function ComparePage() {
       .finally(() => setLoading(false));
   }, [origin, destination, transportMode, priority, navigate]);
 
+  const [grabSheet, setGrabSheet] = useState(false);
+  const [pendingRoute, setPendingRoute] = useState(null);
+
   function startNavigation() {
-    // Default to the optimized route if the user hasn't explicitly chosen.
     const route = selectedRoute || diff?.optimized;
     setSelectedRoute(route);
+    if (route?.grab_legs?.length) {
+      setPendingRoute(route);
+      setGrabSheet(true);
+    } else {
+      navigate('/navigate');
+    }
+  }
+
+  function confirmGrab() {
+    setGrabSheet(false);
+    navigate('/grab-booking', { state: { leg: pendingRoute.grab_legs[0], fullRoute: { origin: pendingRoute.origin, destination: pendingRoute.destination } } });
+  }
+
+  function skipGrab() {
+    setGrabSheet(false);
     navigate('/navigate');
   }
 
@@ -154,6 +171,99 @@ export default function ComparePage() {
       <button className="btn btn--primary btn--block" onClick={startNavigation}>
         ▶ Đi tuyến {chosenIsNormal ? 'đã chọn' : 'tối ưu'}
       </button>
+
+      {/* Grab/Be bottom sheet */}
+      {grabSheet && pendingRoute?.grab_legs?.[0] && (() => {
+        const leg = pendingRoute.grab_legs[0];
+        return (
+          <>
+            {/* overlay */}
+            <div
+              onClick={skipGrab}
+              style={{
+                position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.45)', zIndex: 50,
+              }}
+            />
+            {/* sheet */}
+            <div style={{
+              position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
+              width: '100%', maxWidth: 430, background: '#fff',
+              borderRadius: '24px 24px 0 0',
+              padding: '20px 20px 36px',
+              boxShadow: '0 -8px 40px rgba(0,0,0,0.18)',
+              zIndex: 51,
+            }}>
+              {/* handle */}
+              <div style={{ width: 40, height: 4, background: '#E5E7EB', borderRadius: 2, margin: '0 auto 18px' }} />
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+                <div style={{
+                  width: 48, height: 48, borderRadius: '50%',
+                  background: '#00b14f1a', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: 24,
+                }}>🏍️</div>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: 16, color: '#1A1A2E' }}>
+                    Tuyến này có đoạn đi xe máy
+                  </div>
+                  <div style={{ fontSize: 13, color: '#6B7280', marginTop: 2 }}>
+                    Bạn có muốn đặt Grab/Be không?
+                  </div>
+                </div>
+              </div>
+
+              {/* leg detail */}
+              <div style={{
+                background: '#F9FAFB', borderRadius: 14, padding: '12px 14px', marginBottom: 18,
+              }}>
+                <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, paddingTop: 3 }}>
+                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#00b14f' }} />
+                    <div style={{ width: 2, height: 24, background: '#D1D5DB' }} />
+                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#EF4444' }} />
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1A2E', marginBottom: 8 }}>
+                      {leg.pickup_label}
+                    </div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1A2E' }}>
+                      {leg.dropoff_label}
+                    </div>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: 16, marginTop: 10 }}>
+                  <span style={{ fontSize: 12, color: '#6B7280' }}>📏 {leg.distance} m</span>
+                  <span style={{ fontSize: 12, color: '#6B7280' }}>⏱ ~{leg.duration} phút</span>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: 10 }}>
+                <button
+                  onClick={skipGrab}
+                  style={{
+                    flex: 1, padding: '13px 0', borderRadius: 14,
+                    border: '1.5px solid #E5E7EB', background: '#fff',
+                    fontWeight: 700, fontSize: 14, color: '#6B7280', cursor: 'pointer',
+                  }}
+                >
+                  Bỏ qua
+                </button>
+                <button
+                  onClick={confirmGrab}
+                  style={{
+                    flex: 2, padding: '13px 0', borderRadius: 14,
+                    border: 'none', background: '#00b14f',
+                    fontWeight: 700, fontSize: 14, color: '#fff', cursor: 'pointer',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                  }}
+                >
+                  <span>🚗</span> Đặt Grab / Be
+                </button>
+              </div>
+            </div>
+          </>
+        );
+      })()}
     </main>
   );
 }

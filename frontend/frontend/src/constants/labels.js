@@ -49,9 +49,13 @@ export const formatWarning = (w) =>
   typeof w === 'string' ? w : `${w.street_name}: ${issueLabels(w.issues)}`;
 
 export const TRANSPORT_MODES = [
-  { id: 'walk_only', label: 'Đi bộ', icon: '🚶' },
-  { id: 'walk_and_bus', label: 'Đi bộ + Xe buýt', icon: '🚌' },
+  { id: 'walk_only',         label: 'Đi bộ',                    icon: '🚶'  },
+  { id: 'walk_and_bus',      label: 'Đi bộ + Xe buýt',          icon: '🚌'  },
+  { id: 'walk_and_motorbike',label: 'Đi bộ + Xe máy (Grab/Be)', icon: '🏍️'  },
+  { id: 'mixed',             label: 'Kết hợp (Xe máy + Xe buýt)',icon: '🔀'  },
 ];
+
+export const GRAB_MODES = ['walk_and_motorbike', 'mixed'];
 
 export const transportLabel = (id) =>
   TRANSPORT_MODES.find((m) => m.id === id)?.label || id;
