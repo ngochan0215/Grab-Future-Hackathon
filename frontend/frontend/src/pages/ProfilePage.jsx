@@ -39,9 +39,11 @@ function InfoRow({ label, value }) {
 
 export default function ProfilePage() {
   const navigate = useNavigate();
-  const storeUser = useAppStore((s) => s.user);
-  const setUser = useAppStore((s) => s.setUser);
-  const logout = useAppStore((s) => s.logout);
+  const storeUser          = useAppStore((s) => s.user);
+  const setUser            = useAppStore((s) => s.setUser);
+  const logout             = useAppStore((s) => s.logout);
+  const emergencyContacts  = useAppStore((s) => s.emergencyContacts);
+  const setEmergencyContacts = useAppStore((s) => s.setEmergencyContacts);
 
   const [user, setLocalUser] = useState(storeUser);
   const [loading, setLoading] = useState(!storeUser);
@@ -198,7 +200,7 @@ export default function ProfilePage() {
 
   return (
     <main className="page">
-      <Header title="Hồ sơ" />
+      <Header title="Hồ sơ" back />
 
       <ErrorMsg>{error}</ErrorMsg>
       <OkMsg>{notice}</OkMsg>
@@ -439,9 +441,100 @@ export default function ProfilePage() {
         </div>
       </Section>
 
+      {/* ── 5. Emergency Contacts ────────────────────────────────────────── */}
+      <Section title="Liên hệ khẩn cấp" icon="🆘">
+        <EmergencyContactsEditor
+          contacts={emergencyContacts}
+          onChange={setEmergencyContacts}
+        />
+      </Section>
+
       <button className="btn btn--danger btn--block" style={{ marginTop: 4 }} onClick={handleLogout}>
         Đăng xuất
       </button>
     </main>
+  );
+}
+
+// ── Emergency Contacts editor ────────────────────────────────────────────────
+const RELATIONS = ['Bố/Mẹ', 'Vợ/Chồng', 'Con', 'Anh/Chị/Em', 'Bạn bè', 'Khác'];
+
+function EmergencyContactsEditor({ contacts, onChange }) {
+  const [adding, setAdding] = useState(false);
+  const [form,   setForm]   = useState({ name: '', phone: '', relation: 'Bố/Mẹ' });
+
+  function add() {
+    if (!form.name.trim() || !form.phone.trim()) return;
+    onChange([...contacts, { id: Date.now(), ...form }]);
+    setForm({ name: '', phone: '', relation: 'Bố/Mẹ' });
+    setAdding(false);
+  }
+
+  function remove(id) {
+    onChange(contacts.filter((c) => c.id !== id));
+  }
+
+  return (
+    <div>
+      <p className="muted small" style={{ marginBottom: 10 }}>
+        Những người này sẽ được thông báo khi bạn nhấn nút SOS trong lúc điều hướng.
+      </p>
+
+      {contacts.length === 0 && !adding && (
+        <p className="muted small" style={{ textAlign: 'center', padding: '8px 0' }}>
+          Chưa có liên hệ khẩn cấp nào.
+        </p>
+      )}
+
+      {contacts.map((c) => (
+        <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', borderBottom: '1px solid var(--border)' }}>
+          <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#FEE2E2', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>
+            👤
+          </div>
+          <div style={{ flex: 1 }}>
+            <div className="title small">{c.name}</div>
+            <div className="muted small">{c.phone} · {c.relation}</div>
+          </div>
+          <button
+            onClick={() => remove(c.id)}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#EF4444', fontSize: 18, padding: 4 }}
+            aria-label="Xoá"
+          >
+            ×
+          </button>
+        </div>
+      ))}
+
+      {adding ? (
+        <div style={{ marginTop: 12 }}>
+          <div className="field">
+            <label>Họ tên</label>
+            <input className="input" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} />
+          </div>
+          <div className="field">
+            <label>Số điện thoại</label>
+            <input className="input" type="tel" value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} />
+          </div>
+          <div className="field">
+            <label>Quan hệ</label>
+            <select className="select" value={form.relation} onChange={(e) => setForm((f) => ({ ...f, relation: e.target.value }))}>
+              {RELATIONS.map((r) => <option key={r} value={r}>{r}</option>)}
+            </select>
+          </div>
+          <div className="row" style={{ gap: 10, marginTop: 8 }}>
+            <button className="btn btn--block" onClick={() => setAdding(false)}>Huỷ</button>
+            <button className="btn btn--primary btn--block" onClick={add}>Lưu</button>
+          </div>
+        </div>
+      ) : (
+        <button
+          className="btn btn--block"
+          style={{ marginTop: 12 }}
+          onClick={() => setAdding(true)}
+        >
+          + Thêm liên hệ khẩn cấp
+        </button>
+      )}
+    </div>
   );
 }

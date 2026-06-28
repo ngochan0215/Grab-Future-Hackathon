@@ -145,7 +145,187 @@
       "longitude": 106.7958,
       "has_ramp_entrance": false,
       "has_accessible_toilet": false
-    }
+    },
+    {
+    "place_id": 531,
+    "place_name": "Chợ Bến Thành",
+    "category": "Market",
+    "latitude": 10.7720,
+    "longitude": 106.6982,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 532,
+    "place_name": "Nhà thờ Đức Bà Sài Gòn",
+    "category": "Landmark",
+    "latitude": 10.7798,
+    "longitude": 106.6990,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": false
+  },
+  {
+    "place_id": 533,
+    "place_name": "Bưu điện Trung tâm Sài Gòn",
+    "category": "Landmark",
+    "latitude": 10.7802,
+    "longitude": 106.6991,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": false
+  },
+  {
+    "place_id": 534,
+    "place_name": "Dinh Độc Lập",
+    "category": "Museum",
+    "latitude": 10.7771,
+    "longitude": 106.6953,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 535,
+    "place_name": "Bảo tàng Chứng tích Chiến tranh",
+    "category": "Museum",
+    "latitude": 10.7795,
+    "longitude": 106.6920,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 536,
+    "place_name": "Landmark 81",
+    "category": "Skyscraper",
+    "latitude": 10.7949,
+    "longitude": 106.7219,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 537,
+    "place_name": "Bitexco Financial Tower",
+    "category": "Skyscraper",
+    "latitude": 10.7717,
+    "longitude": 106.7045,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 538,
+    "place_name": "Phố đi bộ Nguyễn Huệ",
+    "category": "Public Square",
+    "latitude": 10.7743,
+    "longitude": 106.7038,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": false
+  },
+  {
+    "place_id": 539,
+    "place_name": "Bến Bạch Đằng",
+    "category": "Park",
+    "latitude": 10.7733,
+    "longitude": 106.7066,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 540,
+    "place_name": "Thảo Cầm Viên Sài Gòn",
+    "category": "Zoo",
+    "latitude": 10.7871,
+    "longitude": 106.7050,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 541,
+    "place_name": "Hồ Hoàn Kiếm",
+    "category": "Lake",
+    "latitude": 21.0288,
+    "longitude": 105.8522,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 542,
+    "place_name": "Lăng Chủ tịch Hồ Chí Minh",
+    "category": "Historical Site",
+    "latitude": 21.0368,
+    "longitude": 105.8347,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 543,
+    "place_name": "Văn Miếu - Quốc Tử Giám",
+    "category": "Historical Site",
+    "latitude": 21.0280,
+    "longitude": 105.8357,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": false
+  },
+  {
+    "place_id": 544,
+    "place_name": "Cầu Rồng Đà Nẵng",
+    "category": "Bridge",
+    "latitude": 16.0615,
+    "longitude": 108.2278,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": false
+  },
+  {
+    "place_id": 545,
+    "place_name": "Bà Nà Hills",
+    "category": "Tourist Attraction",
+    "latitude": 15.9950,
+    "longitude": 107.9969,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 546,
+    "place_name": "Phố cổ Hội An",
+    "category": "Heritage Site",
+    "latitude": 15.8794,
+    "longitude": 108.3350,
+    "has_ramp_entrance": false,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 547,
+    "place_name": "Kinh thành Huế",
+    "category": "Historical Site",
+    "latitude": 16.4696,
+    "longitude": 107.5784,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 548,
+    "place_name": "Vịnh Hạ Long",
+    "category": "Natural Wonder",
+    "latitude": 20.9101,
+    "longitude": 107.1839,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 549,
+    "place_name": "Nhà ga Đà Lạt",
+    "category": "Historical Site",
+    "latitude": 11.9416,
+    "longitude": 108.4588,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": false
+  },
+  {
+    "place_id": 550,
+    "place_name": "Chợ Đêm Phú Quốc",
+    "category": "Market",
+    "latitude": 10.2185,
+    "longitude": 103.9597,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  }
   ],
   "user_reviews": [
     {

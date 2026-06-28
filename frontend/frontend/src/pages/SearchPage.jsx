@@ -90,7 +90,7 @@ export default function SearchPage() {
     }}>
       {/* Header */}
       <div style={{ flexShrink: 0, zIndex: 10, padding: '0 16px' }}>
-        <Header title="Plan Your Trip" />
+        <Header title="Plan Your Trip" back />
       </div>
 
       {/* Map fills remaining space between header and sheet */}

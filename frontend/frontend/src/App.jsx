@@ -14,6 +14,7 @@ import TripsPage from './pages/TripsPage'
 import ProfilePage from './pages/ProfilePage'
 import AlertsPage from './pages/AlertsPage'
 import GrabBookingPage from './pages/GrabBookingPage'
+import RoutePreviewPage from './pages/RoutePreviewPage'
 
 const protectedPages = [
   { path: '/home',     element: <AppLayout><HomePage /></AppLayout>       },
@@ -27,7 +28,8 @@ const protectedPages = [
   { path: '/trips',    element: <TripsPage />                             },
   { path: '/profile',  element: <AppLayout><ProfilePage /></AppLayout>    },
   { path: '/alerts',        element: <AppLayout><AlertsPage /></AppLayout>        },
-  { path: '/grab-booking',  element: <GrabBookingPage />                         },
+  { path: '/grab-booking',   element: <GrabBookingPage />                        },
+  { path: '/route-preview', element: <RoutePreviewPage />                        },
 ]
 
 export default function App() {

@@ -197,7 +197,7 @@ export default function AlertsPage() {
 
   return (
     <main className="page">
-      <Header title={`Cảnh báo (${activeCount} đang xảy ra)`} />
+      <Header title={`Cảnh báo (${activeCount} đang xảy ra)`} back />
 
       {/* Filter tabs */}
       <div style={{ display: 'flex', gap: 8, padding: '12px 16px 4px' }}>

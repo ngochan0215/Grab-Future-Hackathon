@@ -9,13 +9,17 @@ import { reviewRoute } from '../services/route.api';
 import { RatingInput, ErrorMsg, OkMsg } from '../components/ui';
 import { routePath, buildInterpolator } from '../utils/geo';
 import { formatDistance } from '../utils/formatRoute';
+import SosButton, { SosTriggeredScreen } from '../components/SosButton';
 
 const toLngLat = (c) => [c[1], c[0]];
 
 export default function NavigationPage() {
-  const navigate = useNavigate();
-  const route = useAppStore((s) => s.selectedRoute);
-  const resetTrip = useAppStore((s) => s.resetTrip);
+  const navigate           = useNavigate();
+  const route              = useAppStore((s) => s.selectedRoute);
+  const resetTrip          = useAppStore((s) => s.resetTrip);
+  const transitBuddy       = useAppStore((s) => s.transitBuddy);
+  const emergencyContacts  = useAppStore((s) => s.emergencyContacts);
+  const clearTransitBuddy  = useAppStore((s) => s.clearTransitBuddy);
 
   const coords = useMemo(() => (route ? routePath(route) : []), [route]);
   const interp = useMemo(() => buildInterpolator(coords), [coords]);
@@ -45,6 +49,7 @@ export default function NavigationPage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+  const [sosTriggered, setSosTriggered] = useState(false);
 
   // Guard + start a trip on mount.
   useEffect(() => {
@@ -222,13 +227,40 @@ export default function NavigationPage() {
             {phase === 'overview' && <span className="badge badge--accent">Đang khởi động…</span>}
           </div>
         )}
+
+        {/* SOS button — always visible during active navigation */}
+        {phase !== 'arrived' && !sosTriggered && (
+          <SosButton onActivate={() => { cancelAnimationFrame(rafRef.current); setSosTriggered(true); }} />
+        )}
       </div>
 
       <div className="navSheet">
         {error && <ErrorMsg>{error}</ErrorMsg>}
 
-        {phase !== 'arrived' ? (
+        {/* SOS triggered screen — replaces normal sheet */}
+        {sosTriggered ? (
+          <SosTriggeredScreen
+            contacts={emergencyContacts}
+            position={user.pos}
+            route={route}
+            onDismiss={() => { setSosTriggered(false); navigate('/home'); }}
+          />
+        ) : phase !== 'arrived' ? (
           <>
+            {/* Transit Buddy status bar */}
+            {transitBuddy && (
+              <div style={{
+                display: 'flex', alignItems: 'center', gap: 8,
+                background: '#EDE9FE', borderRadius: 10, padding: '7px 12px', marginBottom: 10,
+              }}>
+                <span style={{ fontSize: 16 }}>👁️</span>
+                <span style={{ flex: 1, fontSize: 13, color: '#5B21B6', fontWeight: 600 }}>
+                  {transitBuddy.name} đang theo dõi hành trình
+                </span>
+                <span style={{ fontSize: 12, color: '#7C3AED' }}>ETA {remainTime}p</span>
+              </div>
+            )}
+
             <div className="bar" style={{ marginBottom: 12 }}>
               <span style={{ width: `${Math.round(progress * 100)}%`, background: lineColor }} />
             </div>
@@ -260,7 +292,7 @@ export default function NavigationPage() {
               <button className="btn btn--block" onClick={() => navigate('/trips')}>Trips</button>
               <button
                 className="btn btn--block"
-                onClick={() => { resetTrip(); navigate('/home'); }}
+                onClick={() => { resetTrip(); clearTransitBuddy(); navigate('/home'); }}
               >
                 Về trang chủ
               </button>

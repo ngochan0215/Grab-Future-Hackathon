@@ -29,7 +29,7 @@ export default function OptionsPage() {
 
   return (
     <main className="page">
-      <Header title="Cá nhân hoá lộ trình" />
+      <Header title="Cá nhân hoá lộ trình" back />
 
       <div className="sectionTitle">Phương tiện</div>
       {TRANSPORT_MODES.map((m) => (

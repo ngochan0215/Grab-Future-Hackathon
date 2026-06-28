@@ -22,7 +22,7 @@ export default function ConfirmPage() {
 
   return (
     <main className="page">
-      <Header title="Xác nhận hành trình" />
+      <Header title="Xác nhận hành trình" back />
 
       {markers.length > 0 ? (
         <MapView height={240} markers={markers} polylines={polylines} />

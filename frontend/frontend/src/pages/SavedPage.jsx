@@ -52,7 +52,7 @@ export default function SavedPage() {
 
   return (
     <main className="page">
-      <Header title="Saved" />
+      <Header title="Saved" back />
       <div className="chips" style={{ marginBottom: 12 }}>
         <button
           className={`chip ${tab === 'routes' ? 'chip--active' : ''}`}

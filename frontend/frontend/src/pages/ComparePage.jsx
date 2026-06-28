@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAppStore from '../store/useAppStore';
+import BuddyInviteSheet from '../components/BuddyInviteSheet';
 import { compareRoutes } from '../services/route.api';
 import { getAlerts } from '../services/map.api';
 import MapView from '../components/map/MapView';
@@ -46,7 +47,11 @@ export default function ComparePage() {
       .finally(() => setLoading(false));
   }, [origin, destination, transportMode, priority, navigate]);
 
-  const [grabSheet, setGrabSheet] = useState(false);
+  const transitBuddy    = useAppStore((s) => s.transitBuddy);
+  const setTransitBuddy = useAppStore((s) => s.setTransitBuddy);
+
+  const [grabSheet,   setGrabSheet]   = useState(false);
+  const [buddySheet,  setBuddySheet]  = useState(false);
   const [pendingRoute, setPendingRoute] = useState(null);
 
   function startNavigation() {
@@ -103,7 +108,7 @@ export default function ComparePage() {
 
   return (
     <main className="page">
-      <Header title="So sánh tuyến" />
+      <Header title="So sánh tuyến" back />
 
       <MapView height={260} polylines={polylines} markers={markers} hazards={hazards} />
       <div className="mapLegend">
@@ -168,9 +173,44 @@ export default function ComparePage() {
         </div>
       )}
 
+      <button
+        className="btn btn--block"
+        style={{ marginBottom: 8 }}
+        onClick={() => {
+          setSelectedRoute(optimized);
+          navigate('/route-preview', { state: { alerts } });
+        }}
+      >
+        🔍 Xem trước tuyến đường
+      </button>
+
+      {/* Transit Buddy row */}
+      <button
+        className="btn btn--block"
+        style={{ marginBottom: 8, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+        onClick={() => setBuddySheet(true)}
+      >
+        <span>👁️ Transit Buddy</span>
+        {transitBuddy
+          ? <span style={{ fontSize: 12, background: '#D1FAE5', color: '#065F46', borderRadius: 8, padding: '2px 8px', fontWeight: 700 }}>
+              {transitBuddy.name} đang theo dõi
+            </span>
+          : <span style={{ fontSize: 12, color: '#9CA3AF' }}>Chưa thiết lập</span>}
+      </button>
+
       <button className="btn btn--primary btn--block" onClick={startNavigation}>
         ▶ Đi tuyến {chosenIsNormal ? 'đã chọn' : 'tối ưu'}
       </button>
+
+      {buddySheet && (
+        <BuddyInviteSheet
+          route={{ origin: optimized.origin, destination: optimized.destination, total_duration: optimized.total_duration }}
+          current={transitBuddy}
+          onSave={(b) => { setTransitBuddy(b); setBuddySheet(false); }}
+          onClear={() => { setTransitBuddy(null); setBuddySheet(false); }}
+          onClose={() => setBuddySheet(false)}
+        />
+      )}
 
       {/* Grab/Be bottom sheet */}
       {grabSheet && pendingRoute?.grab_legs?.[0] && (() => {

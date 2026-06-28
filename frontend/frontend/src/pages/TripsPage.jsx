@@ -26,7 +26,7 @@ export default function TripsPage() {
 
   return (
     <main className="page">
-      <Header title="Trips" />
+      <Header title="Trips" back />
       <ErrorMsg>{error}</ErrorMsg>
       {trips.length === 0 ? (
         <EmptyState icon="🧭">Bạn chưa có chuyến đi nào.</EmptyState>

@@ -51,7 +51,7 @@ export default function ReportPage() {
 
   return (
     <main className="page">
-      <Header title="Báo cáo sự cố" />
+      <Header title="Báo cáo sự cố" back />
 
       <ErrorMsg>{error}</ErrorMsg>
       <OkMsg>{notice}</OkMsg>

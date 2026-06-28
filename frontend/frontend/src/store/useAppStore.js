@@ -43,7 +43,19 @@ const useAppStore = create((set) => ({
   setPriority: (priority) => set({ priority }),
   setSelectedRoute: (selectedRoute) => set({ selectedRoute }),
   resetTrip: () =>
-    set({ origin: null, destination: null, transportMode: 'walk_only', priority: 'safety', selectedRoute: null }),
+    set({ origin: null, destination: null, transportMode: 'walk_only', priority: 'safety', selectedRoute: null, transitBuddy: null }),
+
+  // ── Confidence Booster: Transit Buddy ─────────────────────────────────────
+  transitBuddy: null, // { name, phone } | null
+  setTransitBuddy: (buddy) => set({ transitBuddy: buddy }),
+  clearTransitBuddy: () => set({ transitBuddy: null }),
+
+  // ── Confidence Booster: Emergency Contacts ────────────────────────────────
+  emergencyContacts: JSON.parse(localStorage.getItem('emergency_contacts') || '[]'),
+  setEmergencyContacts: (contacts) => {
+    localStorage.setItem('emergency_contacts', JSON.stringify(contacts));
+    set({ emergencyContacts: contacts });
+  },
 }));
 
 export default useAppStore;
