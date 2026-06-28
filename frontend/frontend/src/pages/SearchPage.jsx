@@ -8,15 +8,16 @@ import Header from '../components/layout/Header/Header';
 import MapView from '../components/map/MapView';
 
 const TRAVEL_MODES = [
-  { id: 'walk_only', label: 'Walking', icon: '🚶' },
-  { id: 'wheelchair', label: 'Wheelchair', icon: '♿' },
-  { id: 'mixed_transport', label: 'Mixed Transport', icon: '🚍' },
+  { id: 'walk_only',    label: 'Walking',    icon: '🚶' },
+  { id: 'wheelchair',   label: 'Wheelchair', icon: '♿' },
+  { id: 'walk_and_bus', label: 'Bus + Walk', icon: '🚌' },
 ];
 
 const ROUTE_PREFS = [
-  { id: 'safety', label: 'Safest', icon: '🛡️' },
-  { id: 'time', label: 'Fastest', icon: '⚡' },
-  { id: 'cost', label: 'Cheapest', icon: '💰' },
+  { id: 'safety',        label: 'Safest',     icon: '🛡️' },
+  { id: 'time',          label: 'Fastest',    icon: '⚡' },
+  { id: 'cost',          label: 'Cheapest',   icon: '💰' },
+  // { id: 'accessibility', label: 'Accessible', icon: '♿' },
 ];
 
 export default function SearchPage() {
@@ -67,7 +68,7 @@ export default function SearchPage() {
     if (!origin?.label?.trim() || !destination?.label?.trim()) return;
     setOrigin(origin);
     setDestination(destination);
-    navigate('/confirm');
+    navigate('/compare');
   }
 
   const ready = origin?.label?.trim() && destination?.label?.trim();

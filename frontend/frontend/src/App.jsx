@@ -4,8 +4,6 @@ import AppLayout from './components/layout/AppLayout'
 import LoginPage from './pages/LoginPage/LoginPage'
 import HomePage from './pages/HomePage'
 import SearchPage from './pages/SearchPage'
-import ConfirmPage from './pages/ConfirmPage'
-import OptionsPage from './pages/OptionsPage'
 import RoutesPage from './pages/RoutesPage'
 import ComparePage from './pages/ComparePage'
 import NavigationPage from './pages/NavigationPage'
@@ -19,8 +17,6 @@ import RoutePreviewPage from './pages/RoutePreviewPage'
 const protectedPages = [
   { path: '/home',     element: <AppLayout><HomePage /></AppLayout>       },
   { path: '/search',   element: <AppLayout><SearchPage /></AppLayout>     },
-  { path: '/confirm',  element: <ConfirmPage />                           },
-  { path: '/options',  element: <OptionsPage />                           },
   { path: '/routes',   element: <AppLayout><RoutesPage /></AppLayout>     },
   { path: '/compare',  element: <ComparePage />                           },
   { path: '/navigate', element: <NavigationPage />                        },

@@ -44,9 +44,44 @@ export const issueLabels = (arr) => {
   return list.map(issueLabel).join(', ');
 };
 
-// Format a route warning, which the backend sends as { street_name, issues }.
-export const formatWarning = (w) =>
-  typeof w === 'string' ? w : `${w.street_name}: ${issueLabels(w.issues)}`;
+// English issue labels (used by English-language screens, e.g. ComparePage).
+export const ISSUE_LABELS_EN = {
+  pothole: 'Pothole',
+  flooded: 'Flooding',
+  obstacle: 'Obstacle',
+  construction: 'Construction',
+  broken_ramp: 'Broken ramp',
+  steep_slope: 'Steep slope',
+  narrow_path: 'Narrow path',
+  no_sidewalk: 'No sidewalk',
+  crowded: 'Crowded',
+  slippery: 'Slippery',
+  other: 'Other',
+};
+
+export const issueLabelEn = (id) => ISSUE_LABELS_EN[id] || id;
+
+export const issueLabelsEn = (arr) => {
+  const list = Array.isArray(arr) ? arr : [arr].filter(Boolean);
+  return list.map(issueLabelEn).join(', ');
+};
+
+// Format a route warning.
+// Handles both the old shape { street_name, issues[] } and the engine shape { street_name, issue }.
+export const formatWarning = (w) => {
+  if (typeof w === 'string') return w;
+  if (w.issues) return `${w.street_name}: ${issueLabels(w.issues)}`;
+  if (w.issue)  return `${w.street_name}: ${issueLabel(w.issue)}`;
+  return w.street_name ?? '—';
+};
+
+// English variant of formatWarning.
+export const formatWarningEn = (w) => {
+  if (typeof w === 'string') return w;
+  if (w.issues) return `${w.street_name}: ${issueLabelsEn(w.issues)}`;
+  if (w.issue)  return `${w.street_name}: ${issueLabelEn(w.issue)}`;
+  return w.street_name ?? '—';
+};
 
 export const TRANSPORT_MODES = [
   { id: 'walk_only',         label: 'Đi bộ',                    icon: '🚶'  },
@@ -61,8 +96,29 @@ export const transportLabel = (id) =>
   TRANSPORT_MODES.find((m) => m.id === id)?.label || id;
 
 export const PRIORITIES = [
-  { id: 'safety', label: 'An toàn nhất', icon: '🛡️', desc: 'Ưu tiên đường an toàn, ít chướng ngại' },
-  { id: 'time', label: 'Nhanh nhất', icon: '⚡', desc: 'Ưu tiên thời gian di chuyển ngắn' },
-  { id: 'accessibility', label: 'Dễ tiếp cận', icon: '♿', desc: 'Ưu tiên lối dốc, vỉa hè rộng, phẳng' },
-  { id: 'cost', label: 'Tiết kiệm', icon: '💰', desc: 'Ưu tiên chi phí thấp nhất' },
+  { id: 'safety',        label: 'An toàn nhất', icon: '🛡️', desc: 'Ưu tiên đường an toàn, ít chướng ngại' },
+  { id: 'time',          label: 'Nhanh nhất',   icon: '⚡',  desc: 'Ưu tiên thời gian di chuyển ngắn' },
+  { id: 'accessibility', label: 'Dễ tiếp cận',  icon: '♿',  desc: 'Ưu tiên lối dốc, vỉa hè rộng, phẳng' },
+  { id: 'cost',          label: 'Tiết kiệm',    icon: '💰',  desc: 'Ưu tiên chi phí thấp nhất' },
+  { id: 'avoid_hills',   label: 'Ít dốc nhất',  icon: '⛰️',  desc: 'Tránh đường dốc, phù hợp xe lăn tay' },
+];
+
+// ── Recommendation engine metadata ───────────────────────────────────────────
+
+/** Human-readable label for each ranking strategy id. */
+export const STRATEGY_LABELS = {
+  safety:        '🛡️ Safest Route',
+  time:          '⚡ Fastest Route',
+  cost:          '💰 Cheapest Route',
+  accessibility: '♿ Most Accessible',
+  avoid_hills:   '⛰️ Flattest Route',
+};
+
+/** Accessibility breakdown factors returned by the engine. */
+export const BREAKDOWN_FACTORS = [
+  { key: 'surfaceScore',    label: 'Surface quality' },
+  { key: 'rampScore',       label: 'Ramp / stair access' },
+  { key: 'widthScore',      label: 'Sidewalk width' },
+  { key: 'safetyBaseScore', label: 'Base safety' },
+  { key: 'slopeScore',      label: 'Slope / incline' },
 ];

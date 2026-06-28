@@ -31,7 +31,7 @@ const useAppStore = create((set) => ({
     set({ token: null, user: null, isAuthenticated: false });
   },
 
-  // ── Search funnel state (Search → Confirm → Options → Routes → Compare) ─
+  // ── Search funnel state (Search → Compare) ─
   origin: null, // { label, address, lat, lng }
   destination: null,
   transportMode: 'walk_only',

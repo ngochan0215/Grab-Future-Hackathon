@@ -191,7 +191,7 @@ export default function HomePage() {
   function rerun(r) {
     setOrigin({ label: r.origin });
     setDestination({ label: r.destination });
-    navigate('/confirm');
+    navigate('/compare');
   }
 
   function startRecommended() {
