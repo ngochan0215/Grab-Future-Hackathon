@@ -10,7 +10,7 @@ export const setToken = (token) => {
 
 const api = axios.create({
   // Backend mounts everything under /api (see backend/server.js)
-  baseURL: `${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api`,
+  baseURL: `${import.meta.env.VITE_API_URL || 'https://grab-future-hackathon.onrender.com'}/api`,
   timeout: 10000,
 });
 
