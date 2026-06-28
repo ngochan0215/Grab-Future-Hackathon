@@ -1,0 +1,989 @@
+{
+  "users": [
+    {
+      "user_id": 1001,
+      "name": "Trần Văn Bình",
+      "email": "binhtran@gmail.com",
+      "password": "$2b$10$fJ32iZbSF8YCjQm3JO4L4u6o1BF9X8PeU1pT25DBVENy0XI/UugO2",
+      "mobility_type": "wheelchair_manual",
+      "max_walking_distance": 600,
+      "created_at": "2026-06-27T08:00:00Z"
+    },
+    {
+      "user_id": 1002,
+      "name": "Lê Minh Hoàng",
+      "email": "hoangle@gmail.com",
+      "password": "$2b$10$fJ32iZbSF8YCjQm3JO4L4u6o1BF9X8PeU1pT25DBVENy0XI/UugO2",
+      "mobility_type": "none",
+      "max_walking_distance": 5000,
+      "created_at": "2026-06-27T09:15:00Z"
+    },
+    {
+      "user_id": 1003,
+      "name": "Phạm Thị Mai",
+      "email": "maipham@gmail.com",
+      "password": "$2b$10$fJ32iZbSF8YCjQm3JO4L4u6o1BF9X8PeU1pT25DBVENy0XI/UugO2",
+      "mobility_type": "wheelchair_electric",
+      "max_walking_distance": 1500,
+      "created_at": "2026-06-27T10:30:00Z"
+    },
+    {
+      "user_id": 1004,
+      "name": "Nguyễn Quốc Đạt",
+      "email": "datnguyen@gmail.com",
+      "password": "$2b$10$fJ32iZbSF8YCjQm3JO4L4u6o1BF9X8PeU1pT25DBVENy0XI/UugO2",
+      "mobility_type": "crutches",
+      "max_walking_distance": 800,
+      "created_at": "2026-06-27T11:45:00Z"
+    },
+    {
+      "user_id": 1005,
+      "name": "Võ Thị Hồng",
+      "email": "hongvo@gmail.com",
+      "password": "$2b$10$fJ32iZbSF8YCjQm3JO4L4u6o1BF9X8PeU1pT25DBVENy0XI/UugO2",
+      "mobility_type": "wheelchair_manual",
+      "max_walking_distance": 400,
+      "created_at": "2026-06-27T12:20:00Z"
+    },
+    {
+      "user_id": 1006,
+      "name": "Bùi Thanh Tùng",
+      "email": "tungbui@gmail.com",
+      "password": "$2b$10$fJ32iZbSF8YCjQm3JO4L4u6o1BF9X8PeU1pT25DBVENy0XI/UugO2",
+      "mobility_type": "scooter",
+      "max_walking_distance": 2000,
+      "created_at": "2026-06-27T13:05:00Z"
+    }
+  ],
+  "accessible_places": [
+    {
+      "place_id": 501,
+      "place_name": "Nhà hát Thành phố (Opera House)",
+      "category": "Cultural",
+      "latitude": 10.7762,
+      "longitude": 106.7009,
+      "has_ramp_entrance": true,
+      "has_accessible_toilet": true
+    },
+    {
+      "place_id": 502,
+      "place_name": "Bưu điện Trung tâm Sài Gòn",
+      "category": "Government",
+      "latitude": 10.7796,
+      "longitude": 106.7000,
+      "has_ramp_entrance": true,
+      "has_accessible_toilet": true
+    },
+    {
+      "place_id": 503,
+      "place_name": "Vincom Center B (Quận 1)",
+      "category": "Shopping Mall",
+      "latitude": 10.7731,
+      "longitude": 106.7026,
+      "has_ramp_entrance": true,
+      "has_accessible_toilet": true
+    },
+    {
+      "place_id": 504,
+      "place_name": "Bảo tàng Chứng tích Chiến tranh",
+      "category": "Museum",
+      "latitude": 10.7790,
+      "longitude": 106.6926,
+      "has_ramp_entrance": true,
+      "has_accessible_toilet": true
+    },
+    {
+      "place_id": 505,
+      "place_name": "Công viên Tao Đàn",
+      "category": "Park",
+      "latitude": 10.7731,
+      "longitude": 106.6916,
+      "has_ramp_entrance": true,
+      "has_accessible_toilet": false
+    },
+    {
+      "place_id": 506,
+      "place_name": "Rex Hotel Saigon",
+      "category": "Hotel",
+      "latitude": 10.7757,
+      "longitude": 106.7009,
+      "has_ramp_entrance": true,
+      "has_accessible_toilet": true
+    },
+    {
+      "place_id": 507,
+      "place_name": "Dinh Thống Nhất",
+      "category": "Historical Site",
+      "latitude": 10.7769,
+      "longitude": 106.6956,
+      "has_ramp_entrance": true,
+      "has_accessible_toilet": true
+    },
+    {
+      "place_id": 508,
+      "place_name": "Bitexco Financial Tower",
+      "category": "Landmark",
+      "latitude": 10.7717,
+      "longitude": 106.7040,
+      "has_ramp_entrance": true,
+      "has_accessible_toilet": true
+    },
+    {
+      "place_id": 509,
+      "place_name": "Chợ Bến Thành",
+      "category": "Market",
+      "latitude": 10.7725,
+      "longitude": 106.6981,
+      "has_ramp_entrance": false,
+      "has_accessible_toilet": false
+    },
+    {
+      "place_id": 510,
+      "place_name": "Phố đi bộ Nguyễn Huệ",
+      "category": "Public Space",
+      "latitude": 10.7746,
+      "longitude": 106.7018,
+      "has_ramp_entrance": true,
+      "has_accessible_toilet": false
+    },
+    {
+    "place_id": 531,
+    "place_name": "Chợ Bến Thành",
+    "category": "Market",
+    "latitude": 10.7720,
+    "longitude": 106.6982,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 532,
+    "place_name": "Nhà thờ Đức Bà Sài Gòn",
+    "category": "Landmark",
+    "latitude": 10.7798,
+    "longitude": 106.6990,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": false
+  },
+  {
+    "place_id": 533,
+    "place_name": "Bưu điện Trung tâm Sài Gòn",
+    "category": "Landmark",
+    "latitude": 10.7802,
+    "longitude": 106.6991,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": false
+  },
+  {
+    "place_id": 534,
+    "place_name": "Dinh Độc Lập",
+    "category": "Museum",
+    "latitude": 10.7771,
+    "longitude": 106.6953,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 535,
+    "place_name": "Bảo tàng Chứng tích Chiến tranh",
+    "category": "Museum",
+    "latitude": 10.7795,
+    "longitude": 106.6920,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 536,
+    "place_name": "Landmark 81",
+    "category": "Skyscraper",
+    "latitude": 10.7949,
+    "longitude": 106.7219,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 537,
+    "place_name": "Bitexco Financial Tower",
+    "category": "Skyscraper",
+    "latitude": 10.7717,
+    "longitude": 106.7045,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 538,
+    "place_name": "Phố đi bộ Nguyễn Huệ",
+    "category": "Public Square",
+    "latitude": 10.7743,
+    "longitude": 106.7038,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": false
+  },
+  {
+    "place_id": 539,
+    "place_name": "Bến Bạch Đằng",
+    "category": "Park",
+    "latitude": 10.7733,
+    "longitude": 106.7066,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 540,
+    "place_name": "Thảo Cầm Viên Sài Gòn",
+    "category": "Zoo",
+    "latitude": 10.7871,
+    "longitude": 106.7050,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 541,
+    "place_name": "Hồ Hoàn Kiếm",
+    "category": "Lake",
+    "latitude": 21.0288,
+    "longitude": 105.8522,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 542,
+    "place_name": "Lăng Chủ tịch Hồ Chí Minh",
+    "category": "Historical Site",
+    "latitude": 21.0368,
+    "longitude": 105.8347,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 543,
+    "place_name": "Văn Miếu - Quốc Tử Giám",
+    "category": "Historical Site",
+    "latitude": 21.0280,
+    "longitude": 105.8357,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": false
+  },
+  {
+    "place_id": 544,
+    "place_name": "Cầu Rồng Đà Nẵng",
+    "category": "Bridge",
+    "latitude": 16.0615,
+    "longitude": 108.2278,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": false
+  },
+  {
+    "place_id": 545,
+    "place_name": "Bà Nà Hills",
+    "category": "Tourist Attraction",
+    "latitude": 15.9950,
+    "longitude": 107.9969,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 546,
+    "place_name": "Phố cổ Hội An",
+    "category": "Heritage Site",
+    "latitude": 15.8794,
+    "longitude": 108.3350,
+    "has_ramp_entrance": false,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 547,
+    "place_name": "Kinh thành Huế",
+    "category": "Historical Site",
+    "latitude": 16.4696,
+    "longitude": 107.5784,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 548,
+    "place_name": "Vịnh Hạ Long",
+    "category": "Natural Wonder",
+    "latitude": 20.9101,
+    "longitude": 107.1839,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  },
+  {
+    "place_id": 549,
+    "place_name": "Nhà ga Đà Lạt",
+    "category": "Historical Site",
+    "latitude": 11.9416,
+    "longitude": 108.4588,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": false
+  },
+  {
+    "place_id": 550,
+    "place_name": "Chợ Đêm Phú Quốc",
+    "category": "Market",
+    "latitude": 10.2185,
+    "longitude": 103.9597,
+    "has_ramp_entrance": true,
+    "has_accessible_toilet": true
+  }
+  ],
+  "user_reviews": [
+    {
+      "review_id": 801,
+      "place_id": 501,
+      "user_id": 1001,
+      "rating_score": 5,
+      "comment": "Lối vào có dốc thoải, thang máy hoạt động tốt, rất tiện cho xe lăn.",
+      "created_at": "2026-06-27T14:20:00Z"
+    },
+    {
+      "review_id": 802,
+      "place_id": 503,
+      "user_id": 1002,
+      "rating_score": 5,
+      "comment": "Vincom có lối dốc tốt ở tất cả cửa vào, thang máy rộng rãi.",
+      "created_at": "2026-06-27T15:00:00Z"
+    },
+    {
+      "review_id": 803,
+      "place_id": 507,
+      "user_id": 1003,
+      "rating_score": 4,
+      "comment": "Dinh Thống Nhất có lối dốc nhưng bề mặt đường vào hơi trơn khi mưa.",
+      "created_at": "2026-06-27T16:10:00Z"
+    },
+    {
+      "review_id": 804,
+      "place_id": 509,
+      "user_id": 1001,
+      "rating_score": 2,
+      "comment": "Chợ Bến Thành không có lối dốc cho xe lăn, cần hỗ trợ để vào.",
+      "created_at": "2026-06-27T17:25:00Z"
+    },
+    {
+      "review_id": 805,
+      "place_id": 508,
+      "user_id": 1003,
+      "rating_score": 5,
+      "comment": "Bitexco có lối vào rất tốt, bãi đậu xe dành riêng cho người khuyết tật.",
+      "created_at": "2026-06-27T18:40:00Z"
+    },
+    {
+      "review_id": 806,
+      "place_id": 502,
+      "user_id": 1005,
+      "rating_score": 4,
+      "comment": "Bưu điện có dốc và lối đi rộng, nhưng đông người vào giờ cao điểm.",
+      "created_at": "2026-06-27T19:30:00Z"
+    },
+    {
+      "review_id": 807,
+      "place_id": 510,
+      "user_id": 1004,
+      "rating_score": 4,
+      "comment": "Phố đi bộ Nguyễn Huệ bằng phẳng, rất dễ di chuyển bằng nạng.",
+      "created_at": "2026-06-27T20:05:00Z"
+    },
+    {
+      "review_id": 808,
+      "place_id": 504,
+      "user_id": 1003,
+      "rating_score": 4,
+      "comment": "Bảo tàng có đường dốc và thang máy, nhân viên rất hỗ trợ.",
+      "created_at": "2026-06-27T20:45:00Z"
+    }
+  ],
+  "route_segments": [
+    {
+      "segment_id": 201,
+      "street_name": "Đường Lê Lợi (đoạn Bến Thành – Pasteur)",
+      "surface_quality": "smooth",
+      "has_sidewalk_ramp": true,
+      "sidewalk_width": 2.5,
+      "safety_score": 4.5,
+      "distance": 360,
+      "start_node": "BEN_THANH",
+      "end_node": "LE_LOI_J",
+      "path": [
+        [10.7725, 106.6981],
+        [10.7728, 106.6988],
+        [10.7732, 106.6994],
+        [10.7737, 106.7001]
+      ]
+    },
+    {
+      "segment_id": 202,
+      "street_name": "Hẻm Phan Bội Châu (lối tắt sau Bến Thành)",
+      "surface_quality": "damaged",
+      "has_sidewalk_ramp": false,
+      "sidewalk_width": 0.8,
+      "safety_score": 1.2,
+      "distance": 270,
+      "start_node": "BEN_THANH",
+      "end_node": "LE_LOI_J",
+      "path": [
+        [10.7725, 106.6981],
+        [10.7723, 106.6985],
+        [10.7729, 106.6993],
+        [10.7737, 106.7001]
+      ]
+    },
+    {
+      "segment_id": 203,
+      "street_name": "Đường Đồng Khởi (đoạn Lý Tự Trọng – Nhà hát)",
+      "surface_quality": "smooth",
+      "has_sidewalk_ramp": true,
+      "sidewalk_width": 3.0,
+      "safety_score": 4.8,
+      "distance": 300,
+      "start_node": "LE_LOI_J",
+      "end_node": "OPERA",
+      "path": [
+        [10.7737, 106.7001],
+        [10.7746, 106.7004],
+        [10.7754, 106.7007],
+        [10.7762, 106.7009]
+      ]
+    },
+    {
+      "segment_id": 204,
+      "street_name": "Đường Đồng Khởi (đoạn Nhà hát – Nhà thờ Đức Bà)",
+      "surface_quality": "smooth",
+      "has_sidewalk_ramp": true,
+      "sidewalk_width": 2.5,
+      "safety_score": 4.5,
+      "distance": 430,
+      "start_node": "OPERA",
+      "end_node": "NOTRE_DAME",
+      "path": [
+        [10.7762, 106.7009],
+        [10.7772, 106.7002],
+        [10.7782, 106.6996],
+        [10.7797, 106.6989]
+      ]
+    },
+    {
+      "segment_id": 205,
+      "street_name": "Đường hẻm Thái Văn Lung – Tự Đức (lối tắt)",
+      "surface_quality": "damaged",
+      "has_sidewalk_ramp": false,
+      "sidewalk_width": 0.9,
+      "safety_score": 1.8,
+      "distance": 700,
+      "start_node": "LE_LOI_J",
+      "end_node": "NOTRE_DAME",
+      "path": [
+        [10.7737, 106.7001],
+        [10.7750, 106.6997],
+        [10.7763, 106.6991],
+        [10.7778, 106.6988],
+        [10.7797, 106.6989]
+      ]
+    },
+    {
+      "segment_id": 206,
+      "street_name": "Đường Cách Mạng Tháng 8 (đoạn Bến Thành – Tao Đàn)",
+      "surface_quality": "moderate",
+      "has_sidewalk_ramp": true,
+      "sidewalk_width": 2.0,
+      "safety_score": 3.8,
+      "distance": 800,
+      "start_node": "BEN_THANH",
+      "end_node": "TAO_DAN",
+      "path": [
+        [10.7725, 106.6981],
+        [10.7726, 106.6964],
+        [10.7728, 106.6943],
+        [10.7730, 106.6928],
+        [10.7731, 106.6916]
+      ]
+    },
+    {
+      "segment_id": 207,
+      "street_name": "Đường Nguyễn Thị Minh Khai (đoạn Tao Đàn – Dinh Thống Nhất)",
+      "surface_quality": "moderate",
+      "has_sidewalk_ramp": false,
+      "sidewalk_width": 1.5,
+      "safety_score": 3.0,
+      "distance": 560,
+      "start_node": "TAO_DAN",
+      "end_node": "REUNIFICATION",
+      "path": [
+        [10.7731, 106.6916],
+        [10.7745, 106.6928],
+        [10.7757, 106.6941],
+        [10.7769, 106.6956]
+      ]
+    },
+    {
+      "segment_id": 208,
+      "street_name": "Đường Nam Kỳ Khởi Nghĩa (đoạn Dinh – Nhà thờ)",
+      "surface_quality": "smooth",
+      "has_sidewalk_ramp": true,
+      "sidewalk_width": 2.2,
+      "safety_score": 4.2,
+      "distance": 380,
+      "start_node": "REUNIFICATION",
+      "end_node": "NOTRE_DAME",
+      "path": [
+        [10.7769, 106.6956],
+        [10.7778, 106.6967],
+        [10.7788, 106.6978],
+        [10.7797, 106.6989]
+      ]
+    },
+    {
+      "segment_id": 209,
+      "street_name": "Đường Lý Tự Trọng (đoạn Nhà hát – Vincom)",
+      "surface_quality": "smooth",
+      "has_sidewalk_ramp": true,
+      "sidewalk_width": 2.5,
+      "safety_score": 4.6,
+      "distance": 450,
+      "start_node": "OPERA",
+      "end_node": "VINCOM",
+      "path": [
+        [10.7762, 106.7009],
+        [10.7754, 106.7016],
+        [10.7744, 106.7021],
+        [10.7731, 106.7026]
+      ]
+    },
+    {
+      "segment_id": 210,
+      "street_name": "Đường Hàm Nghi (đoạn Bến Thành – Bitexco)",
+      "surface_quality": "moderate",
+      "has_sidewalk_ramp": true,
+      "sidewalk_width": 2.0,
+      "safety_score": 3.5,
+      "distance": 620,
+      "start_node": "BEN_THANH",
+      "end_node": "BITEXCO",
+      "path": [
+        [10.7725, 106.6981],
+        [10.7722, 106.6998],
+        [10.7719, 106.7015],
+        [10.7718, 106.7028],
+        [10.7717, 106.7040]
+      ]
+    },
+    {
+      "segment_id": 211,
+      "street_name": "Đường Pasteur (đoạn Vincom – Lê Lợi)",
+      "surface_quality": "smooth",
+      "has_sidewalk_ramp": true,
+      "sidewalk_width": 2.3,
+      "safety_score": 4.3,
+      "distance": 350,
+      "start_node": "VINCOM",
+      "end_node": "LE_LOI_J",
+      "path": [
+        [10.7731, 106.7026],
+        [10.7733, 106.7018],
+        [10.7735, 106.7009],
+        [10.7737, 106.7001]
+      ]
+    }
+  ],
+  "realtime_alerts": [
+    {
+      "alert_id": 301,
+      "segment_id": 202,
+      "user_id": 1002,
+      "issue_type": ["pothole", "flooded"],
+      "description": "Hẻm Phan Bội Châu có ổ gà và đọng nước sau mưa.",
+      "detected_by": "User_Report_App",
+      "status": "active",
+      "created_at": "2026-06-27T21:05:00Z"
+    },
+    {
+      "alert_id": 302,
+      "segment_id": 205,
+      "user_id": 1001,
+      "issue_type": ["obstacle", "construction"],
+      "description": "Vật liệu xây dựng chắn lối hẻm Thái Văn Lung.",
+      "detected_by": "User_Report_App",
+      "status": "active",
+      "created_at": "2026-06-28T06:30:00Z"
+    },
+    {
+      "alert_id": 303,
+      "segment_id": 205,
+      "user_id": 1003,
+      "issue_type": ["flooded"],
+      "description": "Ngập sau mưa chiều, đã rút bớt nước.",
+      "detected_by": "User_Report_App",
+      "status": "resolved",
+      "created_at": "2026-06-27T22:50:00Z"
+    },
+    {
+      "alert_id": 304,
+      "segment_id": 202,
+      "user_id": 1004,
+      "issue_type": ["pothole"],
+      "description": "Ổ gà lớn gần cuối hẻm, nguy hiểm cho xe lăn.",
+      "detected_by": "AI_Road_Scan",
+      "status": "active",
+      "created_at": "2026-06-28T07:15:00Z"
+    },
+    {
+      "alert_id": 305,
+      "segment_id": 207,
+      "user_id": 1003,
+      "issue_type": ["steep_slope"],
+      "description": "Đoạn dốc vỉa hè trên Nguyễn Thị Minh Khai, cần hỗ trợ với xe lăn tay.",
+      "detected_by": "User_Report_App",
+      "status": "active",
+      "created_at": "2026-06-28T07:40:00Z"
+    },
+    {
+      "alert_id": 306,
+      "segment_id": 205,
+      "user_id": 1005,
+      "issue_type": ["narrow_path"],
+      "description": "Lối hẻm chỉ rộng 0.9m, xe lăn điện không qua được.",
+      "detected_by": "User_Report_App",
+      "status": "active",
+      "created_at": "2026-06-28T08:00:00Z"
+    },
+    {
+      "alert_id": 307,
+      "segment_id": 206,
+      "user_id": 1001,
+      "issue_type": ["crowded"],
+      "description": "Đường Cách Mạng Tháng 8 đông người vào giờ cao điểm sáng.",
+      "detected_by": "User_Report_App",
+      "status": "active",
+      "created_at": "2026-06-28T08:20:00Z"
+    },
+    {
+      "alert_id": 308,
+      "segment_id": 204,
+      "user_id": 1002,
+      "issue_type": ["slippery"],
+      "description": "Vỉa hè Đồng Khởi trơn sau mưa nhỏ.",
+      "detected_by": "AI_Road_Scan",
+      "status": "resolved",
+      "created_at": "2026-06-28T05:10:00Z"
+    }
+  ],
+  "bus_lines": [
+    {
+      "line_id": 401,
+      "line_number": "Bus 01",
+      "route_name": "Bến Thành – Bến xe Miền Đông",
+      "has_low_floor_bus": true
+    },
+    {
+      "line_id": 402,
+      "line_number": "Bus 04",
+      "route_name": "Bến Thành – KCN Bình Đổ",
+      "has_low_floor_bus": true
+    },
+    {
+      "line_id": 403,
+      "line_number": "Bus 152",
+      "route_name": "Bến Thành – Sân bay Tân Sơn Nhất",
+      "has_low_floor_bus": true
+    },
+    {
+      "line_id": 404,
+      "line_number": "Bus 36",
+      "route_name": "Bến Thành – Đại học Quốc gia",
+      "has_low_floor_bus": false
+    }
+  ],
+  "bus_stops": [
+    {
+      "stop_id": 601,
+      "stop_name": "Bến Thành – Lê Lợi",
+      "latitude": 10.7726,
+      "longitude": 106.6984,
+      "wheelchair_accessible": true
+    },
+    {
+      "stop_id": 602,
+      "stop_name": "Ngã tư Đồng Khởi – Lý Tự Trọng",
+      "latitude": 10.7750,
+      "longitude": 106.7005,
+      "wheelchair_accessible": true
+    },
+    {
+      "stop_id": 603,
+      "stop_name": "Nhà hát Thành phố",
+      "latitude": 10.7762,
+      "longitude": 106.7010,
+      "wheelchair_accessible": true
+    },
+    {
+      "stop_id": 604,
+      "stop_name": "Nhà thờ Đức Bà – Bưu điện",
+      "latitude": 10.7796,
+      "longitude": 106.6997,
+      "wheelchair_accessible": true
+    },
+    {
+      "stop_id": 605,
+      "stop_name": "Vincom Center Quận 1",
+      "latitude": 10.7732,
+      "longitude": 106.7027,
+      "wheelchair_accessible": true
+    },
+    {
+      "stop_id": 606,
+      "stop_name": "Hàm Nghi – Bitexco",
+      "latitude": 10.7719,
+      "longitude": 106.7012,
+      "wheelchair_accessible": false
+    }
+  ],
+  "segment_bus_mapping": [
+    { "mapping_id": 701, "segment_id": 201, "stop_id": 601 },
+    { "mapping_id": 702, "segment_id": 203, "stop_id": 602 },
+    { "mapping_id": 703, "segment_id": 203, "stop_id": 603 },
+    { "mapping_id": 704, "segment_id": 204, "stop_id": 604 },
+    { "mapping_id": 705, "segment_id": 209, "stop_id": 605 },
+    { "mapping_id": 706, "segment_id": 210, "stop_id": 606 }
+  ],
+  "saved_routes": [
+    {
+      "route_id": 101,
+      "user_id": 1001,
+      "origin": "Chợ Bến Thành",
+      "destination": "Nhà thờ Đức Bà",
+      "total_distance": 1090,
+      "total_duration": 15,
+      "total_cost": 0,
+      "transport_mode": "walk_only",
+      "created_at": "2026-06-27T08:10:00Z"
+    },
+    {
+      "route_id": 102,
+      "user_id": 1002,
+      "origin": "Chợ Bến Thành",
+      "destination": "Dinh Thống Nhất",
+      "total_distance": 1360,
+      "total_duration": 19,
+      "total_cost": 0,
+      "transport_mode": "walk_only",
+      "created_at": "2026-06-27T09:25:00Z"
+    },
+    {
+      "route_id": 103,
+      "user_id": 1003,
+      "origin": "Nhà hát Thành phố",
+      "destination": "Vincom Center B",
+      "total_distance": 450,
+      "total_duration": 7,
+      "total_cost": 0,
+      "transport_mode": "walk_only",
+      "created_at": "2026-06-27T10:40:00Z"
+    },
+    {
+      "route_id": 104,
+      "user_id": 1005,
+      "origin": "Chợ Bến Thành",
+      "destination": "Bitexco Tower",
+      "total_distance": 620,
+      "total_duration": 9,
+      "total_cost": 0,
+      "transport_mode": "walk_only",
+      "created_at": "2026-06-27T12:30:00Z"
+    },
+    {
+      "route_id": 105,
+      "user_id": 1004,
+      "origin": "Dinh Thống Nhất",
+      "destination": "Nhà thờ Đức Bà",
+      "total_distance": 380,
+      "total_duration": 6,
+      "total_cost": 0,
+      "transport_mode": "walk_only",
+      "created_at": "2026-06-27T11:55:00Z"
+    }
+  ],
+  "route_details": [
+    { "route_detail_id": 11, "route_id": 101, "segment_id": 201, "sequence_order": 1 },
+    { "route_detail_id": 12, "route_id": 101, "segment_id": 203, "sequence_order": 2 },
+    { "route_detail_id": 13, "route_id": 101, "segment_id": 204, "sequence_order": 3 },
+    { "route_detail_id": 14, "route_id": 102, "segment_id": 206, "sequence_order": 1 },
+    { "route_detail_id": 15, "route_id": 102, "segment_id": 207, "sequence_order": 2 },
+    { "route_detail_id": 16, "route_id": 103, "segment_id": 209, "sequence_order": 1 },
+    { "route_detail_id": 17, "route_id": 104, "segment_id": 210, "sequence_order": 1 },
+    { "route_detail_id": 18, "route_id": 105, "segment_id": 208, "sequence_order": 1 }
+  ],
+  "saved_addresses": [
+    {
+      "address_id": 901,
+      "user_id": 1001,
+      "label": "Home",
+      "address": "Chợ Bến Thành, Quận 1",
+      "latitude": 10.7725,
+      "longitude": 106.6981,
+      "created_at": "2026-06-27T08:05:00Z"
+    },
+    {
+      "address_id": 902,
+      "user_id": 1001,
+      "label": "Work",
+      "address": "Bưu điện Trung tâm Sài Gòn, Quận 1",
+      "latitude": 10.7796,
+      "longitude": 106.7000,
+      "created_at": "2026-06-27T08:06:00Z"
+    },
+    {
+      "address_id": 903,
+      "user_id": 1002,
+      "label": "Home",
+      "address": "Vincom Center B, Lê Thánh Tôn, Quận 1",
+      "latitude": 10.7731,
+      "longitude": 106.7026,
+      "created_at": "2026-06-27T09:20:00Z"
+    },
+    {
+      "address_id": 904,
+      "user_id": 1002,
+      "label": "Office",
+      "address": "Nhà hát Thành phố, Đồng Khởi, Quận 1",
+      "latitude": 10.7762,
+      "longitude": 106.7009,
+      "created_at": "2026-06-27T09:21:00Z"
+    },
+    {
+      "address_id": 905,
+      "user_id": 1003,
+      "label": "Gym",
+      "address": "Công viên Tao Đàn, Quận 1",
+      "latitude": 10.7731,
+      "longitude": 106.6916,
+      "created_at": "2026-06-27T10:35:00Z"
+    },
+    {
+      "address_id": 906,
+      "user_id": 1005,
+      "label": "School",
+      "address": "Dinh Thống Nhất, Nam Kỳ Khởi Nghĩa, Quận 1",
+      "latitude": 10.7769,
+      "longitude": 106.6956,
+      "created_at": "2026-06-27T12:25:00Z"
+    },
+    {
+      "address_id": 907,
+      "user_id": 1004,
+      "label": "Home",
+      "address": "Phố đi bộ Nguyễn Huệ, Quận 1",
+      "latitude": 10.7746,
+      "longitude": 106.7018,
+      "created_at": "2026-06-27T11:50:00Z"
+    }
+  ],
+  "trips": [
+    {
+      "trip_id": "trip-0001",
+      "user_id": 1001,
+      "origin": "Chợ Bến Thành",
+      "destination": "Nhà thờ Đức Bà",
+      "route_id": 101,
+      "segment_ids": [201, 203, 204],
+      "status": "completed",
+      "started_at": "2026-06-27T13:00:00Z",
+      "finished_at": "2026-06-27T13:16:00Z",
+      "actual_distance": 1110,
+      "actual_duration": 16
+    },
+    {
+      "trip_id": "trip-0002",
+      "user_id": 1002,
+      "origin": "Chợ Bến Thành",
+      "destination": "Dinh Thống Nhất",
+      "route_id": 102,
+      "segment_ids": [206, 207],
+      "status": "completed",
+      "started_at": "2026-06-27T14:30:00Z",
+      "finished_at": "2026-06-27T14:52:00Z",
+      "actual_distance": 1380,
+      "actual_duration": 22
+    },
+    {
+      "trip_id": "trip-0003",
+      "user_id": 1003,
+      "origin": "Nhà hát Thành phố",
+      "destination": "Vincom Center B",
+      "route_id": 103,
+      "segment_ids": [209],
+      "status": "in_progress",
+      "started_at": "2026-06-28T07:40:00Z",
+      "finished_at": null,
+      "actual_distance": null,
+      "actual_duration": null
+    },
+    {
+      "trip_id": "trip-0004",
+      "user_id": 1005,
+      "origin": "Chợ Bến Thành",
+      "destination": "Bitexco Tower",
+      "route_id": 104,
+      "segment_ids": [210],
+      "status": "completed",
+      "started_at": "2026-06-27T16:00:00Z",
+      "finished_at": "2026-06-27T16:10:00Z",
+      "actual_distance": 640,
+      "actual_duration": 10
+    },
+    {
+      "trip_id": "trip-0005",
+      "user_id": 1004,
+      "origin": "Dinh Thống Nhất",
+      "destination": "Nhà thờ Đức Bà",
+      "route_id": 105,
+      "segment_ids": [208],
+      "status": "completed",
+      "started_at": "2026-06-28T06:50:00Z",
+      "finished_at": "2026-06-28T06:57:00Z",
+      "actual_distance": 390,
+      "actual_duration": 7
+    }
+  ],
+  "route_reviews": [
+    {
+      "route_review_id": 8501,
+      "route_id": 101,
+      "user_id": 1001,
+      "rating_score": 5,
+      "comment": "Đường Đồng Khởi rất tốt cho xe lăn, vỉa hè rộng và bằng phẳng.",
+      "created_at": "2026-06-27T13:25:00Z"
+    },
+    {
+      "route_review_id": 8502,
+      "route_id": 102,
+      "user_id": 1002,
+      "rating_score": 4,
+      "comment": "Tuyến qua Tao Đàn ổn nhưng đoạn Nguyễn Thị Minh Khai thiếu lối dốc.",
+      "created_at": "2026-06-27T14:55:00Z"
+    },
+    {
+      "route_review_id": 8503,
+      "route_id": 103,
+      "user_id": 1003,
+      "rating_score": 5,
+      "comment": "Lý Tự Trọng thoải mái, thích hợp với xe lăn điện.",
+      "created_at": "2026-06-27T19:10:00Z"
+    },
+    {
+      "route_review_id": 8504,
+      "route_id": 104,
+      "user_id": 1005,
+      "rating_score": 3,
+      "comment": "Hàm Nghi đông xe, vỉa hè bị lấn chiếm một đoạn.",
+      "created_at": "2026-06-27T16:30:00Z"
+    },
+    {
+      "route_review_id": 8505,
+      "route_id": 105,
+      "user_id": 1004,
+      "rating_score": 5,
+      "comment": "Nam Kỳ Khởi Nghĩa có lối dốc đẹp, đi nạng rất dễ.",
+      "created_at": "2026-06-27T15:10:00Z"
+    }
+  ]
+}
