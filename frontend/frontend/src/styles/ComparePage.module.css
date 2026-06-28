@@ -1,0 +1,146 @@
+/* ── Recommendation Explanation Card ────────────────────────────────────── */
+
+.explanationCard {
+  background: linear-gradient(140deg, #0d9b87 0%, #3dbfa8 60%, #a8eddc 100%);
+  border-radius: 20px;
+  padding: 18px 18px 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 6px 20px rgba(13, 155, 135, 0.25);
+}
+
+.explanationHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.explanationTitle {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.75);
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+.strategyBadge {
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.explanationText {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #fff;
+  margin: 0;
+}
+
+/* ── Accessibility Breakdown (inside optimized card) ────────────────────── */
+
+.breakdownSection {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.breakdownTitle {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.breakdownRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.breakdownLabel {
+  font-size: 12px;
+  color: var(--text);
+  width: 110px;
+  flex-shrink: 0;
+}
+
+.breakdownBarWrap {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.breakdownFill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--accent);
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.breakdownFill--warn {
+  background: var(--warn);
+}
+
+.breakdownFill--danger {
+  background: var(--danger);
+}
+
+.breakdownVal {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-h);
+  width: 30px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── Priority score pill ─────────────────────────────────────────────────── */
+
+.scorePill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+/* ── Rejection banner (inside normal route card) ─────────────────────────── */
+
+.rejectionBanner {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  background: var(--danger-bg);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-top: 10px;
+}
+
+.rejectionIcon {
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.rejectionText {
+  font-size: 12px;
+  color: var(--danger);
+  line-height: 1.45;
+  margin: 0;
+}

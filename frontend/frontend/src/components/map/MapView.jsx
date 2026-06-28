@@ -13,6 +13,7 @@ const toLngLat = (c) => [c[1], c[0]];
  *  - polylines: [{ coords:[[lat,lng]], color, dashArray, weight }]
  *  - markers:   [{ position:[lat,lng], emoji, label }]
  *  - hazards:   [{ position:[lat,lng], label, color }]
+ *  - zones:     [{ position:[lat,lng], color }] — filled circle overlay for low-access areas
  *  - focusPosition: [lat, lng] — fly to this when it changes
  *  - onMapClick(lat, lng) — called when user taps/clicks on the map
  */
@@ -20,6 +21,7 @@ export default function MapView({
   polylines = [],
   markers = [],
   hazards = [],
+  zones = [],
   height = 260,
   center = DHQG_CENTER,
   zoom = 14,
@@ -34,8 +36,9 @@ export default function MapView({
       ...polylines.flatMap((p) => p.coords || []),
       ...markers.map((m) => m.position),
       ...hazards.map((h) => h.position),
+      ...zones.map((z) => z.position),
     ],
-    [polylines, markers, hazards]
+    [polylines, markers, hazards, zones]
   );
 
   const fitBounds = useCallback(() => {
@@ -83,6 +86,36 @@ export default function MapView({
         onClick={onMapClick ? handleMapClick : undefined}
         cursor={onMapClick ? 'crosshair' : 'grab'}
       >
+        {/* Zone circles — rendered first so they sit under routes */}
+        {/* {zones.length > 0 && (
+          <Source
+            id="low-access-zones"
+            type="geojson"
+            data={{
+              type: 'FeatureCollection',
+              features: zones.map((z, i) => ({
+                type: 'Feature',
+                id: i,
+                geometry: { type: 'Point', coordinates: toLngLat(z.position) },
+                properties: { color: z.color ?? '#dc2626' },
+              })),
+            }}
+          >
+            <Layer
+              id="zones-fill"
+              type="circle"
+              paint={{
+                'circle-radius': 44,
+                'circle-color': ['get', 'color'],
+                'circle-opacity': 0.12,
+                'circle-stroke-width': 1.5,
+                'circle-stroke-color': ['get', 'color'],
+                'circle-stroke-opacity': 0.45,
+              }}
+            />
+          </Source>
+        )} */}
+
         {polylines.map((p, i) =>
           p.coords?.length ? (
             <Source
@@ -109,11 +142,11 @@ export default function MapView({
           ) : null
         )}
 
-        {hazards.map((h, i) => (
+        {/* {hazards.map((h, i) => (
           <Marker key={`hz-${i}`} longitude={h.position[1]} latitude={h.position[0]}>
             <div className="hazardDot" title={h.label} style={h.color ? { background: h.color } : undefined} />
           </Marker>
-        ))}
+        ))} */}
 
         {markers.map((m, i) => (
           <Marker key={`mk-${i}`} longitude={m.position[1]} latitude={m.position[0]}>
